@@ -1,0 +1,7 @@
+{
+    "title": "Zend\\Json\\Server",
+    "target": "html/",
+    "content": [
+        "book/zend.json.server.introduction.md"
+    ]
+}
