@@ -1,21 +1,17 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace ZendTest\Json\Server;
 
-use Zend\Json;
+use PHPUnit_Framework_TestCase as TestCase;
+use Zend\Json\Json;
+use Zend\Json\Server\Request;
 
-/**
- * @group      Zend_JSON
- * @group      Zend_JSON_Server
- */
-class RequestTest extends \PHPUnit_Framework_TestCase
+class RequestTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -25,17 +21,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->request = new \Zend\Json\Server\Request();
-    }
-
-    /**
-     * Tears down the fixture, for example, close a network connection.
-     * This method is called after a test is executed.
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
+        $this->request = new Request();
     }
 
     public function testShouldHaveNoParamsByDefault()
@@ -187,7 +173,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     public function testShouldBeAbleToLoadRequestFromJSONString()
     {
         $options = $this->getOptions();
-        $json    = Json\Json::encode($options);
+        $json    = Json::encode($options);
         $this->request->loadJSON($json);
 
         $this->assertEquals('foo', $this->request->getMethod());
@@ -199,7 +185,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
     {
         $options = $this->getOptions();
         $options['jsonrpc'] = '2.0';
-        $json    = Json\Json::encode($options);
+        $json    = Json::encode($options);
         $this->request->loadJSON($json);
         $this->assertEquals('2.0', $this->request->getVersion());
     }
@@ -251,7 +237,7 @@ class RequestTest extends \PHPUnit_Framework_TestCase
 
     public function validateJSON($json, array $options)
     {
-        $test = Json\Json::decode($json, Json\Json::TYPE_ARRAY);
+        $test = Json::decode($json, Json::TYPE_ARRAY);
         $this->assertInternalType('array', $test, var_export($json, 1));
 
         $this->assertArrayHasKey('id', $test);

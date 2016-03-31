@@ -1,14 +1,13 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace ZendTest\Json\Server;
 
+use PHPUnit_Framework_TestCase as TestCase;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Client\Adapter\Test as TestAdapter;
 use Zend\Json\Server\Client;
@@ -16,10 +15,7 @@ use Zend\Json\Server\Error;
 use Zend\Json\Server\Request;
 use Zend\Json\Server\Response;
 
-/**
- * @group      Zend_XmlRpc
- */
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     /**
      * @var TestAdapter
@@ -39,8 +35,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->httpAdapter = new TestAdapter();
-        $this->httpClient = new HttpClient('http://foo',
-                                    ['adapter' => $this->httpAdapter]);
+        $this->httpClient = new HttpClient(
+            'http://foo',
+            ['adapter' => $this->httpAdapter]
+        );
 
         $this->jsonClient = new Client('http://foo');
         $this->jsonClient->setHttpClient($this->httpClient);
@@ -245,7 +243,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         return $response;
     }
 
-    public function makeHttpResponseFrom($data, $status=200, $message='OK')
+    public function makeHttpResponseFrom($data, $status = 200, $message = 'OK')
     {
         $headers = ["HTTP/1.1 $status $message",
                          "Status: $status",

@@ -1,0 +1,16 @@
+docs_dir: doc/book
+site_dir: doc/html
+pages:
+    - index.md
+    - Intro: intro.md
+    - "Basic Usage": usage.md
+    - Reference:
+        - "Zend\\Json\\Server\\Server": server.md
+        - "Zend\\Json\\Server\\Request": request.md
+        - "Zend\\Json\\Server\\Response": response.md
+        - "Zend\\Json\\Server\\Error": error.md
+        - "Service Mapping Description (SMD)": smd.md
+site_name: zend-json-server
+site_description: Zend\Json\Server
+repo_url: 'https://github.com/zendframework/zend-json-server'
+copyright: 'Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a>'

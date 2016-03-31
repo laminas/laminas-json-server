@@ -1,24 +1,19 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace ZendTest\Json\Server;
 
-use Zend\Json\Server;
-use Zend\Json;
+use PHPUnit_Framework_TestCase as TestCase;
+use Zend\Json\Server\Error;
+use Zend\Json\Server\Exception\RuntimeException;
+use Zend\Json\Server\Response;
+use Zend\Json\Json;
 
-/**
- * Test class for Zend\JSON\Server\Response
- *
- * @group      Zend_JSON
- * @group      Zend_JSON_Server
- */
-class ResponseTest extends \PHPUnit_Framework_TestCase
+class ResponseTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -28,7 +23,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->response = new \Zend\Json\Server\Response();
+        $this->response = new Response();
     }
 
     public function testResultShouldBeNullByDefault()
@@ -51,14 +46,14 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testSettingErrorShouldMarkRequestAsError()
     {
-        $error = new Server\Error();
+        $error = new Error();
         $this->response->setError($error);
         $this->assertTrue($this->response->isError());
     }
 
     public function testShouldBeAbleToRetrieveErrorObject()
     {
-        $error = new Server\Error();
+        $error = new Error();
         $this->response->setError($error);
         $this->assertSame($error, $this->response->getError());
     }
@@ -99,7 +94,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function testShouldBeAbleToLoadResponseFromJSONString()
     {
         $options = $this->getOptions();
-        $json    = Json\Json::encode($options);
+        $json    = Json::encode($options);
         $this->response->loadJSON($json);
 
         $this->assertEquals('foobar', $this->response->getId());
@@ -110,7 +105,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     {
         $options = $this->getOptions();
         $options['jsonrpc'] = '2.0';
-        $json    = Json\Json::encode($options);
+        $json    = Json::encode($options);
         $this->response->loadJSON($json);
         $this->assertEquals('2.0', $this->response->getVersion());
     }
@@ -121,7 +116,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
                        ->setId('foo')
                        ->setVersion('2.0');
         $json = $this->response->toJSON();
-        $test = Json\Json::decode($json, Json\Json::TYPE_ARRAY);
+        $test = Json::decode($json, Json::TYPE_ARRAY);
 
         $this->assertInternalType('array', $test);
         $this->assertArrayHasKey('result', $test);
@@ -136,14 +131,14 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testResponseShouldCastErrorToJSONIfIsError()
     {
-        $error = new Server\Error();
-        $error->setCode(Server\Error::ERROR_INTERNAL)
+        $error = new Error();
+        $error->setCode(Error::ERROR_INTERNAL)
               ->setMessage('error occurred');
         $this->response->setId('foo')
                        ->setResult(true)
                        ->setError($error);
         $json = $this->response->toJSON();
-        $test = Json\Json::decode($json, Json\Json::TYPE_ARRAY);
+        $test = Json::decode($json, Json::TYPE_ARRAY);
 
         $this->assertInternalType('array', $test);
         $this->assertArrayNotHasKey('result', $test, "'result' may not coexist with 'error'");
@@ -161,7 +156,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->response->setResult(true)
                        ->setId('foo');
         $json = $this->response->__toString();
-        $test = Json\Json::decode($json, Json\Json::TYPE_ARRAY);
+        $test = Json::decode($json, Json::TYPE_ARRAY);
 
         $this->assertInternalType('array', $test);
         $this->assertArrayHasKey('result', $test);
@@ -182,7 +177,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadingScalarJSONResponseShouldThrowException($json)
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\RuntimeException');
+        $this->setExpectedException(RuntimeException::class);
         $this->response->loadJson($json);
     }
 

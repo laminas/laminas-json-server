@@ -1,26 +1,19 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace ZendTest\Json\Server;
 
+use PHPUnit_Framework_TestCase as TestCase;
 use Zend\Json\Server\Smd;
 use Zend\Json\Server\Exception\InvalidArgumentException;
 use Zend\Json\Server\Exception\RuntimeException;
 use Zend\Json;
 
-/**
- * Test class for Zend\JSON\Server\Smd
- *
- * @group      Zend_Json
- * @group      Zend_Json_Server
- */
-class SmdTest extends \PHPUnit_Framework_TestCase
+class SmdTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -30,7 +23,7 @@ class SmdTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->smd = new SMD();
+        $this->smd = new Smd();
     }
 
     public function testTransportShouldDefaultToPost()
@@ -403,19 +396,33 @@ class SmdTest extends \PHPUnit_Framework_TestCase
         // ... : SMD service description requires a name; none provided
         $smdDestination->setOptions($smdSource->toArray());
 
-        $this->assertEquals($smdSource->getContentType(),
-            $smdDestination->getContentType());
-        $this->assertEquals($smdSource->getDescription(),
-            $smdDestination->getDescription());
-        $this->assertEquals($smdSource->getEnvelope(),
-            $smdDestination->getEnvelope());
-        $this->assertEquals($smdSource->getId(),
-            $smdDestination->getId());
-        $this->assertEquals($smdSource->getTarget(),
-            $smdDestination->getTarget());
-        $this->assertEquals($smdSource->getTransport(),
-            $smdDestination->getTransport());
-        $this->assertEquals($smdSource->getServices(),
-            $smdDestination->getServices());
+        $this->assertEquals(
+            $smdSource->getContentType(),
+            $smdDestination->getContentType()
+        );
+        $this->assertEquals(
+            $smdSource->getDescription(),
+            $smdDestination->getDescription()
+        );
+        $this->assertEquals(
+            $smdSource->getEnvelope(),
+            $smdDestination->getEnvelope()
+        );
+        $this->assertEquals(
+            $smdSource->getId(),
+            $smdDestination->getId()
+        );
+        $this->assertEquals(
+            $smdSource->getTarget(),
+            $smdDestination->getTarget()
+        );
+        $this->assertEquals(
+            $smdSource->getTransport(),
+            $smdDestination->getTransport()
+        );
+        $this->assertEquals(
+            $smdSource->getServices(),
+            $smdDestination->getServices()
+        );
     }
 }

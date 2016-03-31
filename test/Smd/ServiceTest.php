@@ -1,24 +1,20 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace ZendTest\Json\Server\Smd;
 
+use PHPUnit_Framework_TestCase as TestCase;
+use stdClass;
+use Zend\Json\Server\Exception;
+use Zend\Json\Server\Smd;
 use Zend\Json\Server\Smd\Service;
 use Zend\Json\Server;
 
-/**
- * Test class for Zend\JSON\Server\Smd\Service
- *
- * @group      Zend_JSON
- * @group      Zend_JSON_Server
- */
-class ServiceTest extends \PHPUnit_Framework_TestCase
+class ServiceTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -33,19 +29,19 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorShouldThrowExceptionWhenNoNameSetWhenNullProvided()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'requires a name');
+        $this->setExpectedException(Exception\InvalidArgumentException::class, 'requires a name');
         $service = new Service(null);
     }
 
     public function testConstructorShouldThrowExceptionWhenNoNameSetWhenArrayProvided()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'requires a name');
+        $this->setExpectedException(Exception\InvalidArgumentException::class, 'requires a name');
         $service = new Service(null);
     }
 
     public function testSettingNameShouldThrowExceptionWhenContainingInvalidFormatStartingWithInt()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid name');
+        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid name');
         $this->service->setName('0ab-?');
     }
 
@@ -57,7 +53,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testSettingNameShouldThrowExceptionWhenContainingInvalidFormatStartingWithRpc()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid name');
+        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid name');
         $this->service->setName('rpc.Foo');
     }
 
@@ -96,13 +92,13 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testSettingTransportThrowsExceptionWhenSetToGet()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid transport');
+        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid transport');
         $this->service->setTransport('GET');
     }
 
     public function testSettingTransportThrowsExceptionWhenSetToRest()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid transport');
+        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid transport');
         $this->service->setTransport('REST');
     }
 
@@ -135,20 +131,20 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testEnvelopeShouldBeJSONRpc1CompliantByDefault()
     {
-        $this->assertEquals(Server\Smd::ENV_JSONRPC_1, $this->service->getEnvelope());
+        $this->assertEquals(Smd::ENV_JSONRPC_1, $this->service->getEnvelope());
     }
 
     public function testEnvelopeShouldOnlyComplyWithJSONRpc1And2()
     {
         $this->testEnvelopeShouldBeJSONRpc1CompliantByDefault();
-        $this->service->setEnvelope(Server\Smd::ENV_JSONRPC_2);
-        $this->assertEquals(Server\Smd::ENV_JSONRPC_2, $this->service->getEnvelope());
-        $this->service->setEnvelope(Server\Smd::ENV_JSONRPC_1);
-        $this->assertEquals(Server\Smd::ENV_JSONRPC_1, $this->service->getEnvelope());
+        $this->service->setEnvelope(Smd::ENV_JSONRPC_2);
+        $this->assertEquals(Smd::ENV_JSONRPC_2, $this->service->getEnvelope());
+        $this->service->setEnvelope(Smd::ENV_JSONRPC_1);
+        $this->assertEquals(Smd::ENV_JSONRPC_1, $this->service->getEnvelope());
         try {
             $this->service->setEnvelope('JSON-P');
             $this->fail('Should not be able to set non-JSON-RPC spec envelopes');
-        } catch (Server\Exception\InvalidArgumentException $e) {
+        } catch (Exception\InvalidArgumentException $e) {
             $this->assertContains('Invalid envelope', $e->getMessage());
         }
     }
@@ -181,8 +177,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidParamTypeShouldThrowException()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid param type');
-        $this->service->addParam(new \stdClass);
+        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid param type');
+        $this->service->addParam(new stdClass);
     }
 
     public function testShouldBeAbleToOrderParams()
@@ -279,8 +275,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidReturnTypeShouldThrowException()
     {
-        $this->setExpectedException('Zend\Json\Server\Exception\InvalidArgumentException', 'Invalid param type');
-        $this->service->setReturn(new \stdClass);
+        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid param type');
+        $this->service->setReturn(new stdClass);
     }
 
     public function testToArrayShouldCreateSmdCompatibleHash()
@@ -307,7 +303,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->service->setName('foo')
                       ->setTransport('POST')
                       ->setTarget('/foo')
-                      ->setEnvelope(Server\Smd::ENV_JSONRPC_2)
+                      ->setEnvelope(Smd::ENV_JSONRPC_2)
                       ->addParam('boolean')
                       ->addParam('array')
                       ->addParam('object')
@@ -320,7 +316,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('POST', $smd['transport']);
 
         $this->assertArrayHasKey('envelope', $smd);
-        $this->assertEquals(Server\Smd::ENV_JSONRPC_2, $smd['envelope']);
+        $this->assertEquals(Smd::ENV_JSONRPC_2, $smd['envelope']);
 
         $this->assertArrayHasKey('parameters', $smd);
         $params = $smd['parameters'];

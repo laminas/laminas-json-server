@@ -11,25 +11,19 @@
     "homepage": "https://github.com/zendframework/zend-json-server",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.6-dev",
-            "dev-develop": "2.7-dev"
+            "dev-master": "3.0-dev",
+            "dev-develop": "3.1-dev"
         }
     },
     "require": {
         "php": "^5.5 || ^7.0",
-        "zendframework/zend-json": "dev-feature/split-zend-json-server",
+        "zendframework/zend-json": "^2.6.1 || ^3.0",
         "zendframework/zend-http": "^2.5.4",
         "zendframework/zend-server": "^2.6.1"
     },
     "require-dev": {
-        "zendframework/zend-stdlib": "^2.5 || ^3.0",
-        "zendframework/zendxml": "^1.0.2",
-        "fabpot/php-cs-fixer": "1.7.*",
+        "squizlabs/php_codesniffer": "^2.3",
         "phpunit/PHPUnit": "~4.0"
-    },
-    "suggest": {
-        "zendframework/zend-stdlib": "Zend\\Stdlib component, for use with caching Zend\\Json\\Server responses",
-        "zendframework/zendxml": "To support Zend\\Json\\Json::fromXml() usage"
     },
     "autoload": {
         "psr-4": {
@@ -39,12 +33,20 @@
     "autoload-dev": {
         "psr-4": {
             "ZendTest\\Json\\Server\\": "test/"
-        }
+        },
+        "files": [
+            "test/TestAsset/FooFunc.php"
+        ]
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/webit4me/zend-json"
-        }
-    ]
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "upload-coverage": "coveralls",
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf fix -v",
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-clover clover.xml"
+    }
 }

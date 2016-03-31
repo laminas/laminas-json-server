@@ -1,24 +1,17 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace ZendTest\Json\Server;
 
+use PHPUnit_Framework_TestCase as TestCase;
 use Zend\Json\Server;
 use Zend\Json;
 
-/**
- * Test class for Zend\JSON\Server\Error
- *
- * @group      Zend_JSON
- * @group      Zend_JSON_Server
- */
-class ErrorTest extends \PHPUnit_Framework_TestCase
+class ErrorTest extends TestCase
 {
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -29,16 +22,6 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->error = new Server\Error();
-    }
-
-    /**
-     * Tears down the fixture, for example, close a network connection.
-     * This method is called after a test is executed.
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
     }
 
     public function testCodeShouldBeErrOtherByDefault()

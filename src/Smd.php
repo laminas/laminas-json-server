@@ -1,9 +1,7 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -20,37 +18,43 @@ class Smd
     const SMD_VERSION   = '2.0';
 
     /**
-     * Content type
+     * Content type.
+     *
      * @var string
      */
     protected $contentType = 'application/json';
 
     /**
-     * Content type regex
+     * Content type regex.
+     *
      * @var string
      */
     protected $contentTypeRegex = '#[a-z]+/[a-z][a-z-]+#i';
 
     /**
-     * Service description
+     * Service description.
+     *
      * @var string
      */
     protected $description;
 
     /**
-     * Generate Dojo-compatible SMD
+     * Generate Dojo-compatible SMD?
+     *
      * @var bool
      */
     protected $dojoCompatible = false;
 
     /**
-     * Current envelope
+     * Current envelope.
+     *
      * @var string
      */
     protected $envelope = self::ENV_JSONRPC_1;
 
     /**
-     * Allowed envelope types
+     * Allowed envelope types.
+     *
      * @var array
      */
     protected $envelopeTypes = [
@@ -59,70 +63,78 @@ class Smd
     ];
 
     /**
-     * Service id
+     * Service id.
+     *
      * @var string
      */
     protected $id;
 
     /**
-     * Services offered
+     * Services offered.
+     *
      * @var array
      */
     protected $services = [];
 
     /**
-     * Service target
+     * Service target.
+     *
      * @var string
      */
     protected $target;
 
     /**
-     * Global transport
+     * Global transport.
+     *
      * @var string
      */
     protected $transport = 'POST';
 
     /**
-     * Allowed transport types
+     * Allowed transport types.
+     *
      * @var array
      */
     protected $transportTypes = ['POST'];
 
     /**
-     * Set object state via options
+     * Set object state via options.
      *
      * @param  array $options
-     * @return Smd
+     * @return self
      */
     public function setOptions(array $options)
     {
         foreach ($options as $key => $value) {
             $method = 'set' . ucfirst($key);
+
             if (method_exists($this, $method)) {
                 $this->$method($value);
             }
         }
+
         return $this;
     }
 
     /**
-     * Set transport
+     * Set transport.
      *
      * @param  string $transport
+     * @return self
      * @throws Exception\InvalidArgumentException
-     * @return \Zend\Json\Server\Smd
      */
     public function setTransport($transport)
     {
-        if (!in_array($transport, $this->transportTypes)) {
+        if (! in_array($transport, $this->transportTypes)) {
             throw new InvalidArgumentException("Invalid transport '{$transport}' specified");
         }
+
         $this->transport = $transport;
         return $this;
     }
 
     /**
-     * Get transport
+     * Get transport.
      *
      * @return string
      */
@@ -132,23 +144,24 @@ class Smd
     }
 
     /**
-     * Set envelope
+     * Set envelope.
      *
      * @param  string $envelopeType
+     * @return self
      * @throws Exception\InvalidArgumentException
-     * @return Smd
      */
     public function setEnvelope($envelopeType)
     {
-        if (!in_array($envelopeType, $this->envelopeTypes)) {
+        if (! in_array($envelopeType, $this->envelopeTypes)) {
             throw new InvalidArgumentException("Invalid envelope type '{$envelopeType}'");
         }
+
         $this->envelope = $envelopeType;
         return $this;
     }
 
     /**
-     * Retrieve envelope
+     * Retrieve envelope.
      *
      * @return string
      */
@@ -157,25 +170,27 @@ class Smd
         return $this->envelope;
     }
 
-    // Content-Type of response; default to application/json
     /**
      * Set content type
      *
      * @param  string $type
+     * @return self
      * @throws Exception\InvalidArgumentException
-     * @return \Zend\Json\Server\Smd
      */
     public function setContentType($type)
     {
-        if (!preg_match($this->contentTypeRegex, $type)) {
+        if (! preg_match($this->contentTypeRegex, $type)) {
             throw new InvalidArgumentException("Invalid content type '{$type}' specified");
         }
+
         $this->contentType = $type;
         return $this;
     }
 
     /**
      * Retrieve content type
+     *
+     * Content-Type of response; default to application/json.
      *
      * @return string
      */
@@ -185,10 +200,10 @@ class Smd
     }
 
     /**
-     * Set service target
+     * Set service target.
      *
      * @param  string $target
-     * @return Smd
+     * @return self
      */
     public function setTarget($target)
     {
@@ -197,7 +212,7 @@ class Smd
     }
 
     /**
-     * Retrieve service target
+     * Retrieve service target.
      *
      * @return string
      */
@@ -207,19 +222,19 @@ class Smd
     }
 
     /**
-     * Set service ID
+     * Set service ID.
      *
      * @param  string $id
-     * @return Smd
+     * @return self
      */
     public function setId($id)
     {
         $this->id = (string) $id;
-        return $this->id;
+        return $this;
     }
 
     /**
-     * Get service id
+     * Get service id.
      *
      * @return string
      */
@@ -229,10 +244,10 @@ class Smd
     }
 
     /**
-     * Set service description
+     * Set service description.
      *
      * @param  string $description
-     * @return Smd
+     * @return self
      */
     public function setDescription($description)
     {
@@ -241,7 +256,7 @@ class Smd
     }
 
     /**
-     * Get service description
+     * Get service description.
      *
      * @return string
      */
@@ -251,10 +266,10 @@ class Smd
     }
 
     /**
-     * Indicate whether or not to generate Dojo-compatible SMD
+     * Indicate whether or not to generate Dojo-compatible SMD.
      *
      * @param  bool $flag
-     * @return Smd
+     * @return self
      */
     public function setDojoCompatible($flag)
     {
@@ -273,50 +288,53 @@ class Smd
     }
 
     /**
-     * Add Service
+     * Add Service.
      *
      * @param Smd\Service|array $service
+     * @return self
      * @throws Exception\RuntimeException
      * @throws Exception\InvalidArgumentException
-     * @return Smd
      */
     public function addService($service)
     {
-        if ($service instanceof Smd\Service) {
-            $name = $service->getName();
-        } elseif (is_array($service)) {
+        if (is_array($service)) {
             $service = new Smd\Service($service);
-            $name = $service->getName();
-        } else {
+        }
+
+        if (! $service instanceof Smd\Service) {
             throw new InvalidArgumentException('Invalid service passed to addService()');
         }
+
+        $name = $service->getName();
 
         if (array_key_exists($name, $this->services)) {
             throw new RuntimeException('Attempt to register a service already registered detected');
         }
+
         $this->services[$name] = $service;
         return $this;
     }
 
     /**
-     * Add many services
+     * Add many services.
      *
      * @param  array $services
-     * @return Smd
+     * @return self
      */
     public function addServices(array $services)
     {
         foreach ($services as $service) {
             $this->addService($service);
         }
+
         return $this;
     }
 
     /**
-     * Overwrite existing services with new ones
+     * Overwrite existing services with new ones.
      *
      * @param  array $services
-     * @return Smd
+     * @return self
      */
     public function setServices(array $services)
     {
@@ -325,21 +343,22 @@ class Smd
     }
 
     /**
-     * Get service object
+     * Get service object.
      *
      * @param  string $name
      * @return bool|Smd\Service
      */
     public function getService($name)
     {
-        if (array_key_exists($name, $this->services)) {
-            return $this->services[$name];
+        if (! array_key_exists($name, $this->services)) {
+            return false;
         }
-        return false;
+
+        return $this->services[$name];
     }
 
     /**
-     * Return services
+     * Return services.
      *
      * @return array
      */
@@ -349,22 +368,23 @@ class Smd
     }
 
     /**
-     * Remove service
+     * Remove service.
      *
      * @param  string $name
      * @return bool
      */
     public function removeService($name)
     {
-        if (array_key_exists($name, $this->services)) {
-            unset($this->services[$name]);
-            return true;
+        if (! array_key_exists($name, $this->services)) {
+            return false;
         }
-        return false;
+
+        unset($this->services[$name]);
+        return true;
     }
 
     /**
-     * Cast to array
+     * Cast to array.
      *
      * @return array
      */
@@ -379,24 +399,26 @@ class Smd
         $envelope    = $this->getEnvelope();
         $contentType = $this->getContentType();
         $SMDVersion  = static::SMD_VERSION;
-        $service = compact('transport', 'envelope', 'contentType', 'SMDVersion', 'description');
+        $service     = compact('transport', 'envelope', 'contentType', 'SMDVersion', 'description');
 
         if (null !== ($target = $this->getTarget())) {
-            $service['target']     = $target;
+            $service['target'] = $target;
         }
         if (null !== ($id = $this->getId())) {
             $service['id'] = $id;
         }
 
         $services = $this->getServices();
-        if (!empty($services)) {
-            $service['services'] = [];
-            foreach ($services as $name => $svc) {
-                $svc->setEnvelope($envelope);
-                $service['services'][$name] = $svc->toArray();
-            }
-            $service['methods'] = $service['services'];
+        if (empty($services)) {
+            return $service;
         }
+
+        $service['services'] = [];
+        foreach ($services as $name => $svc) {
+            $svc->setEnvelope($envelope);
+            $service['services'][$name] = $svc->toArray();
+        }
+        $service['methods'] = $service['services'];
 
         return $service;
     }
@@ -410,44 +432,47 @@ class Smd
     {
         $SMDVersion  = '.1';
         $serviceType = 'JSON-RPC';
-        $service = compact('SMDVersion', 'serviceType');
+        $service     = compact('SMDVersion', 'serviceType');
+        $target      = $this->getTarget();
+        $services    = $this->getServices();
 
-        $target = $this->getTarget();
+        if (empty($services)) {
+            return $service;
+        }
 
-        $services = $this->getServices();
-        if (!empty($services)) {
-            $service['methods'] = [];
-            foreach ($services as $name => $svc) {
-                $method = [
-                    'name'       => $name,
-                    'serviceURL' => $target,
+        $service['methods'] = [];
+        foreach ($services as $name => $svc) {
+            $method = [
+                'name'       => $name,
+                'serviceURL' => $target,
+            ];
+
+            $params = [];
+            foreach ($svc->getParams() as $param) {
+                $params[] = [
+                    'name' => array_key_exists('name', $param) ? $param['name'] : $param['type'],
+                    'type' => $param['type'],
                 ];
-                $params = [];
-                foreach ($svc->getParams() as $param) {
-                    $paramName = array_key_exists('name', $param) ? $param['name'] : $param['type'];
-                    $params[] = [
-                        'name' => $paramName,
-                        'type' => $param['type'],
-                    ];
-                }
-                if (!empty($params)) {
-                    $method['parameters'] = $params;
-                }
-                $service['methods'][] = $method;
             }
+
+            if (! empty($params)) {
+                $method['parameters'] = $params;
+            }
+
+            $service['methods'][] = $method;
         }
 
         return $service;
     }
 
     /**
-     * Cast to JSON
+     * Cast to JSON.
      *
      * @return string
      */
     public function toJson()
     {
-        return \Zend\Json\Json::encode($this->toArray());
+        return Json::encode($this->toArray());
     }
 
     /**

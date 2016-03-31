@@ -1,9 +1,7 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -86,7 +84,7 @@ class Client implements ServerClient
     /**
      * The request of the last method call.
      *
-     * @return Request Request instance.
+     * @return Request
      */
     public function getLastRequest()
     {
@@ -96,7 +94,7 @@ class Client implements ServerClient
     /**
      * The response received from the last method call.
      *
-     * @return Response Response instance.
+     * @return Response
      */
     public function getLastResponse()
     {
@@ -125,7 +123,7 @@ class Client implements ServerClient
             'Accept'       => 'application/json',
         ]);
 
-        if (!$headers->get('User-Agent')) {
+        if (! $headers->get('User-Agent')) {
             $headers->addHeaderLine('User-Agent', 'Zend_Json_Server_Client');
         }
 
@@ -133,7 +131,7 @@ class Client implements ServerClient
         $this->httpClient->setMethod('POST');
         $httpResponse = $this->httpClient->send();
 
-        if (!$httpResponse->isSuccess()) {
+        if (! $httpResponse->isSuccess()) {
             throw new Exception\HttpException(
                 $httpResponse->getReasonPhrase(),
                 $httpResponse->getStatusCode()

@@ -1,9 +1,7 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -15,44 +13,49 @@ class Response
 {
     /**
      * Response error
+     *
      * @var null|Error
      */
     protected $error;
 
     /**
      * Request ID
-     * @var mixed
+     *
+     * @var string
      */
     protected $id;
 
     /**
      * Result
+     *
      * @var mixed
      */
     protected $result;
 
     /**
      * Service map
+     *
      * @var Smd
      */
     protected $serviceMap;
 
     /**
      * JSON-RPC version
-     * @var string
+     *
+     * @var null|string
      */
     protected $version;
 
     /**
-     * @var $args
+     * @var mixed
      */
     protected $args;
 
     /**
-     * Set response state
+     * Set response state.
      *
      * @param  array $options
-     * @return Response
+     * @return self
      */
     public function setOptions(array $options)
     {
@@ -67,15 +70,19 @@ class Response
             $method = 'set' . ucfirst($key);
             if (in_array($method, $methods)) {
                 $this->$method($value);
-            } elseif ($key == 'jsonrpc') {
+                continue;
+            }
+
+            if ($key == 'jsonrpc') {
                 $this->setVersion($value);
+                continue;
             }
         }
         return $this;
     }
 
     /**
-     * Set response state based on JSON
+     * Set response state based on JSON.
      *
      * @param  string $json
      * @return void
@@ -85,7 +92,7 @@ class Response
     {
         $options = Json::decode($json, Json::TYPE_ARRAY);
 
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             throw new Exception\RuntimeException('json is not a valid response; array expected');
         }
 
@@ -93,10 +100,10 @@ class Response
     }
 
     /**
-     * Set result
+     * Set result.
      *
      * @param  mixed $value
-     * @return Response
+     * @return self
      */
     public function setResult($value)
     {
@@ -105,7 +112,7 @@ class Response
     }
 
     /**
-     * Get result
+     * Get result.
      *
      * @return mixed
      */
@@ -114,12 +121,13 @@ class Response
         return $this->result;
     }
 
-    // RPC error, if response results in fault
     /**
      * Set result error
      *
+     * RPC error, if response results in fault.
+     *
      * @param  mixed $error
-     * @return Response
+     * @return self
      */
     public function setError(Error $error = null)
     {
@@ -151,7 +159,7 @@ class Response
      * Set request ID
      *
      * @param  mixed $name
-     * @return Response
+     * @return self
      */
     public function setId($name)
     {
@@ -160,7 +168,7 @@ class Response
     }
 
     /**
-     * Get request ID
+     * Get request ID.
      *
      * @return mixed
      */
@@ -170,27 +178,27 @@ class Response
     }
 
     /**
-     * Set JSON-RPC version
+     * Set JSON-RPC version.
      *
      * @param  string $version
-     * @return Response
+     * @return self
      */
     public function setVersion($version)
     {
         $version = (string) $version;
         if ('2.0' == $version) {
             $this->version = '2.0';
-        } else {
-            $this->version = null;
+            return $this;
         }
 
+        $this->version = null;
         return $this;
     }
 
     /**
      * Retrieve JSON-RPC version
      *
-     * @return string
+     * @return null|string
      */
     public function getVersion()
     {
@@ -204,27 +212,23 @@ class Response
      */
     public function toJson()
     {
+        $response = ['id' => $this->getId()];
+
         if ($this->isError()) {
-            $response = [
-                'error'  => $this->getError()->toArray(),
-                'id'     => $this->getId(),
-            ];
+            $response['error'] = $this->getError()->toArray();
         } else {
-            $response = [
-                'result' => $this->getResult(),
-                'id'     => $this->getId(),
-            ];
+            $response['result'] = $this->getResult();
         }
 
         if (null !== ($version = $this->getVersion())) {
             $response['jsonrpc'] = $version;
         }
 
-        return \Zend\Json\Json::encode($response);
+        return Json::encode($response);
     }
 
     /**
-     * Retrieve args
+     * Retrieve args.
      *
      * @return mixed
      */
@@ -234,7 +238,7 @@ class Response
     }
 
     /**
-     * Set args
+     * Set args.
      *
      * @param mixed $args
      * @return self
@@ -246,10 +250,10 @@ class Response
     }
 
     /**
-     * Set service map object
+     * Set service map object.
      *
      * @param  Smd $serviceMap
-     * @return Response
+     * @return self
      */
     public function setServiceMap($serviceMap)
     {
@@ -258,7 +262,7 @@ class Response
     }
 
     /**
-     * Retrieve service map
+     * Retrieve service map.
      *
      * @return Smd|null
      */
@@ -268,7 +272,7 @@ class Response
     }
 
     /**
-     * Cast to string (JSON)
+     * Cast to string (JSON).
      *
      * @return string
      */

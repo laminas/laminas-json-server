@@ -1,26 +1,27 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Json\Server\Smd;
 
+use Zend\Json\Json;
 use Zend\Json\Server\Exception\InvalidArgumentException;
 use Zend\Json\Server\Smd;
 
 /**
  * Create Service Mapping Description for a method
  *
- * @todo       Revised method regex to allow NS; however, should SMD be revised to strip PHP NS instead when attaching functions?
+ * @todo Revised method regex to allow NS; however, should SMD be revised to
+ *     strip PHP NS instead when attaching functions?
  */
 class Service
 {
     /**#@+
      * Service metadata
+     *
      * @var string
      */
     protected $envelope  = Smd::ENV_JSONRPC_1;
@@ -31,7 +32,8 @@ class Service
     /**#@-*/
 
     /**
-     * Allowed envelope types
+     * Allowed envelope types.
+     *
      * @var array
      */
     protected $envelopeTypes = [
@@ -40,16 +42,17 @@ class Service
     ];
 
     /**
-     * Regex for names
-     * @var string
+     * Regex for names.
      *
      * @link http://php.net/manual/en/language.oop5.basic.php
      * @link http://www.jsonrpc.org/specification#request_object
+     * @var string
      */
     protected $nameRegex = '/^(?!^rpc\.)[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\.\\\]*$/';
 
     /**
-     * Parameter option types
+     * Parameter option types.
+     *
      * @var array
      */
     protected $paramOptionTypes = [
@@ -60,13 +63,15 @@ class Service
     ];
 
     /**
-     * Service params
+     * Service params.
+     *
      * @var array
      */
     protected $params = [];
 
     /**
-     * Mapping of parameter types to JSON-RPC types
+     * Mapping of parameter types to JSON-RPC types.
+     *
      * @var array
      */
     protected $paramMap = [
@@ -95,7 +100,8 @@ class Service
     ];
 
     /**
-     * Allowed transport types
+     * Allowed transport types.
+     *
      * @var array
      */
     protected $transportTypes = [
@@ -103,9 +109,7 @@ class Service
     ];
 
     /**
-     * Constructor
-     *
-     * @param  string|array             $spec
+     * @param string|array $spec
      * @throws InvalidArgumentException if no name provided
      */
     public function __construct($spec)
@@ -122,10 +126,10 @@ class Service
     }
 
     /**
-     * Set object state
+     * Set object state.
      *
-     * @param  array   $options
-     * @return Service
+     * @param  array $options
+     * @return self
      */
     public function setOptions(array $options)
     {
@@ -134,6 +138,7 @@ class Service
             if ('options' == strtolower($key)) {
                 continue;
             }
+
             $method = 'set' . ucfirst($key);
             if (in_array($method, $methods)) {
                 $this->$method($value);
@@ -144,25 +149,28 @@ class Service
     }
 
     /**
-     * Set service name
+     * Set service name.
      *
-     * @param  string                   $name
-     * @return Service
+     * @param  string $name
+     * @return self
      * @throws InvalidArgumentException
      */
     public function setName($name)
     {
         $name = (string) $name;
-        if (!preg_match($this->nameRegex, $name)) {
-            throw new InvalidArgumentException("Invalid name '{$name} provided for service; must follow PHP method naming conventions");
+        if (! preg_match($this->nameRegex, $name)) {
+            throw new InvalidArgumentException(sprintf(
+                'Invalid name "%s" provided for service; must follow PHP method naming conventions',
+                $name
+            ));
         }
-        $this->name = $name;
 
+        $this->name = $name;
         return $this;
     }
 
     /**
-     * Retrieve name
+     * Retrieve name.
      *
      * @return string
      */
@@ -172,27 +180,30 @@ class Service
     }
 
     /**
-     * Set Transport
+     * Set Transport.
      *
-     * Currently limited to POST
+     * Currently limited to POST.
      *
-     * @param  string                   $transport
+     * @param  string $transport
+     * @return self
      * @throws InvalidArgumentException
-     * @return Service
      */
     public function setTransport($transport)
     {
-        if (!in_array($transport, $this->transportTypes)) {
-            throw new InvalidArgumentException("Invalid transport '{$transport}'; please select one of (" . implode(', ', $this->transportTypes) . ')');
+        if (! in_array($transport, $this->transportTypes)) {
+            throw new InvalidArgumentException(sprintf(
+                'Invalid transport "%s"; please select one of (%s)',
+                $transport,
+                implode(', ', $this->transportTypes)
+            ));
         }
 
         $this->transport = $transport;
-
         return $this;
     }
 
     /**
-     * Get transport
+     * Get transport.
      *
      * @return string
      */
@@ -202,20 +213,19 @@ class Service
     }
 
     /**
-     * Set service target
+     * Set service target.
      *
      * @param  string  $target
-     * @return Service
+     * @return self
      */
     public function setTarget($target)
     {
         $this->target = (string) $target;
-
         return $this;
     }
 
     /**
-     * Get service target
+     * Get service target.
      *
      * @return string
      */
@@ -225,25 +235,28 @@ class Service
     }
 
     /**
-     * Set envelope type
+     * Set envelope type.
      *
-     * @param  string                   $envelopeType
+     * @param  string $envelopeType
+     * @return self
      * @throws InvalidArgumentException
-     * @return Service
      */
     public function setEnvelope($envelopeType)
     {
-        if (!in_array($envelopeType, $this->envelopeTypes)) {
-            throw new InvalidArgumentException("Invalid envelope type '{$envelopeType}'; please specify one of (" . implode(', ', $this->envelopeTypes) . ')');
+        if (! in_array($envelopeType, $this->envelopeTypes)) {
+            throw new InvalidArgumentException(sprintf(
+                'Invalid envelope type "%s"; please specify one of (%s)',
+                $envelopeType,
+                implode(', ', $this->envelopeTypes)
+            ));
         }
 
         $this->envelope = $envelopeType;
-
         return $this;
     }
 
     /**
-     * Get envelope type
+     * Get envelope type.
      *
      * @return string
      */
@@ -253,33 +266,35 @@ class Service
     }
 
     /**
-     * Add a parameter to the service
+     * Add a parameter to the service.
      *
-     * @param  string|array             $type
-     * @param  array                    $options
-     * @param  int|null                 $order
+     * @param string|array $type
+     * @param array $options
+     * @param int|null $order
+     * @return self
      * @throws InvalidArgumentException
-     * @return Service
      */
     public function addParam($type, array $options = [], $order = null)
     {
-        if (is_string($type)) {
-            $type = $this->_validateParamType($type);
-        } elseif (is_array($type)) {
-            foreach ($type as $key => $paramType) {
-                $type[$key] = $this->_validateParamType($paramType);
-            }
-        } else {
+        if (! is_string($type) && ! is_array($type)) {
             throw new InvalidArgumentException('Invalid param type provided');
         }
 
-        $paramOptions = [
-            'type' => $type,
-        ];
+        if (is_string($type)) {
+            $type = $this->validateParamType($type);
+        }
+
+        if (is_array($type)) {
+            foreach ($type as $key => $paramType) {
+                $type[$key] = $this->validateParamType($paramType);
+            }
+        }
+
+        $paramOptions = ['type' => $type];
         foreach ($options as $key => $value) {
             if (in_array($key, array_keys($this->paramOptionTypes))) {
                 if (null !== ($callback = $this->paramOptionTypes[$key])) {
-                    if (!$callback($value)) {
+                    if (! $callback($value)) {
                         continue;
                     }
                 }
@@ -296,23 +311,26 @@ class Service
     }
 
     /**
-     * Add params
+     * Add params.
      *
      * Each param should be an array, and should include the key 'type'.
      *
-     * @param  array   $params
-     * @return Service
+     * @param array $params
+     * @return self
      */
     public function addParams(array $params)
     {
         ksort($params);
+
         foreach ($params as $options) {
-            if (!is_array($options)) {
+            if (! is_array($options)) {
                 continue;
             }
-            if (!array_key_exists('type', $options)) {
+
+            if (! array_key_exists('type', $options)) {
                 continue;
             }
+
             $type  = $options['type'];
             $order = (array_key_exists('order', $options)) ? $options['order'] : null;
             $this->addParam($type, $options, $order);
@@ -322,20 +340,19 @@ class Service
     }
 
     /**
-     * Overwrite all parameters
+     * Overwrite all parameters.
      *
-     * @param  array   $params
-     * @return Service
+     * @param array $params
+     * @return self
      */
     public function setParams(array $params)
     {
         $this->params = [];
-
         return $this->addParams($params);
     }
 
     /**
-     * Get all parameters
+     * Get all parameters.
      *
      * Returns all params in specified order.
      *
@@ -345,47 +362,54 @@ class Service
     {
         $params = [];
         $index  = 0;
+
         foreach ($this->params as $param) {
             if (null === $param['order']) {
                 if (array_search($index, array_keys($params), true)) {
                     ++$index;
                 }
+
                 $params[$index] = $param['param'];
                 ++$index;
-            } else {
-                $params[$param['order']] = $param['param'];
+                continue;
             }
-        }
-        ksort($params);
 
+            $params[$param['order']] = $param['param'];
+        }
+
+        ksort($params);
         return $params;
     }
 
     /**
-     * Set return type
+     * Set return type.
      *
-     * @param  string|array             $type
+     * @param string|array $type
+     * @return self
      * @throws InvalidArgumentException
-     * @return Service
      */
     public function setReturn($type)
     {
-        if (is_string($type)) {
-            $type = $this->_validateParamType($type, true);
-        } elseif (is_array($type)) {
-            foreach ($type as $key => $returnType) {
-                $type[$key] = $this->_validateParamType($returnType, true);
-            }
-        } else {
+        if (! is_string($type) && ! is_array($type)) {
             throw new InvalidArgumentException("Invalid param type provided ('" . gettype($type) . "')");
         }
-        $this->return = $type;
 
+        if (is_string($type)) {
+            $type = $this->validateParamType($type, true);
+        }
+
+        if (is_array($type)) {
+            foreach ($type as $key => $returnType) {
+                $type[$key] = $this->validateParamType($returnType, true);
+            }
+        }
+
+        $this->return = $type;
         return $this;
     }
 
     /**
-     * Get return type
+     * Get return type.
      *
      * @return string|array
      */
@@ -395,7 +419,7 @@ class Service
     }
 
     /**
-     * Cast service description to array
+     * Cast service description to array.
      *
      * @return array
      */
@@ -416,19 +440,19 @@ class Service
     }
 
     /**
-     * Return JSON encoding of service
+     * Return JSON encoding of service.
      *
      * @return string
      */
     public function toJson()
     {
-        $service = [$this->getName() => $this->toArray()];
-
-        return \Zend\Json\Json::encode($service);
+        return Json::encode([
+            $this->getName() => $this->toArray(),
+        ]);
     }
 
     /**
-     * Cast to string
+     * Cast to string.
      *
      * @return string
      */
@@ -438,26 +462,32 @@ class Service
     }
 
     /**
-     * Validate parameter type
+     * Validate parameter type.
      *
-     * @param  string                   $type
-     * @param  bool                     $isReturn
+     * @param string $type
+     * @param bool $isReturn
      * @return string
      * @throws InvalidArgumentException
      */
-    protected function _validateParamType($type, $isReturn = false)
+    protected function validateParamType($type, $isReturn = false)
     {
-        if (!is_string($type)) {
-            throw new InvalidArgumentException("Invalid param type provided ('{$type}')");
+        if (! is_string($type)) {
+            throw new InvalidArgumentException(sprintf(
+                'Invalid param type provided ("%s")',
+                $type
+            ));
         }
 
-        if (!array_key_exists($type, $this->paramMap)) {
+        if (! array_key_exists($type, $this->paramMap)) {
             $type = 'object';
         }
 
         $paramType = $this->paramMap[$type];
-        if (!$isReturn && ('null' == $paramType)) {
-            throw new InvalidArgumentException("Invalid param type provided ('{$type}')");
+        if (! $isReturn && ('null' == $paramType)) {
+            throw new InvalidArgumentException(sprintf(
+                'Invalid param type provided ("%s")',
+                $type
+            ));
         }
 
         return $paramType;

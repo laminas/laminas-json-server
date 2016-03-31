@@ -1,13 +1,13 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Json\Server;
+
+use Zend\Json\Json;
 
 class Error
 {
@@ -20,25 +20,26 @@ class Error
 
     /**
      * Current code
+     *
      * @var int
      */
     protected $code = self::ERROR_OTHER;
 
     /**
      * Error data
+     *
      * @var mixed
      */
     protected $data;
 
     /**
      * Error message
+     *
      * @var string
      */
     protected $message;
 
     /**
-     * Constructor
-     *
      * @param  string $message
      * @param  int $code
      * @param  mixed $data
@@ -56,15 +57,15 @@ class Error
      * If the error code is 0, it will be set to -32000 (ERROR_OTHER).
      *
      * @param  int $code
-     * @return \Zend\Json\Server\Error
+     * @return self
      */
     public function setCode($code)
     {
-        if (!is_scalar($code) || is_bool($code) || is_float($code)) {
+        if (! is_scalar($code) || is_bool($code) || is_float($code)) {
             return $this;
         }
 
-        if (is_string($code) && !is_numeric($code)) {
+        if (is_string($code) && ! is_numeric($code)) {
             return $this;
         }
 
@@ -72,10 +73,10 @@ class Error
 
         if (0 === $code) {
             $this->code = self::ERROR_OTHER;
-        } else {
-            $this->code = $code;
+            return $this;
         }
 
+        $this->code = $code;
         return $this;
     }
 
@@ -93,11 +94,11 @@ class Error
      * Set error message
      *
      * @param  string $message
-     * @return \Zend\Json\Server\Error
+     * @return self
      */
     public function setMessage($message)
     {
-        if (!is_scalar($message)) {
+        if (! is_scalar($message)) {
             return $this;
         }
 
@@ -119,7 +120,7 @@ class Error
      * Set error data
      *
      * @param  mixed $data
-     * @return \Zend\Json\Server\Error
+     * @return self
      */
     public function setData($data)
     {
@@ -158,7 +159,7 @@ class Error
      */
     public function toJson()
     {
-        return \Zend\Json\Json::encode($this->toArray());
+        return Json::encode($this->toArray());
     }
 
     /**

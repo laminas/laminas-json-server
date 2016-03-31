@@ -1,19 +1,16 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Json\Server;
 
 use Zend\Server\Cache as ServerCache;
-use Zend\Stdlib\ErrorHandler;
 
 /**
- * Zend\Json\Server\Cache: cache Zend\Json\Server\Server server definition and SMD
+ * Cache server definition and SMD.
  */
 class Cache extends ServerCache
 {
@@ -23,18 +20,24 @@ class Cache extends ServerCache
      * Returns true on success, false on failure
      *
      * @param  string $filename
-     * @param  \Zend\Json\Server\Server $server
+     * @param  Server $server
      * @return bool
      */
     public static function saveSmd($filename, Server $server)
     {
-        if (!is_string($filename) || (!file_exists($filename) && !is_writable(dirname($filename)))) {
+        if (! is_string($filename)
+            || (! file_exists($filename) && ! is_writable(dirname($filename)))
+        ) {
             return false;
         }
 
-        ErrorHandler::start();
+        set_error_handler(function ($errno, $errstr) {
+            // swallow errors; method returns false on failure
+        }, E_WARNING);
+
         $test = file_put_contents($filename, $server->getServiceMap()->toJson());
-        ErrorHandler::stop();
+
+        restore_error_handler();
 
         if (0 === $test) {
             return false;
@@ -54,13 +57,20 @@ class Cache extends ServerCache
      */
     public static function getSmd($filename)
     {
-        if (!is_string($filename) || !file_exists($filename) || !is_readable($filename)) {
+        if (! is_string($filename)
+            || ! file_exists($filename)
+            || ! is_readable($filename)
+        ) {
             return false;
         }
 
-        ErrorHandler::start();
+        set_error_handler(function ($errno, $errstr) {
+            // swallow errors; method returns false on failure
+        }, E_WARNING);
+
         $smd = file_get_contents($filename);
-        ErrorHandler::stop();
+
+        restore_error_handler();
 
         if (false === $smd) {
             return false;

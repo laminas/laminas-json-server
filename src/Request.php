@@ -1,68 +1,75 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Zend\Json\Server;
 
-use Zend\Json;
+use Exception;
+use Zend\Json\Json;
 
 /**
- * @todo       Revised method regex to allow NS; however, should SMD be revised to strip PHP NS instead when attaching functions?
+ * @todo Revised method regex to allow NS; however, should SMD be revised to
+ *     strip PHP NS instead when attaching functions?
  */
 class Request
 {
     /**
      * Request ID
+     *
      * @var mixed
      */
     protected $id;
 
     /**
-     * Flag
+     * Flag indicating if method represents an error.
+     *
      * @var bool
      */
     protected $isMethodError = false;
 
     /**
-     * Flag
+     * Flag indicating a parse error.
+     *
      * @var bool
      */
     protected $isParseError = false;
 
     /**
-     * Requested method
+     * Requested method.
+     *
      * @var string
      */
     protected $method;
 
     /**
-     * Regex for method
+     * Regex for method.
+     *
      * @var string
      */
     protected $methodRegex = '/^[a-z][a-z0-9\\\\_.]*$/i';
 
     /**
-     * Request parameters
+     * Request parameters.
+     *
      * @var array
      */
     protected $params = [];
 
     /**
-     * JSON-RPC version of request
+     * JSON-RPC version of request.
+     *
      * @var string
      */
     protected $version = '1.0';
 
     /**
-     * Set request state
+     * Set request state.
      *
      * @param  array $options
-     * @return \Zend\Json\Server\Request
+     * @return self
      */
     public function setOptions(array $options)
     {
@@ -71,37 +78,41 @@ class Request
             $method = 'set' . ucfirst($key);
             if (in_array($method, $methods)) {
                 $this->$method($value);
-            } elseif ($key == 'jsonrpc') {
+                continue;
+            }
+
+            if ($key == 'jsonrpc') {
                 $this->setVersion($value);
+                continue;
             }
         }
         return $this;
     }
 
     /**
-     * Add a parameter to the request
+     * Add a parameter to the request.
      *
      * @param  mixed $value
      * @param  string $key
-     * @return \Zend\Json\Server\Request
+     * @return self
      */
     public function addParam($value, $key = null)
     {
-        if ((null === $key) || !is_string($key)) {
+        if ((null === $key) || ! is_string($key)) {
             $index = count($this->params);
             $this->params[$index] = $value;
-        } else {
-            $this->params[$key] = $value;
+            return $this;
         }
 
+        $this->params[$key] = $value;
         return $this;
     }
 
     /**
-     * Add many params
+     * Add many params.
      *
      * @param  array $params
-     * @return \Zend\Json\Server\Request
+     * @return self
      */
     public function addParams(array $params)
     {
@@ -112,7 +123,7 @@ class Request
     }
 
     /**
-     * Overwrite params
+     * Overwrite params.
      *
      * @param  array $params
      * @return \Zend\Json\Server\Request
@@ -124,22 +135,22 @@ class Request
     }
 
     /**
-     * Retrieve param by index or key
+     * Retrieve param by index or key.
      *
      * @param  int|string $index
      * @return mixed|null Null when not found
      */
     public function getParam($index)
     {
-        if (array_key_exists($index, $this->params)) {
-            return $this->params[$index];
+        if (! array_key_exists($index, $this->params)) {
+            return null;
         }
 
-        return;
+        return $this->params[$index];
     }
 
     /**
-     * Retrieve parameters
+     * Retrieve parameters.
      *
      * @return array
      */
@@ -149,23 +160,24 @@ class Request
     }
 
     /**
-     * Set request method
+     * Set request method.
      *
      * @param  string $name
-     * @return \Zend\Json\Server\Request
+     * @return self
      */
     public function setMethod($name)
     {
-        if (!preg_match($this->methodRegex, $name)) {
+        if (! preg_match($this->methodRegex, $name)) {
             $this->isMethodError = true;
-        } else {
-            $this->method = $name;
+            return $this;
         }
+
+        $this->method = $name;
         return $this;
     }
 
     /**
-     * Get request method name
+     * Get request method name.
      *
      * @return string
      */
@@ -198,7 +210,7 @@ class Request
      * Set request identifier
      *
      * @param  mixed $name
-     * @return \Zend\Json\Server\Request
+     * @return self
      */
     public function setId($name)
     {
@@ -207,9 +219,9 @@ class Request
     }
 
     /**
-     * Retrieve request identifier
+     * Retrieve request identifier.
      *
-     * @return mixed
+     * @return string
      */
     public function getId()
     {
@@ -220,20 +232,21 @@ class Request
      * Set JSON-RPC version
      *
      * @param  string $version
-     * @return \Zend\Json\Server\Request
+     * @return self
      */
     public function setVersion($version)
     {
         if ('2.0' == $version) {
             $this->version = '2.0';
-        } else {
-            $this->version = '1.0';
+            return $this;
         }
+
+        $this->version = '1.0';
         return $this;
     }
 
     /**
-     * Retrieve JSON-RPC version
+     * Retrieve JSON-RPC version.
      *
      * @return string
      */
@@ -243,7 +256,7 @@ class Request
     }
 
     /**
-     * Set request state based on JSON
+     * Set request state based on JSON.
      *
      * @param  string $json
      * @return void
@@ -251,15 +264,15 @@ class Request
     public function loadJson($json)
     {
         try {
-            $options = Json\Json::decode($json, Json\Json::TYPE_ARRAY);
+            $options = Json::decode($json, Json::TYPE_ARRAY);
             $this->setOptions($options);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->isParseError = true;
         }
     }
 
     /**
-     * Cast request to JSON
+     * Cast request to JSON.
      *
      * @return string
      */
@@ -268,18 +281,21 @@ class Request
         $jsonArray = [
             'method' => $this->getMethod()
         ];
+
         if (null !== ($id = $this->getId())) {
             $jsonArray['id'] = $id;
         }
+
         $params = $this->getParams();
-        if (!empty($params)) {
+        if (! empty($params)) {
             $jsonArray['params'] = $params;
         }
+
         if ('2.0' == $this->getVersion()) {
             $jsonArray['jsonrpc'] = '2.0';
         }
 
-        return Json\Json::encode($jsonArray);
+        return Json::encode($jsonArray);
     }
 
     /**
