@@ -7,6 +7,7 @@
 
 namespace Zend\Json\Server;
 
+use Zend\Json\Exception\RuntimeException;
 use Zend\Json\Json;
 
 class Response
@@ -90,7 +91,15 @@ class Response
      */
     public function loadJson($json)
     {
-        $options = Json::decode($json, Json::TYPE_ARRAY);
+        try {
+            $options = Json::decode($json, Json::TYPE_ARRAY);
+        } catch (RuntimeException $e) {
+            throw new Exception\RuntimeException(
+                'json is not a valid response; array expected',
+                $e->getCode(),
+                $e
+            );
+        }
 
         if (! is_array($options)) {
             throw new Exception\RuntimeException('json is not a valid response; array expected');
