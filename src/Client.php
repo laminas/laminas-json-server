@@ -117,11 +117,16 @@ class Client implements ServerClient
             $this->httpClient->setUri($this->serverAddress);
         }
 
+        // set default Accept and Content-Type headers unless already set
         $headers = $httpRequest->getHeaders();
-        $headers->addHeaders([
-            'Content-Type' => 'application/json',
-            'Accept'       => 'application/json',
-        ]);
+        $headersToAdd = [];
+        if(!$headers->has('Content-Type')) {
+            $headersToAdd['Content-Type'] = 'application/json-rpc';
+        }
+        if (!$headers->has('Accept')) {
+            $headersToAdd['Accept'] = 'application/json-rpc';
+        }
+        $headers->addHeaders($headersToAdd);
 
         if (! $headers->get('User-Agent')) {
             $headers->addHeaderLine('User-Agent', 'Zend_Json_Server_Client');
@@ -188,4 +193,5 @@ class Client implements ServerClient
             ->setId(++$this->id);
         return $request;
     }
+
 }
