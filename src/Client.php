@@ -120,7 +120,7 @@ class Client implements ServerClient
         // set default Accept and Content-Type headers unless already set
         $headers = $httpRequest->getHeaders();
         $headersToAdd = [];
-        if(!$headers->has('Content-Type')) {
+        if (!$headers->has('Content-Type')) {
             $headersToAdd['Content-Type'] = 'application/json-rpc';
         }
         if (!$headers->has('Accept')) {
@@ -193,5 +193,4 @@ class Client implements ServerClient
             ->setId(++$this->id);
         return $request;
     }
-
 }
