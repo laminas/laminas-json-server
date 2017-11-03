@@ -16,7 +16,7 @@ situation, you will simply:
 - Attach one or more functions and/or classes/objects to the server object.
 - `handle()` the request.
 
-zend-json-server utilizes [Zend\Server\Reflection](http://framework.zend.com/manual/current/en/modules/zend.server.reflection.html)
+zend-json-server utilizes [Zend\Server\Reflection](https://docs.zendframework.com/zend-server/reflection/)
 to perform reflection on any attached classes or functions, and uses that
 information to build both the SMD and enforce method call signatures. As such,
 it is imperative that any attached functions and/or class methods have full

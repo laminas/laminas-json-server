@@ -6,4 +6,4 @@
 Provides a JSON-RPC server implementation.
 
 - File issues at https://github.com/zendframework/zend-json-server/issues
-- Documentation is at http://framework.zend.com/manual/current/en/index.html#zend-json-server
+- Documentation is at https://docs.zendframework.com/zend-json-server/
