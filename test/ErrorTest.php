@@ -7,9 +7,9 @@
 
 namespace ZendTest\Json\Server;
 
-use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Json\Server;
+use PHPUnit\Framework\TestCase;
 use Zend\Json;
+use Zend\Json\Server;
 
 class ErrorTest extends TestCase
 {

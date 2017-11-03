@@ -9,9 +9,9 @@
 
 namespace ZendTest\Json\Server;
 
-use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Json\Server;
+use PHPUnit\Framework\TestCase;
 use Zend\Json;
+use Zend\Json\Server;
 use Zend\Json\Server\Request;
 use Zend\Json\Server\Response;
 use Zend\Server\Reflection\Exception\RuntimeException;
