@@ -14,7 +14,7 @@
         "issues": "https://github.com/zendframework/zend-json-server/issues",
         "source": "https://github.com/zendframework/zend-json-server",
         "rss": "https://github.com/zendframework/zend-json-server/releases.atom",
-        "slack": "https://zendframework-slack.herokuapp.com",
+        "chat": "https://zendframework-slack.herokuapp.com",
         "forum": "https://discourse.zendframework.com/c/questions/components"
     },
     "require": {
