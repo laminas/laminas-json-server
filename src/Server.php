@@ -577,12 +577,13 @@ class Server extends AbstractServer
         $service       = $serviceMap->getService($method);
         $serviceParams = $service->getParams();
 
-        if (count($params) < count($serviceParams)) {
-            $params = $this->getDefaultParams($params, $serviceParams);
-        }
 
         // Make sure named parameters are passed in correct order.
         if (is_string(key($params))) {
+            if (count($params) < count($serviceParams)) {
+                $params = $this->getDefaultParams($params, $serviceParams);
+            }
+
             $callback = $invokable->getCallback();
             if ('function' == $callback->getType()) {
                 $reflection = new ReflectionFunction($callback->getFunction());
@@ -609,6 +610,17 @@ class Server extends AbstractServer
             }
 
             $params = $orderedParams;
+        } else {
+            $requiredParamsCount = 0;
+            foreach ($serviceParams as $param) {
+                if (!$param['optional']) {
+                    $requiredParamsCount++;
+                }
+            }
+
+            if (count($params) < $requiredParamsCount) {
+                return $this->fault('Invalid params', Error::ERROR_INVALID_PARAMS);
+            }
         }
 
         try {

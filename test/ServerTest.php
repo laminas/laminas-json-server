@@ -14,6 +14,7 @@ use Zend\Json\Server;
 use Zend\Json;
 use Zend\Json\Server\Request;
 use Zend\Json\Server\Response;
+use Zend\Json\Server\Error;
 use Zend\Server\Reflection\Exception\RuntimeException;
 
 class ServerTest extends TestCase
@@ -527,5 +528,33 @@ class ServerTest extends TestCase
         $this->assertEquals(1, $result[0]);
         $this->assertEquals('two', $result[1]);
         $this->assertEquals(3, $result[2]);
+    }
+
+    public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys()
+    {
+        $server = $this->server;
+        $server->setClass(TestAsset\FooParameters::class);
+        $server->setReturnResponse(true);
+        $request = $server->getRequest();
+        $request->setMethod('bar')
+                ->setParams([true]);
+        $server->handle();
+
+        $response = $server->getResponse();
+        $this->assertEquals($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
+    }
+
+    public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys1()
+    {
+        $server = $this->server;
+        $server->setClass(TestAsset\FooParameters::class);
+        $server->setReturnResponse(true);
+        $request = $server->getRequest();
+        $request->setMethod('baz')
+                ->setParams([true]);
+        $server->handle();
+        $response = $server->getResponse();
+        $this->assertNotEmpty($response->getError());
+        $this->assertEquals($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
     }
 }
