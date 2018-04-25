@@ -7,13 +7,13 @@
 
 namespace ZendTest\Json\Server;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Client\Adapter\Test as TestAdapter;
 use Zend\Http\Response as HttpResponse;
 use Zend\Json\Server\Client;
 use Zend\Json\Server\Error;
-use Zend\Json\Server\Request;
+use Zend\Json\Server\Exception;
 use Zend\Json\Server\Response;
 
 class ClientTest extends TestCase
@@ -142,7 +142,9 @@ class ClientTest extends TestCase
         $response = $this->makeHttpResponseFrom($body, $status, $message);
         $this->httpAdapter->setResponse($response);
 
-        $this->setExpectedException('Zend\\Json\\Server\\Exception\\HttpException', $message, $status);
+        $this->expectException(Exception\HttpException::class);
+        $this->expectExceptionMessage($message);
+        $this->expectExceptionCode($status);
         $this->jsonClient->call('foo');
     }
 
@@ -159,7 +161,9 @@ class ClientTest extends TestCase
         $response = $this->makeHttpResponseFrom($json);
         $this->httpAdapter->setResponse($response);
 
-        $this->setExpectedException('Zend\\Json\\Server\\Exception\\ErrorException', $message, $code);
+        $this->expectException(Exception\ErrorException::class);
+        $this->expectExceptionMessage($message);
+        $this->expectExceptionCode($code);
         $this->jsonClient->call('foo');
     }
 
@@ -223,7 +227,7 @@ class ClientTest extends TestCase
     {
         $response = $this->makeHttpResponseFrom('false');
         $this->httpAdapter->setResponse($response);
-        $this->setExpectedException('Zend\Json\Server\Exception\ExceptionInterface');
+        $this->expectException(Exception\ExceptionInterface::class);
         $this->jsonClient->call('foo');
     }
 
@@ -281,11 +285,12 @@ class ClientTest extends TestCase
 
     public function makeHttpResponseFrom($data, $status = 200, $message = 'OK')
     {
-        $headers = ["HTTP/1.1 $status $message",
-                         "Status: $status",
-                         'Content-Type: application/json',
-                         'Content-Length: ' . strlen($data)
-                         ];
+        $headers = [
+            "HTTP/1.1 $status $message",
+            "Status: $status",
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data),
+        ];
         return implode("\r\n", $headers) . "\r\n\r\n$data\r\n\r\n";
     }
 

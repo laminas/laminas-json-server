@@ -7,7 +7,7 @@
 
 namespace ZendTest\Json\Server;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use Zend\Json\Json;
 use Zend\Json\Server\Request;
 
@@ -34,7 +34,7 @@ class RequestTest extends TestCase
     {
         $this->request->addParam('foo');
         $params = $this->request->getParams();
-        $this->assertEquals(1, count($params));
+        $this->assertCount(1, $params);
         $test = array_shift($params);
         $this->assertEquals('foo', $test);
     }
@@ -43,7 +43,7 @@ class RequestTest extends TestCase
     {
         $this->request->addParam('bar', 'foo');
         $params = $this->request->getParams();
-        $this->assertEquals(1, count($params));
+        $this->assertCount(1, $params);
         $this->assertArrayHasKey('foo', $params);
         $this->assertEquals('bar', $params['foo']);
     }
@@ -56,7 +56,7 @@ class RequestTest extends TestCase
             $this->assertNull($this->request->getParam('foo'));
             $params = $this->request->getParams();
             ++$count;
-            $this->assertEquals($count, count($params));
+            $this->assertCount($count, $params);
         }
     }
 

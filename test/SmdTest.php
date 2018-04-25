@@ -7,11 +7,11 @@
 
 namespace ZendTest\Json\Server;
 
-use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Json\Server\Smd;
+use PHPUnit\Framework\TestCase;
+use Zend\Json;
 use Zend\Json\Server\Exception\InvalidArgumentException;
 use Zend\Json\Server\Exception\RuntimeException;
-use Zend\Json;
+use Zend\Json\Server\Smd;
 
 class SmdTest extends TestCase
 {
@@ -287,7 +287,7 @@ class SmdTest extends TestCase
         $this->assertEquals('.1', $smd['SMDVersion']);
         $this->assertEquals('JSON-RPC', $smd['serviceType']);
         $methods = $smd['methods'];
-        $this->assertEquals(2, count($methods));
+        $this->assertCount(2, $methods);
 
         $foo = array_shift($methods);
         $this->assertArrayHasKey('name', $foo);
@@ -296,7 +296,7 @@ class SmdTest extends TestCase
         $this->assertEquals('foo', $foo['name']);
         $this->assertEquals($this->smd->getTarget(), $foo['serviceURL']);
         $this->assertInternalType('array', $foo['parameters']);
-        $this->assertEquals(1, count($foo['parameters']));
+        $this->assertCount(1, $foo['parameters']);
 
         $bar = array_shift($methods);
         $this->assertArrayHasKey('name', $bar);
@@ -305,7 +305,7 @@ class SmdTest extends TestCase
         $this->assertEquals('bar', $bar['name']);
         $this->assertEquals($this->smd->getTarget(), $bar['serviceURL']);
         $this->assertInternalType('array', $bar['parameters']);
-        $this->assertEquals(1, count($bar['parameters']));
+        $this->assertCount(1, $bar['parameters']);
     }
 
     public function testShouldBeAbleToRenderAsJSON()
@@ -346,7 +346,7 @@ class SmdTest extends TestCase
                     ],
                     'return' => 'string',
                 ],
-            ]
+            ],
         ];
     }
 
@@ -369,7 +369,7 @@ class SmdTest extends TestCase
         $this->assertEquals($this->smd->getEnvelope(), $smd['envelope']);
         $this->assertEquals($this->smd->getContentType(), $smd['contentType']);
         $services = $smd['services'];
-        $this->assertEquals(2, count($services));
+        $this->assertCount(2, $services);
         $this->assertArrayHasKey('foo', $services);
         $this->assertArrayHasKey('bar', $services);
     }
