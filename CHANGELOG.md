@@ -8,24 +8,6 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
-
-## 3.0.1 - TBD
-
-### Added
-
-- Nothing.
-
 ### Changed
 
 - [#6](https://github.com/zendframework/zend-json-server/pull/6) updates the default `Accept` and `Content-Type` header values issued
