@@ -1,7 +1,7 @@
 <?php
 /**
  * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -571,56 +571,17 @@ class Server extends AbstractServer
             return $this->fault('Method not found', Error::ERROR_INVALID_METHOD);
         }
 
-        $params        = $request->getParams();
-        $invokable     = $this->table->getMethod($method);
-        $serviceMap    = $this->getServiceMap();
-        $service       = $serviceMap->getService($method);
-        $serviceParams = $service->getParams();
+        $invokable  = $this->table->getMethod($method);
+        $serviceMap = $this->getServiceMap();
+        $service    = $serviceMap->getService($method);
+        $params     = $this->validateAndPrepareParams(
+            $request->getParams(),
+            $service->getParams(),
+            $invokable
+        );
 
-
-        // Make sure named parameters are passed in correct order.
-        if (is_string(key($params))) {
-            if (count($params) < count($serviceParams)) {
-                $params = $this->getDefaultParams($params, $serviceParams);
-            }
-
-            $callback = $invokable->getCallback();
-            if ('function' == $callback->getType()) {
-                $reflection = new ReflectionFunction($callback->getFunction());
-            } else {
-                $reflection = new ReflectionMethod(
-                    $callback->getClass(),
-                    $callback->getMethod()
-                );
-            }
-
-            $orderedParams = [];
-            foreach ($reflection->getParameters() as $refParam) {
-                if (array_key_exists($refParam->getName(), $params)) {
-                    $orderedParams[$refParam->getName()] = $params[$refParam->getName()];
-                    continue;
-                }
-
-                if ($refParam->isOptional()) {
-                    $orderedParams[$refParam->getName()] = null;
-                    continue;
-                }
-
-                return $this->fault('Invalid params', Error::ERROR_INVALID_PARAMS);
-            }
-
-            $params = $orderedParams;
-        } else {
-            $requiredParamsCount = 0;
-            foreach ($serviceParams as $param) {
-                if (!$param['optional']) {
-                    $requiredParamsCount++;
-                }
-            }
-
-            if (count($params) < $requiredParamsCount) {
-                return $this->fault('Invalid params', Error::ERROR_INVALID_PARAMS);
-            }
+        if ($params instanceof Error) {
+            return $params;
         }
 
         try {
@@ -630,5 +591,80 @@ class Server extends AbstractServer
         }
 
         $this->getResponse()->setResult($result);
+    }
+
+    /**
+     * @param array $requestedParams
+     * @param array $serviceParams
+     * @param Method\Definition $invokable
+     * @return array|Error Array of parameters to use when calling the requested
+     *     method on success, Error if there is a mismatch between request
+     *     parameters and the method signature.
+     */
+    private function validateAndPrepareParams(array $requestedParams, array $serviceParams, Method\Definition $invokable)
+    {
+        return is_string(key($requestedParams))
+            ? $this->validateAndPrepareNamedParams($requestedParams, $serviceParams, $invokable)
+            : $this->validateAndPrepareOrderedParams($requestedParams, $serviceParams);
+    }
+
+    /**
+     * Ensures named parameters are passed in the correct order.
+     *
+     * @param array $requestedParams
+     * @param array $serviceParams
+     * @param Method\Definition $invokable
+     * @return array|Error Array of parameters to use when calling the requested
+     *     method on success, Error if any named request parameters do not match
+     *     those of the method requested.
+     */
+    private function validateAndPrepareNamedParams(array $requestedParams, array $serviceParams, Method\Definition $invokable)
+    {
+        if (count($requestedParams) < count($serviceParams)) {
+            $requestedParams = $this->getDefaultParams($requestedParams, $serviceParams);
+        }
+
+        $callback = $invokable->getCallback();
+        $reflection = 'function' == $callback->getType()
+            ? new ReflectionFunction($callback->getFunction())
+            : new ReflectionMethod($callback->getClass(), $callback->getMethod());
+
+        $orderedParams = [];
+        foreach ($reflection->getParameters() as $refParam) {
+            if (array_key_exists($refParam->getName(), $requestedParams)) {
+                $orderedParams[$refParam->getName()] = $requestedParams[$refParam->getName()];
+                continue;
+            }
+
+            if ($refParam->isOptional()) {
+                $orderedParams[$refParam->getName()] = null;
+                continue;
+            }
+
+            return $this->fault('Invalid params', Error::ERROR_INVALID_PARAMS);
+        }
+
+        return $orderedParams;
+    }
+
+    /**
+     * @param array $requestedParams
+     * @param array $serviceParams
+     * @return array|Error Array of parameters to use when calling the requested
+     *     method on success, Error if the number of request parameters does not
+     *     match the number of parameters required by the requested method.
+     */
+    private function validateAndPrepareOrderedParams(array $requestedParams, array $serviceParams)
+    {
+        $requiredParamsCount = array_reduce($serviceParams, function ($count, $param) {
+            $count += $param['optional'] ? 0 : 1;
+            return $count;
+        }, 0);
+
+        if (count($requestedParams) < $requiredParamsCount) {
+            return $this->fault('Invalid params', Error::ERROR_INVALID_PARAMS);
+        }
+
+        return $requestedParams;
     }
 }
