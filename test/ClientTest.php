@@ -14,6 +14,7 @@ use Zend\Http\Response as HttpResponse;
 use Zend\Json\Server\Client;
 use Zend\Json\Server\Error;
 use Zend\Json\Server\Exception;
+use Zend\Json\Server\Request;
 use Zend\Json\Server\Response;
 
 class ClientTest extends TestCase
