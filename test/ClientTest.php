@@ -14,6 +14,7 @@ use Zend\Json\Server\Client;
 use Zend\Json\Server\Error;
 use Zend\Json\Server\Request;
 use Zend\Json\Server\Response;
+use Zend\Http\Response as HttpResponse;
 
 class ClientTest extends TestCase
 {
@@ -231,6 +232,41 @@ class ClientTest extends TestCase
     {
         $response = $this->getServerResponseFor($nativeVars);
         $this->httpAdapter->setResponse($response);
+    }
+
+    public function testClientShouldSetDefaultAcceptAndContentTypeHeadersOnRequest()
+    {
+        $request = new Request();
+        $response = new HttpResponse();
+        $response->setContent(\Zend\Json\Json::encode(['test' => 'test']));
+        $testAdapter = new TestAdapter();
+        $testAdapter->setResponse($response);
+        $jsonClient = new Client('http://foo');
+        $jsonClient->getHttpClient()->setAdapter($testAdapter);
+        $jsonClient->doRequest($request);
+        $this->assertSame('application/json-rpc', $jsonClient->getHttpClient()->getHeader('Content-Type'));
+        $this->assertSame('application/json-rpc', $jsonClient->getHttpClient()->getHeader('Accept'));
+    }
+
+    public function testClientShouldNotSetDefaultAcceptAndContentTypeHeadersOnRequestIfTheyAlreadyExist()
+    {
+        $request = new Request();
+        $response = new HttpResponse();
+        $response->setContent(\Zend\Json\Json::encode(['test' => 'test']));
+        $testAdapter = new TestAdapter();
+        $testAdapter->setResponse($response);
+
+        $httpClient = new HttpClient();
+        $httpClient->setHeaders([
+            'Content-Type' => 'application/jsonrequest',
+            'Accept' => 'application/jsonrequest',
+        ]);
+
+        $jsonClient = new Client('http://foo', $httpClient);
+        $jsonClient->getHttpClient()->setAdapter($testAdapter);
+        $jsonClient->doRequest($request);
+        $this->assertSame('application/jsonrequest', $jsonClient->getHttpClient()->getHeader('Content-Type'));
+        $this->assertSame('application/jsonrequest', $jsonClient->getHttpClient()->getHeader('Accept'));
     }
 
     public function getServerResponseFor($nativeVars)
