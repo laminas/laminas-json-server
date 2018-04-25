@@ -28,7 +28,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Changed
 
-- Nothing.
+- [#6](https://github.com/zendframework/zend-json-server/pull/6) updates the default `Accept` and `Content-Type` header values issued
+  by the `Client` to `application/json-rpc`, which is more correct per the JSON-RPC spec.
 
 ### Deprecated
 
@@ -39,6 +40,9 @@ All notable changes to this project will be documented in this file, in reverse 
 - Nothing.
 
 ### Fixed
+
+- [#6](https://github.com/zendframework/zend-json-server/pull/6) fixes how the `Client` handles the `Accept` and `Content-Type` headers,
+  honoring those already present in the request, and providing defaults if not.
 
 - [#4](https://github.com/zendframework/zend-json-server/pull/4) provides a fix to how parameters are validated, ensuring default values
   are provided when known (and only when named parameters are provided), and an error
