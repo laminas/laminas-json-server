@@ -200,4 +200,15 @@ class ResponseTest extends TestCase
             'id'  => 'foobar'
         ];
     }
+
+    /**
+     * @see https://github.com/zendframework/zend-json-server/pull/2
+     */
+    public function testValueOfZeroForOptionsKeyShouldNotBeInterpretedAsVersionKey()
+    {
+        $this->response->setOptions([
+            0 => '2.0',
+        ]);
+        $this->assertNull($this->response->getVersion());
+    }
 }
