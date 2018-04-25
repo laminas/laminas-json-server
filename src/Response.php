@@ -74,7 +74,7 @@ class Response
                 continue;
             }
 
-            if ($key == 'jsonrpc') {
+            if ('jsonrpc' === $key) {
                 $this->setVersion($value);
                 continue;
             }
