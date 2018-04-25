@@ -7,11 +7,11 @@
 
 namespace ZendTest\Json\Server;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
+use Zend\Json\Json;
 use Zend\Json\Server\Error;
 use Zend\Json\Server\Exception\RuntimeException;
 use Zend\Json\Server\Response;
-use Zend\Json\Json;
 
 class ResponseTest extends TestCase
 {
@@ -177,7 +177,7 @@ class ResponseTest extends TestCase
      */
     public function testLoadingScalarJSONResponseShouldThrowException($json)
     {
-        $this->setExpectedException(RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->response->loadJson($json);
     }
 
@@ -197,7 +197,7 @@ class ResponseTest extends TestCase
                 'four',
                 true,
             ],
-            'id'  => 'foobar'
+            'id'  => 'foobar',
         ];
     }
 

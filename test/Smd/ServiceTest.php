@@ -7,12 +7,11 @@
 
 namespace ZendTest\Json\Server\Smd;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Zend\Json\Server\Exception;
 use Zend\Json\Server\Smd;
 use Zend\Json\Server\Smd\Service;
-use Zend\Json\Server;
 
 class ServiceTest extends TestCase
 {
@@ -29,19 +28,22 @@ class ServiceTest extends TestCase
 
     public function testConstructorShouldThrowExceptionWhenNoNameSetWhenNullProvided()
     {
-        $this->setExpectedException(Exception\InvalidArgumentException::class, 'requires a name');
-        $service = new Service(null);
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('requires a name');
+        new Service(null);
     }
 
     public function testConstructorShouldThrowExceptionWhenNoNameSetWhenArrayProvided()
     {
-        $this->setExpectedException(Exception\InvalidArgumentException::class, 'requires a name');
-        $service = new Service(null);
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('requires a name');
+        new Service(null);
     }
 
     public function testSettingNameShouldThrowExceptionWhenContainingInvalidFormatStartingWithInt()
     {
-        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid name');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid name');
         $this->service->setName('0ab-?');
     }
 
@@ -53,7 +55,8 @@ class ServiceTest extends TestCase
 
     public function testSettingNameShouldThrowExceptionWhenContainingInvalidFormatStartingWithRpc()
     {
-        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid name');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid name');
         $this->service->setName('rpc.Foo');
     }
 
@@ -92,13 +95,15 @@ class ServiceTest extends TestCase
 
     public function testSettingTransportThrowsExceptionWhenSetToGet()
     {
-        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid transport');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid transport');
         $this->service->setTransport('GET');
     }
 
     public function testSettingTransportThrowsExceptionWhenSetToRest()
     {
-        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid transport');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid transport');
         $this->service->setTransport('REST');
     }
 
@@ -159,7 +164,7 @@ class ServiceTest extends TestCase
     {
         $this->service->addParam('integer');
         $params = $this->service->getParams();
-        $this->assertEquals(1, count($params));
+        $this->assertCount(1, $params);
         $param = array_shift($params);
         $this->assertEquals('integer', $param['type']);
     }
@@ -177,7 +182,8 @@ class ServiceTest extends TestCase
 
     public function testInvalidParamTypeShouldThrowException()
     {
-        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid param type');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid param type');
         $this->service->addParam(new stdClass);
     }
 
@@ -188,7 +194,7 @@ class ServiceTest extends TestCase
                       ->addParam('boolean', [], 3);
         $params = $this->service->getParams();
 
-        $this->assertEquals(3, count($params));
+        $this->assertCount(3, $params);
 
         $param = array_shift($params);
         $this->assertEquals('string', $param['type'], var_export($params, 1));
@@ -226,7 +232,7 @@ class ServiceTest extends TestCase
         ]);
         $params = $this->service->getParams();
 
-        $this->assertEquals(3, count($params));
+        $this->assertCount(3, $params);
         $param = array_shift($params);
         $this->assertEquals('string', $param['type']);
         $this->assertEquals('foo', $param['name']);
@@ -242,7 +248,7 @@ class ServiceTest extends TestCase
     {
         $this->testShouldBeAbleToAddMultipleParamsAtOnce();
         $params = $this->service->getParams();
-        $this->assertEquals(3, count($params));
+        $this->assertCount(3, $params);
 
         $this->service->setParams([
             ['type' => 'string'],
@@ -250,7 +256,7 @@ class ServiceTest extends TestCase
         ]);
         $test = $this->service->getParams();
         $this->assertNotEquals($params, $test);
-        $this->assertEquals(2, count($test));
+        $this->assertCount(2, $test);
     }
 
     public function testReturnShouldBeNullByDefault()
@@ -275,7 +281,8 @@ class ServiceTest extends TestCase
 
     public function testInvalidReturnTypeShouldThrowException()
     {
-        $this->setExpectedException(Exception\InvalidArgumentException::class, 'Invalid param type');
+        $this->expectException(Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid param type');
         $this->service->setReturn(new stdClass);
     }
 
@@ -320,7 +327,7 @@ class ServiceTest extends TestCase
 
         $this->assertArrayHasKey('parameters', $smd);
         $params = $smd['parameters'];
-        $this->assertEquals(3, count($params));
+        $this->assertCount(3, $params);
         $param = array_shift($params);
         $this->assertEquals('boolean', $param['type']);
         $param = array_shift($params);
