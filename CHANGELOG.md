@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#13](https://github.com/zendframework/zend-json-server/pull/13) adds support for PHP 7.1 and 7.2.
 
 ### Changed
 
@@ -19,7 +19,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#13](https://github.com/zendframework/zend-json-server/pull/13) removes support for PHP 5.5.
+
+- [#13](https://github.com/zendframework/zend-json-server/pull/13) removes support for HHVM.
 
 ### Fixed
 
