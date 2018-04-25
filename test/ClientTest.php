@@ -1,8 +1,8 @@
 <?php
 /**
- * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/zend-json-server/blob/master/LICENSE.md New BSD License
  */
 
 namespace ZendTest\Json\Server;
@@ -10,6 +10,7 @@ namespace ZendTest\Json\Server;
 use PHPUnit_Framework_TestCase as TestCase;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\Client\Adapter\Test as TestAdapter;
+use Zend\Http\Response as HttpResponse;
 use Zend\Json\Server\Client;
 use Zend\Json\Server\Error;
 use Zend\Json\Server\Request;
@@ -231,6 +232,41 @@ class ClientTest extends TestCase
     {
         $response = $this->getServerResponseFor($nativeVars);
         $this->httpAdapter->setResponse($response);
+    }
+
+    public function testClientShouldSetDefaultAcceptAndContentTypeHeadersOnRequest()
+    {
+        $request = new Request();
+        $response = new HttpResponse();
+        $response->setContent(\Zend\Json\Json::encode(['test' => 'test']));
+        $testAdapter = new TestAdapter();
+        $testAdapter->setResponse($response);
+        $jsonClient = new Client('http://foo');
+        $jsonClient->getHttpClient()->setAdapter($testAdapter);
+        $jsonClient->doRequest($request);
+        $this->assertSame('application/json-rpc', $jsonClient->getHttpClient()->getHeader('Content-Type'));
+        $this->assertSame('application/json-rpc', $jsonClient->getHttpClient()->getHeader('Accept'));
+    }
+
+    public function testClientShouldNotOverwriteAcceptAndContentTypeHeadersIfAlreadyPresentInRequest()
+    {
+        $request = new Request();
+        $response = new HttpResponse();
+        $response->setContent(\Zend\Json\Json::encode(['test' => 'test']));
+        $testAdapter = new TestAdapter();
+        $testAdapter->setResponse($response);
+
+        $httpClient = new HttpClient();
+        $httpClient->setHeaders([
+            'Content-Type' => 'application/jsonrequest',
+            'Accept' => 'application/jsonrequest',
+        ]);
+
+        $jsonClient = new Client('http://foo', $httpClient);
+        $jsonClient->getHttpClient()->setAdapter($testAdapter);
+        $jsonClient->doRequest($request);
+        $this->assertSame('application/jsonrequest', $jsonClient->getHttpClient()->getHeader('Content-Type'));
+        $this->assertSame('application/jsonrequest', $jsonClient->getHttpClient()->getHeader('Accept'));
     }
 
     public function getServerResponseFor($nativeVars)
