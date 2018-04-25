@@ -1,8 +1,8 @@
 <?php
 /**
- * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/zend-json-server/blob/master/LICENSE.md New BSD License
  */
 
 namespace Zend\Json\Server;
@@ -117,13 +117,13 @@ class Client implements ServerClient
             $this->httpClient->setUri($this->serverAddress);
         }
 
-        // set default Accept and Content-Type headers unless already set
+        // Set default Accept and Content-Type headers unless already set.
         $headers = $httpRequest->getHeaders();
         $headersToAdd = [];
-        if (!$headers->has('Content-Type')) {
+        if (! $headers->has('Content-Type')) {
             $headersToAdd['Content-Type'] = 'application/json-rpc';
         }
-        if (!$headers->has('Accept')) {
+        if (! $headers->has('Accept')) {
             $headersToAdd['Accept'] = 'application/json-rpc';
         }
         $headers->addHeaders($headersToAdd);

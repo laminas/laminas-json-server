@@ -601,8 +601,11 @@ class Server extends AbstractServer
      *     method on success, Error if there is a mismatch between request
      *     parameters and the method signature.
      */
-    private function validateAndPrepareParams(array $requestedParams, array $serviceParams, Method\Definition $invokable)
-    {
+    private function validateAndPrepareParams(
+        array $requestedParams,
+        array $serviceParams,
+        Method\Definition $invokable
+    ) {
         return is_string(key($requestedParams))
             ? $this->validateAndPrepareNamedParams($requestedParams, $serviceParams, $invokable)
             : $this->validateAndPrepareOrderedParams($requestedParams, $serviceParams);
@@ -618,8 +621,11 @@ class Server extends AbstractServer
      *     method on success, Error if any named request parameters do not match
      *     those of the method requested.
      */
-    private function validateAndPrepareNamedParams(array $requestedParams, array $serviceParams, Method\Definition $invokable)
-    {
+    private function validateAndPrepareNamedParams(
+        array $requestedParams,
+        array $serviceParams,
+        Method\Definition $invokable
+    ) {
         if (count($requestedParams) < count($serviceParams)) {
             $requestedParams = $this->getDefaultParams($requestedParams, $serviceParams);
         }
