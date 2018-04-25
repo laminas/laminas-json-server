@@ -40,6 +40,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
+- [#4](https://github.com/zendframework/zend-json-server/pull/4) provides a fix to how parameters are validated, ensuring default values
+  are provided when known (and only when named parameters are provided), and an error
+  is raised when not enough parameters are provided.
+
 - [#2](https://github.com/zendframework/zend-json-server/pull/2) fixes an issue with how the `Response::setOptions()` method would handle a
   key of `0`; previously, it would (incorrectly) set the JSON-RPC version of the response;
   now it does not.

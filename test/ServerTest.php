@@ -1,10 +1,8 @@
 <?php
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/zendframework/zend-json-server for the canonical source repository
+ * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
+ * @license   https://github.com/zendframework/zend-json-server/blob/master/LICENSE.md New BSD License
  */
 
 namespace ZendTest\Json\Server;
@@ -14,6 +12,7 @@ use Zend\Json\Server;
 use Zend\Json;
 use Zend\Json\Server\Request;
 use Zend\Json\Server\Response;
+use Zend\Json\Server\Error;
 use Zend\Server\Reflection\Exception\RuntimeException;
 
 class ServerTest extends TestCase
@@ -527,5 +526,33 @@ class ServerTest extends TestCase
         $this->assertEquals(1, $result[0]);
         $this->assertEquals('two', $result[1]);
         $this->assertEquals(3, $result[2]);
+    }
+
+    public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys()
+    {
+        $server = $this->server;
+        $server->setClass(TestAsset\FooParameters::class);
+        $server->setReturnResponse(true);
+        $request = $server->getRequest();
+        $request->setMethod('bar')
+                ->setParams([true]);
+        $server->handle();
+
+        $response = $server->getResponse();
+        $this->assertEquals($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
+    }
+
+    public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys1()
+    {
+        $server = $this->server;
+        $server->setClass(TestAsset\FooParameters::class);
+        $server->setReturnResponse(true);
+        $request = $server->getRequest();
+        $request->setMethod('baz')
+                ->setParams([true]);
+        $server->handle();
+        $response = $server->getResponse();
+        $this->assertNotEmpty($response->getError());
+        $this->assertEquals($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
     }
 }
