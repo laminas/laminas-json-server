@@ -32,6 +32,9 @@
             "Zend\\Json\\Server\\": "src/"
         }
     },
+    "conflict": {
+        "zendframework/zend-stdlib": "<3.2.1"
+    },
     "autoload-dev": {
         "files": [
             "test/TestAsset/FooFunc.php"
