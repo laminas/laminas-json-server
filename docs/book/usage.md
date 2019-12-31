@@ -62,13 +62,13 @@ class Calculator
 
 Note that each method has a docblock with entries indicating each parameter and
 its type, as well as an entry for the return value. This is **absolutely
-critical** when utilizing zend-json-server or any other server component in
-Zend Framework, for that matter.
+critical** when utilizing laminas-json-server or any other server component in
+Laminas, for that matter.
 
 Now we'll create a script to handle the requests:
 
 ```php
-$server = new Zend\Json\Server\Server();
+$server = new Laminas\Json\Server\Server();
 
 // Indicate what functionality is available:
 $server->setClass('Calculator');
@@ -83,13 +83,13 @@ determining the HTTP request method, and then specifying some server
 metadata:
 
 ```php
-$server = new Zend\Json\Server\Server();
+$server = new Laminas\Json\Server\Server();
 $server->setClass('Calculator');
 
 if ('GET' == $_SERVER['REQUEST_METHOD']) {
     // Indicate the URL endpoint, and the JSON-RPC version used:
     $server->setTarget('/json-rpc.php')
-           ->setEnvelope(Zend\Json\Server\Smd::ENV_JSONRPC_2);
+           ->setEnvelope(Laminas\Json\Server\Smd::ENV_JSONRPC_2);
 
     // Grab the SMD
     $smd = $server->getServiceMap();
@@ -107,12 +107,12 @@ If utilizing the JSON-RPC server with Dojo toolkit, you will also need to set a
 special compatibility flag to ensure that the two interoperate properly:
 
 ```php
-$server = new Zend\Json\Server\Server();
+$server = new Laminas\Json\Server\Server();
 $server->setClass('Calculator');
 
 if ('GET' == $_SERVER['REQUEST_METHOD']) {
     $server->setTarget('/json-rpc.php')
-           ->setEnvelope(Zend\Json\Server\Smd::ENV_JSONRPC_2);
+           ->setEnvelope(Laminas\Json\Server\Smd::ENV_JSONRPC_2);
     $smd = $server->getServiceMap();
 
     // Set Dojo compatibility:

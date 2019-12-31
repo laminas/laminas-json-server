@@ -1,47 +1,21 @@
 {
-    "name": "zendframework/zend-json-server",
-    "description": "Zend Json-Server is a JSON-RPC server implementation.",
+    "name": "laminas/laminas-json-server",
+    "description": "Laminas Json-Server is a JSON-RPC server implementation.",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf",
-        "zendframework",
+        "laminas",
         "json",
         "server",
         "json-server"
     ],
+    "homepage": "https://laminas.dev",
     "support": {
-        "docs": "https://docs.zendframework.com/zend-json-server/",
-        "issues": "https://github.com/zendframework/zend-json-server/issues",
-        "source": "https://github.com/zendframework/zend-json-server",
-        "rss": "https://github.com/zendframework/zend-json-server/releases.atom",
-        "chat": "https://zendframework-slack.herokuapp.com",
-        "forum": "https://discourse.zendframework.com/c/questions/components"
-    },
-    "require": {
-        "php": "^5.6 || ^7.0",
-        "zendframework/zend-http": "^2.7",
-        "zendframework/zend-json": "^2.6.1 || ^3.0",
-        "zendframework/zend-server": "^2.7"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2",
-        "zendframework/zend-coding-standard": "~1.0.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Zend\\Json\\Server\\": "src/"
-        }
-    },
-    "conflict": {
-        "zendframework/zend-stdlib": "<3.2.1"
-    },
-    "autoload-dev": {
-        "files": [
-            "test/TestAsset/FooFunc.php"
-        ],
-        "psr-4": {
-            "ZendTest\\Json\\Server\\": "test/"
-        }
+        "docs": "https://docs.laminas.dev/laminas-json-server/",
+        "issues": "https://github.com/laminas/laminas-json-server/issues",
+        "source": "https://github.com/laminas/laminas-json-server",
+        "rss": "https://github.com/laminas/laminas-json-server/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
     "config": {
         "sort-packages": true
@@ -50,6 +24,33 @@
         "branch-alias": {
             "dev-master": "3.2.x-dev",
             "dev-develop": "3.3.x-dev"
+        }
+    },
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "laminas/laminas-http": "^2.7",
+        "laminas/laminas-json": "^2.6.1 || ^3.0",
+        "laminas/laminas-server": "^2.7",
+        "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "require-dev": {
+        "laminas/laminas-coding-standard": "~1.0.0",
+        "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2"
+    },
+    "conflict": {
+        "laminas/laminas-stdlib": "<3.2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Json\\Server\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "files": [
+            "test/TestAsset/FooFunc.php"
+        ],
+        "psr-4": {
+            "LaminasTest\\Json\\Server\\": "test/"
         }
     },
     "scripts": {
@@ -61,5 +62,8 @@
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    },
+    "replace": {
+        "zendframework/zend-json-server": "self.version"
     }
 }
