@@ -13,25 +13,25 @@ and a map of services available. In the case of JSON-RPC, the service map is a
 list of available methods, which each method documenting the available
 parameters and their types, as well as the expected return value type.
 
-`Zend\Json\Server\Smd` provides an object-oriented way to build service maps.
+`Laminas\Json\Server\Smd` provides an object-oriented way to build service maps.
 At its most basic, you pass it metadata describing the service using mutators,
 and specify services (methods and functions).
 
 The service descriptions themselves are typically instances of
-`Zend\Json\Server\Smd\Service`; you can also pass all information as an array
-to the various service mutators in `Zend\Json\Server\Smd`, and it will
+`Laminas\Json\Server\Smd\Service`; you can also pass all information as an array
+to the various service mutators in `Laminas\Json\Server\Smd`, and it will
 instantiate a service for you. The service objects contain information such as
 the name of the service (typically the function or method name), the parameters
 (names, types, and position), and the return value type. Optionally, each
 service can have its own target and envelope, though this functionality is
 rarely used.
 
-`Zend\Json\Server\Server` actually does all of this behind the scenes for you,
+`Laminas\Json\Server\Server` actually does all of this behind the scenes for you,
 by using reflection on the attached classes and functions; you should create
 your own service maps only if you need to provide custom functionality that
 class and function introspection cannot offer.
 
-Methods available in `Zend\Json\Server\Smd` include:
+Methods available in `Laminas\Json\Server\Smd` include:
 
 - `setOptions(array $options)`: Setup an SMD object from an array of options.
   All mutators (methods beginning with 'set') can be used as keys.
@@ -40,8 +40,8 @@ Methods available in `Zend\Json\Server\Smd` include:
 - `getTransport()`: Get the current service transport.
 - `setEnvelope($envelopeType)`: Set the request envelope that should be used to
   access the service.  Currently, supports the constants
-  `Zend\Json\Server\Smd::ENV_JSONRPC_1` and
-  `Zend\Json\Server\Smd::ENV_JSONRPC_2`.
+  `Laminas\Json\Server\Smd::ENV_JSONRPC_1` and
+  `Laminas\Json\Server\Smd::ENV_JSONRPC_2`.
 - `getEnvelope()`: Get the current request envelope.
 - `setContentType($type)`: Set the content type requests should use (by
   default, this is 'application/json').
@@ -61,7 +61,7 @@ Methods available in `Zend\Json\Server\Smd` include:
 - `isDojoCompatible()`: Returns the value of the Dojo compatibility flag
   (`FALSE`, by default).
 - `addService($service)`: Add a service to the map. May be an array of
-  information to pass to the constructor of `Zend\Json\Server\Smd\Service`, or
+  information to pass to the constructor of `Laminas\Json\Server\Smd\Service`, or
   an instance of that class.
 - `addServices(array $services)`: Add multiple services at once.
 - `setServices(array $services)`: Add multiple services at once, overwriting
@@ -74,7 +74,7 @@ Methods available in `Zend\Json\Server\Smd` include:
   Toolkit.
 - `toJson()`: Cast the service map to a JSON representation.
 
-`Zend\Json\Server\Smd\Service` has the following methods:
+`Laminas\Json\Server\Smd\Service` has the following methods:
 
 - `setOptions(array $options)`: Set object state from an array. Any mutator
   (methods beginning with 'set') may be used as a key and set via this method.
@@ -82,13 +82,13 @@ Methods available in `Zend\Json\Server\Smd` include:
   name).
 - `getName()`: Retrieve the service name.
 - `setTransport($transport)`: Set the service transport (currently, only
-  transports supported by `Zend\Json\Server\Smd` are allowed).
+  transports supported by `Laminas\Json\Server\Smd` are allowed).
 - `getTransport()`: Retrieve the current transport.
 - `setTarget($target)`: Set the URL endpoint of the service (typically, this
   will be the same as the overall SMD to which the service is attached).
 - `getTarget()`: Get the URL endpoint of the service.
 - `setEnvelope($envelopeType)`: Set the service envelope (currently, only
-  envelopes supported by `Zend\Json\Server\Smd` are allowed).
+  envelopes supported by `Laminas\Json\Server\Smd` are allowed).
 - `getEnvelope()`: Retrieve the service envelope type.
   `addParam($type, array $options = array(), $order = null)`: Add a parameter
   to the service. By default, only the parameter type is necessary. However,

@@ -1,18 +1,19 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-json-server for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-json-server/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Json\Server\Smd;
+namespace LaminasTest\Json\Server\Smd;
 
+use Laminas\Json\Server;
+use Laminas\Json\Server\Exception;
+use Laminas\Json\Server\Smd;
+use Laminas\Json\Server\Smd\Service;
 use PHPUnit_Framework_TestCase as TestCase;
 use stdClass;
-use Zend\Json\Server\Exception;
-use Zend\Json\Server\Smd;
-use Zend\Json\Server\Smd\Service;
-use Zend\Json\Server;
 
 class ServiceTest extends TestCase
 {
@@ -290,7 +291,7 @@ class ServiceTest extends TestCase
     {
         $this->setupSmdValidationObject();
         $json = $this->service->toJSON();
-        $smd  = \Zend\Json\Json::decode($json, \Zend\Json\Json::TYPE_ARRAY);
+        $smd  = \Laminas\Json\Json::decode($json, \Laminas\Json\Json::TYPE_ARRAY);
 
         $this->assertArrayHasKey('foo', $smd);
         $this->assertInternalType('array', $smd['foo']);

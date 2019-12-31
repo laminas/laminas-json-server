@@ -1,17 +1,18 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-json-server for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-json-server/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Json\Server;
+namespace LaminasTest\Json\Server;
 
+use Laminas\Json;
+use Laminas\Json\Server\Exception\InvalidArgumentException;
+use Laminas\Json\Server\Exception\RuntimeException;
+use Laminas\Json\Server\Smd;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Json\Server\Smd;
-use Zend\Json\Server\Exception\InvalidArgumentException;
-use Zend\Json\Server\Exception\RuntimeException;
-use Zend\Json;
 
 class SmdTest extends TestCase
 {
@@ -171,7 +172,7 @@ class SmdTest extends TestCase
         ];
         $this->smd->addService($service);
         $foo = $this->smd->getService('foo');
-        $this->assertInstanceOf('Zend\Json\Server\Smd\Service', $foo);
+        $this->assertInstanceOf('Laminas\Json\Server\Smd\Service', $foo);
         $this->assertEquals('foo', $foo->getName());
     }
 
@@ -375,7 +376,7 @@ class SmdTest extends TestCase
     }
 
     /**
-     * @group ZF2-5624
+     * @group Laminas-5624
      */
     public function testSetOptionsShouldAccommodateToArrayOutput()
     {
@@ -392,7 +393,7 @@ class SmdTest extends TestCase
 
         $smdDestination = new Smd();
         // prior to fix the following resulted in:
-        // .. Zend\Json\Server\Exception\InvalidArgumentException
+        // .. Laminas\Json\Server\Exception\InvalidArgumentException
         // ... : SMD service description requires a name; none provided
         $smdDestination->setOptions($smdSource->toArray());
 

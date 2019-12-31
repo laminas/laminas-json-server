@@ -1,15 +1,16 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-json-server for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-json-server/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Json\Server\Smd;
+namespace Laminas\Json\Server\Smd;
 
-use Zend\Json\Json;
-use Zend\Json\Server\Exception\InvalidArgumentException;
-use Zend\Json\Server\Smd;
+use Laminas\Json\Json;
+use Laminas\Json\Server\Exception\InvalidArgumentException;
+use Laminas\Json\Server\Smd;
 
 /**
  * Create Service Mapping Description for a method
