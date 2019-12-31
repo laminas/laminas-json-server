@@ -1,14 +1,14 @@
-# Zend\\Json\\Server\\Error
+# Laminas\\Json\\Server\\Error
 
 JSON-RPC has a special format for reporting error conditions. All errors need
 to provide, minimally, an error message and error code; optionally, they can
 provide additional data, such as a backtrace.
 
 Error codes are derived from those recommended by [the XML-RPC EPI project](http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php).
-`Zend\Json\Server` appropriately assigns the code based on the error condition.
+`Laminas\Json\Server` appropriately assigns the code based on the error condition.
 For application exceptions, the code '-32000' is used.
 
-`Zend\Json\Server\Error` exposes the following methods:
+`Laminas\Json\Server\Error` exposes the following methods:
 
 - `setCode($code)`: Set the error code; if the code is not in the accepted
   XML-RPC error code range, -32000 will be assigned.

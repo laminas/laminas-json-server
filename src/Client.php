@@ -1,14 +1,15 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-json-server for the canonical source repository
- * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-json-server/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-json-server for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-json-server/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Json\Server;
+namespace Laminas\Json\Server;
 
-use Zend\Http\Client as HttpClient;
-use Zend\Server\Client as ServerClient;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Server\Client as ServerClient;
 
 class Client implements ServerClient
 {
@@ -129,7 +130,7 @@ class Client implements ServerClient
         $headers->addHeaders($headersToAdd);
 
         if (! $headers->get('User-Agent')) {
-            $headers->addHeaderLine('User-Agent', 'Zend_Json_Server_Client');
+            $headers->addHeaderLine('User-Agent', 'Laminas_Json_Server_Client');
         }
 
         $this->httpClient->setRawBody($request->__toString());

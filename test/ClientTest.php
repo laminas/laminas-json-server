@@ -1,21 +1,22 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-json-server for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-json-server/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-json-server for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-json-server/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Json\Server;
+namespace LaminasTest\Json\Server;
 
+use Laminas\Http\Client\Adapter\Test as TestAdapter;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Response as HttpResponse;
+use Laminas\Json\Server\Client;
+use Laminas\Json\Server\Error;
+use Laminas\Json\Server\Exception;
+use Laminas\Json\Server\Request;
+use Laminas\Json\Server\Response;
 use PHPUnit\Framework\TestCase;
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Client\Adapter\Test as TestAdapter;
-use Zend\Http\Response as HttpResponse;
-use Zend\Json\Server\Client;
-use Zend\Json\Server\Error;
-use Zend\Json\Server\Exception;
-use Zend\Json\Server\Request;
-use Zend\Json\Server\Response;
 
 class ClientTest extends TestCase
 {
@@ -52,7 +53,7 @@ class ClientTest extends TestCase
     {
         $jsonClient = new Client('http://foo');
         $httpClient = $jsonClient->getHttpClient();
-        //$this->assertInstanceOf('Zend\\Http\\Client', $httpClient);
+        //$this->assertInstanceOf('Laminas\\Http\\Client', $httpClient);
         $this->assertSame($httpClient, $jsonClient->getHttpClient());
     }
 
@@ -85,8 +86,8 @@ class ClientTest extends TestCase
         $this->setServerResponseTo(true);
         $this->jsonClient->call('foo');
 
-        //$this->assertInstanceOf('Zend\\Json\\Server\\Request', $this->jsonClient->getLastRequest());
-        //$this->assertInstanceOf('Zend\\Json\\Server\\Response', $this->jsonClient->getLastResponse());
+        //$this->assertInstanceOf('Laminas\\Json\\Server\\Request', $this->jsonClient->getLastRequest());
+        //$this->assertInstanceOf('Laminas\\Json\\Server\\Response', $this->jsonClient->getLastResponse());
     }
 
     public function testSuccessfulRpcMethodCallWithNoParameters()
@@ -208,12 +209,12 @@ class ClientTest extends TestCase
         $this->setServerResponseTo(null);
         $this->assertNull($this->jsonClient->call('method'));
         $this->assertSame(
-            'Zend_Json_Server_Client',
+            'Laminas_Json_Server_Client',
             $this->httpClient->getHeader('User-Agent'),
-            'If no custom UA is set, set Zend_Json_Server_Client'
+            'If no custom UA is set, set Laminas_Json_Server_Client'
         );
 
-        $expectedUserAgent = 'Zend_Json_Server_Client (custom)';
+        $expectedUserAgent = 'Laminas_Json_Server_Client (custom)';
         $this->httpClient->setHeaders(['User-Agent' => $expectedUserAgent]);
 
         $this->setServerResponseTo(null);
@@ -243,7 +244,7 @@ class ClientTest extends TestCase
     {
         $request = new Request();
         $response = new HttpResponse();
-        $response->setContent(\Zend\Json\Json::encode(['test' => 'test']));
+        $response->setContent(\Laminas\Json\Json::encode(['test' => 'test']));
         $testAdapter = new TestAdapter();
         $testAdapter->setResponse($response);
         $jsonClient = new Client('http://foo');
@@ -257,7 +258,7 @@ class ClientTest extends TestCase
     {
         $request = new Request();
         $response = new HttpResponse();
-        $response->setContent(\Zend\Json\Json::encode(['test' => 'test']));
+        $response->setContent(\Laminas\Json\Json::encode(['test' => 'test']));
         $testAdapter = new TestAdapter();
         $testAdapter->setResponse($response);
 
@@ -303,7 +304,7 @@ class ClientTest extends TestCase
 
     public function mockHttpClient()
     {
-        $this->mockedHttpClient = $this->getMock('Zend\\Http\\Client');
+        $this->mockedHttpClient = $this->getMock('Laminas\\Http\\Client');
         $this->jsonClient->setHttpClient($this->mockedHttpClient);
     }
 }
