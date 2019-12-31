@@ -1,19 +1,20 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-json-server for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-json-server for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-json-server/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Json\Server;
+namespace Laminas\Json\Server;
 
 use Exception as PhpException;
+use Laminas\Server\AbstractServer;
+use Laminas\Server\Definition;
+use Laminas\Server\Method;
+use Laminas\Server\Reflection;
 use ReflectionFunction;
 use ReflectionMethod;
-use Zend\Server\AbstractServer;
-use Zend\Server\Definition;
-use Zend\Server\Method;
-use Zend\Server\Reflection;
 
 class Server extends AbstractServer
 {
@@ -32,7 +33,7 @@ class Server extends AbstractServer
     protected $returnResponse = false;
 
     /**
-     * Inherited from Zend\Server\AbstractServer.
+     * Inherited from Laminas\Server\AbstractServer.
      *
      * Flag; allow overwriting existing methods when creating server definition.
      *

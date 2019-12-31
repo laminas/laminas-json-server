@@ -1,7 +1,7 @@
-# Zend\\Json\\Server\\Request
+# Laminas\\Json\\Server\\Request
 
 The JSON-RPC request environment is encapsulated in the
-`Zend\Json\Server\Request` object. This object allows you to set necessary
+`Laminas\Json\Server\Request` object. This object allows you to set necessary
 portions of the JSON-RPC request, including the request ID, parameters, and
 JSON-RPC specification version. It has the ability to load itself via JSON or
 a set of options, and can render itself as JSON via the `toJson()` method.
@@ -34,6 +34,6 @@ The request object has the following methods available:
 - `loadJson($json)`: Load the request object from a JSON string.
 - `toJson()`: Render the request as a JSON string.
 
-An HTTP specific version is available via `Zend\Json\Server\Request\Http`. This
+An HTTP specific version is available via `Laminas\Json\Server\Request\Http`. This
 class will retrieve the request via `php://input`, and allows access to the raw
 JSON via the `getRawJson()` method.
