@@ -13,3 +13,6 @@ nav:
 site_name: laminas-json-server
 site_description: Laminas\Json\Server
 repo_url: 'https://github.com/laminas/laminas-json-server'
+extra:
+    project: Components
+    project_url: 'https://docs.laminas.dev'
