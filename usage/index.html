@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -61,20 +65,6 @@
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href=".." class="subnavigation__link">laminas-json-server</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -246,116 +236,112 @@
 <p>First, let's define a class we wish to expose via the JSON-RPC server. We'll
 call the class <code>Calculator</code>, and define methods for <code>add</code>, <code>subtract</code>,
 <code>multiply</code>, and <code>divide</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>/**</span>
-<span class=x> * Calculator - sample class to expose via JSON-RPC</span>
-<span class=x> */</span>
-<span class=x>class Calculator</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * Return sum of two variables</span>
-<span class=x>     *</span>
-<span class=x>     * @param  int $x</span>
-<span class=x>     * @param  int $y</span>
-<span class=x>     * @return int</span>
-<span class=x>     */</span>
-<span class=x>    public function add($x, $y)</span>
-<span class=x>    {</span>
-<span class=x>        return $x + $y;</span>
-<span class=x>    }</span>
+<pre class=codehilite><code class=language-php>/**
+ * Calculator - sample class to expose via JSON-RPC
+ */
+class Calculator
+{
+    /**
+     * Return sum of two variables
+     *
+     * @param  int $x
+     * @param  int $y
+     * @return int
+     */
+    public function add($x, $y)
+    {
+        return $x + $y;
+    }
 
-<span class=x>    /**</span>
-<span class=x>     * Return difference of two variables</span>
-<span class=x>     *</span>
-<span class=x>     * @param  int $x</span>
-<span class=x>     * @param  int $y</span>
-<span class=x>     * @return int</span>
-<span class=x>     */</span>
-<span class=x>    public function subtract($x, $y)</span>
-<span class=x>    {</span>
-<span class=x>        return $x - $y;</span>
-<span class=x>    }</span>
+    /**
+     * Return difference of two variables
+     *
+     * @param  int $x
+     * @param  int $y
+     * @return int
+     */
+    public function subtract($x, $y)
+    {
+        return $x - $y;
+    }
 
-<span class=x>    /**</span>
-<span class=x>     * Return product of two variables</span>
-<span class=x>     *</span>
-<span class=x>     * @param  int $x</span>
-<span class=x>     * @param  int $y</span>
-<span class=x>     * @return int</span>
-<span class=x>     */</span>
-<span class=x>    public function multiply($x, $y)</span>
-<span class=x>    {</span>
-<span class=x>        return $x * $y;</span>
-<span class=x>    }</span>
+    /**
+     * Return product of two variables
+     *
+     * @param  int $x
+     * @param  int $y
+     * @return int
+     */
+    public function multiply($x, $y)
+    {
+        return $x * $y;
+    }
 
-<span class=x>    /**</span>
-<span class=x>     * Return the division of two variables</span>
-<span class=x>     *</span>
-<span class=x>     * @param  int $x</span>
-<span class=x>     * @param  int $y</span>
-<span class=x>     * @return float</span>
-<span class=x>     */</span>
-<span class=x>    public function divide($x, $y)</span>
-<span class=x>    {</span>
-<span class=x>        return $x / $y;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+    /**
+     * Return the division of two variables
+     *
+     * @param  int $x
+     * @param  int $y
+     * @return float
+     */
+    public function divide($x, $y)
+    {
+        return $x / $y;
+    }
+}</code></pre>
 <p>Note that each method has a docblock with entries indicating each parameter and
 its type, as well as an entry for the return value. This is <strong>absolutely
 critical</strong> when utilizing laminas-json-server or any other server component in
 Laminas, for that matter.</p>
 <p>Now we'll create a script to handle the requests:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$server = new Laminas\Json\Server\Server();</span>
+<pre class=codehilite><code class=language-php>$server = new Laminas\Json\Server\Server();
 
-<span class=x>// Indicate what functionality is available:</span>
-<span class=x>$server-&gt;setClass(&#39;Calculator&#39;);</span>
+// Indicate what functionality is available:
+$server-&gt;setClass('Calculator');
 
-<span class=x>// Handle the request:</span>
-<span class=x>$server-&gt;handle();</span>
-</pre></div></p>
+// Handle the request:
+$server-&gt;handle();</code></pre>
 <p>However, this will not address the issue of returning an SMD so that the
 JSON-RPC client can autodiscover methods. That can be accomplished by
 determining the HTTP request method, and then specifying some server
 metadata:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$server = new Laminas\Json\Server\Server();</span>
-<span class=x>$server-&gt;setClass(&#39;Calculator&#39;);</span>
+<pre class=codehilite><code class=language-php>$server = new Laminas\Json\Server\Server();
+$server-&gt;setClass('Calculator');
 
-<span class=x>if (&#39;GET&#39; == $_SERVER[&#39;REQUEST_METHOD&#39;]) {</span>
-<span class=x>    // Indicate the URL endpoint, and the JSON-RPC version used:</span>
-<span class=x>    $server-&gt;setTarget(&#39;/json-rpc.php&#39;)</span>
-<span class=x>           -&gt;setEnvelope(Laminas\Json\Server\Smd::ENV_JSONRPC_2);</span>
+if ('GET' == $_SERVER['REQUEST_METHOD']) {
+    // Indicate the URL endpoint, and the JSON-RPC version used:
+    $server-&gt;setTarget('/json-rpc.php')
+           -&gt;setEnvelope(Laminas\Json\Server\Smd::ENV_JSONRPC_2);
 
-<span class=x>    // Grab the SMD</span>
-<span class=x>    $smd = $server-&gt;getServiceMap();</span>
+    // Grab the SMD
+    $smd = $server-&gt;getServiceMap();
 
-<span class=x>    // Return the SMD to the client</span>
-<span class=x>    header(&#39;Content-Type: application/json&#39;);</span>
-<span class=x>    echo $smd;</span>
-<span class=x>    return;</span>
-<span class=x>}</span>
+    // Return the SMD to the client
+    header('Content-Type: application/json');
+    echo $smd;
+    return;
+}
 
-<span class=x>$server-&gt;handle();</span>
-</pre></div></p>
+$server-&gt;handle();</code></pre>
 <p>If utilizing the JSON-RPC server with Dojo toolkit, you will also need to set a
 special compatibility flag to ensure that the two interoperate properly:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$server = new Laminas\Json\Server\Server();</span>
-<span class=x>$server-&gt;setClass(&#39;Calculator&#39;);</span>
+<pre class=codehilite><code class=language-php>$server = new Laminas\Json\Server\Server();
+$server-&gt;setClass('Calculator');
 
-<span class=x>if (&#39;GET&#39; == $_SERVER[&#39;REQUEST_METHOD&#39;]) {</span>
-<span class=x>    $server-&gt;setTarget(&#39;/json-rpc.php&#39;)</span>
-<span class=x>           -&gt;setEnvelope(Laminas\Json\Server\Smd::ENV_JSONRPC_2);</span>
-<span class=x>    $smd = $server-&gt;getServiceMap();</span>
+if ('GET' == $_SERVER['REQUEST_METHOD']) {
+    $server-&gt;setTarget('/json-rpc.php')
+           -&gt;setEnvelope(Laminas\Json\Server\Smd::ENV_JSONRPC_2);
+    $smd = $server-&gt;getServiceMap();
 
-<span class=x>    // Set Dojo compatibility:</span>
-<span class=x>    $smd-&gt;setDojoCompatible(true);</span>
+    // Set Dojo compatibility:
+    $smd-&gt;setDojoCompatible(true);
 
-<span class=x>    header(&#39;Content-Type: application/json&#39;);</span>
-<span class=x>    echo $smd;</span>
-<span class=x>    return;</span>
-<span class=x>}</span>
+    header('Content-Type: application/json');
+    echo $smd;
+    return;
+}
 
-<span class=x>$server-&gt;handle();</span>
-</pre></div></p>
+$server-&gt;handle();</code></pre>
 
 
 
@@ -416,20 +402,6 @@ special compatibility flag to ensure that the two interoperate properly:</p>
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href=".." class="subnavigation__link">laminas-json-server</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -529,9 +501,10 @@ special compatibility flag to ensure that the two interoperate properly:</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -568,7 +541,7 @@ special compatibility flag to ensure that the two interoperate properly:</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-json-server//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -577,8 +550,8 @@ special compatibility flag to ensure that the two interoperate properly:</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-json-server//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-json-server/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

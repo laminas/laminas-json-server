@@ -6,10 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Laminas\Json\Server">  
-    <link rel="canonical" href="https://docs.laminas.dev/intro/">
     <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Intro - laminas-json-server - Laminas Docs</title>
+    <title>laminas-json-server - Laminas Docs</title>
 
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -59,7 +58,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">laminas-json-server</a>
+            <a href="../.">laminas-json-server</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -73,8 +72,8 @@
                     
                     
                         
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="./" class="subnavigation__link">Intro</a>
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Intro</a>
                             </li>
                         
                     
@@ -200,108 +199,21 @@
         <div class="row">
             <div class="col-md-2 col-sm-12">
                 
-    
-
-    
-    
-
             </div>
             <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
                 
-                    <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        
-            <li class="breadcrumb-item"><a href="">Overview</a></li>
 
-            
-                <li class="breadcrumb-item"><a href="..">laminas-json-server</a></li>
+<h1 class="content__title">404</h1>
+<blockquote>
+    <h3>Something went wrong!</h3>
+    <p>
+        We're sorry, but the page you are looking for does not exist.
+    </p>
+</blockquote>
 
-                
-
-                <li class="breadcrumb-item active" aria-current="page">Intro</li>
-            
-        
-    </ol>
-</nav>
+<a href="../." class="btn btn-default" role="button">Go to homepage</a>
 
 
-
-
-
-
-    
-    
-
-    <h1 id="introduction">Introduction</h1>
-<p>laminas-json-server is a <a href="http://groups.google.com/group/json-rpc/">JSON-RPC</a> server implementation.
-It supports both the <a href="http://json-rpc.org/wiki/specification">JSON-RPC version 1 specification</a> as
-well as the <a href="http://www.jsonrpc.org/specification">version 2 specification</a>; additionally, it
-provides a PHP implementation of the <a href="http://www.jsonrpc.org/specification">Service Mapping Description (SMD)
-specification</a> for providing service metadata to service
-consumers.</p>
-<p>JSON-RPC is a lightweight Remote Procedure Call protocol that utilizes JSON for its messaging
-envelopes. This JSON-RPC implementation follows PHP's
-<a href="http://www.php.net/manual/en/class.soapserver.php">SoapServer</a> API. This means, in a typical
-situation, you will simply:</p>
-<ul>
-<li>Instantiate the server object.</li>
-<li>Attach one or more functions and/or classes/objects to the server object.</li>
-<li><code>handle()</code> the request.</li>
-</ul>
-<p>laminas-json-server utilizes <a href="https://docs.laminas.dev/laminas-server/reflection/">Laminas\Server\Reflection</a>
-to perform reflection on any attached classes or functions, and uses that
-information to build both the SMD and enforce method call signatures. As such,
-it is imperative that any attached functions and/or class methods have full
-PHP docblocks documenting, minimally:</p>
-<ul>
-<li>All parameters and their expected variable types</li>
-<li>The return value variable type</li>
-</ul>
-<p>laminas-json-server listens for POST requests only at this time; fortunately, most
-JSON-RPC client implementations in the wild at the time of this writing will
-only POST requests as it is. This makes it simple to utilize the same server
-end point to both handle requests as well as to deliver the service SMD, as is
-shown in the next example.</p>
-
-
-
-
-    <nav>
-    <ul class="page-nav hidden-print">
-
-        
-        <li class="page-nav__item">
-            
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="..">
-                    <i class="fa fa-chevron-left"></i> Previous
-                </a>
-            
-        </li>
-
-        
-        <li class="page-nav__item">
-            
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../usage/">
-                    Next <i class="fa fa-chevron-right"></i>
-                </a>
-            
-        </li>
-    </ul>
-</nav>
-
-
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/laminas/laminas-json-server/edit/master/docs/book/intro.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
-
-                
             </div>
             <div class="col-md-3 col-sm-12 sidebar">
                 
@@ -316,7 +228,7 @@ shown in the next example.</p>
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">laminas-json-server</a>
+            <a href="../.">laminas-json-server</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -330,8 +242,8 @@ shown in the next example.</p>
                     
                     
                         
-                            <li class="subnavigation__list-item subnavigation__list-item--active">
-                                <a href="./" class="subnavigation__link">Intro</a>
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Intro</a>
                             </li>
                         
                     
