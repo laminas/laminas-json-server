@@ -64,7 +64,8 @@ class Response
         // re-produce error state
         if (isset($options['error']) && is_array($options['error'])) {
             $error = $options['error'];
-            $options['error'] = new Error($error['message'], $error['code'], $error['data']);
+            $errorData = isset($error['data']) ? $error['data'] : null;
+            $options['error'] = new Error($error['message'], $error['code'], $errorData);
         }
 
         $methods = get_class_methods($this);
