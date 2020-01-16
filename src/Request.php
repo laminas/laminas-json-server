@@ -137,7 +137,7 @@ class Request
      * Overwrite params.
      *
      * @param  array $params
-     * @return \Laminas\Json\Server\Request
+     * @return Request
      */
     public function setParams(array $params) : Request
     {

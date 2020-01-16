@@ -59,7 +59,7 @@ class RequestTest extends TestCase
     public function testInvalidKeysShouldBeIgnored() : void
     {
         $count = 0;
-        foreach ([['foo', true], ['foo', new \stdClass], ['foo', []]] as $spec) {
+        foreach ([['foo', true], ['foo', new stdClass()], ['foo', []]] as $spec) {
             $this->request->addParam($spec[0], $spec[1]);
             $this->assertNull($this->request->getParam('foo'));
             $params = $this->request->getParams();
