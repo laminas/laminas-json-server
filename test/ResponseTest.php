@@ -23,7 +23,7 @@ class ResponseTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp() : void
     {
         $this->response = new Response();
     }
@@ -120,7 +120,7 @@ class ResponseTest extends TestCase
         $json = $this->response->toJSON();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertArrayHasKey('result', $test);
         $this->assertArrayNotHasKey('error', $test, "'error' may not coexist with 'result'");
         $this->assertArrayHasKey('id', $test);
@@ -142,7 +142,7 @@ class ResponseTest extends TestCase
         $json = $this->response->toJSON();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertArrayNotHasKey('result', $test, "'result' may not coexist with 'error'");
         $this->assertArrayHasKey('error', $test);
         $this->assertArrayHasKey('id', $test);
@@ -160,7 +160,7 @@ class ResponseTest extends TestCase
         $json = $this->response->__toString();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertArrayHasKey('result', $test);
         $this->assertArrayNotHasKey('error', $test, "'error' may not coexist with 'result'");
         $this->assertArrayHasKey('id', $test);
