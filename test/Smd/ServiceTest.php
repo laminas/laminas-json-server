@@ -131,7 +131,7 @@ class ServiceTest extends TestCase
         $this->testTargetShouldBeNullInitially();
         $this->service->setTarget(123);
         $value = $this->service->getTarget();
-        $this->assertInternalType('string', $value);
+        $this->assertIsString($value);
         $this->assertEquals((string) 123, $value);
     }
 
@@ -151,7 +151,7 @@ class ServiceTest extends TestCase
             $this->service->setEnvelope('JSON-P');
             $this->fail('Should not be able to set non-JSON-RPC spec envelopes');
         } catch (Exception\InvalidArgumentException $e) {
-            $this->assertContains('Invalid envelope', $e->getMessage());
+            $this->assertStringContainsString('Invalid envelope', $e->getMessage());
         }
     }
 
@@ -177,7 +177,7 @@ class ServiceTest extends TestCase
         $params = $this->service->getParams();
         $param  = array_shift($params);
         $test   = $param['type'];
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertEquals($type, $test);
     }
 
@@ -301,7 +301,7 @@ class ServiceTest extends TestCase
         $smd  = \Laminas\Json\Json::decode($json, \Laminas\Json\Json::TYPE_ARRAY);
 
         $this->assertArrayHasKey('foo', $smd);
-        $this->assertInternalType('array', $smd['foo']);
+        $this->assertIsArray($smd['foo']);
 
         $this->validateSmdArray($smd['foo']);
     }
