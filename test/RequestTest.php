@@ -32,13 +32,13 @@ class RequestTest extends TestCase
         $this->request = new Request();
     }
 
-    public function testShouldHaveNoParamsByDefault()
+    public function testShouldHaveNoParamsByDefault() : void
     {
         $params = $this->request->getParams();
         $this->assertEmpty($params);
     }
 
-    public function testShouldBeAbleToAddAParamAsValueOnly()
+    public function testShouldBeAbleToAddAParamAsValueOnly() : void
     {
         $this->request->addParam('foo');
         $params = $this->request->getParams();
@@ -47,7 +47,7 @@ class RequestTest extends TestCase
         $this->assertEquals('foo', $test);
     }
 
-    public function testShouldBeAbleToAddAParamAsKeyValuePair()
+    public function testShouldBeAbleToAddAParamAsKeyValuePair() : void
     {
         $this->request->addParam('bar', 'foo');
         $params = $this->request->getParams();
@@ -56,7 +56,7 @@ class RequestTest extends TestCase
         $this->assertEquals('bar', $params['foo']);
     }
 
-    public function testInvalidKeysShouldBeIgnored()
+    public function testInvalidKeysShouldBeIgnored() : void
     {
         $count = 0;
         foreach ([['foo', true], ['foo', new \stdClass], ['foo', []]] as $spec) {
@@ -68,7 +68,7 @@ class RequestTest extends TestCase
         }
     }
 
-    public function testShouldBeAbleToAddMultipleIndexedParamsAtOnce()
+    public function testShouldBeAbleToAddMultipleIndexedParamsAtOnce() : void
     {
         $params = [
             'foo',
@@ -80,7 +80,7 @@ class RequestTest extends TestCase
         $this->assertSame($params, $test);
     }
 
-    public function testShouldBeAbleToAddMultipleNamedParamsAtOnce()
+    public function testShouldBeAbleToAddMultipleNamedParamsAtOnce() : void
     {
         $params = [
             'foo' => 'bar',
@@ -92,7 +92,7 @@ class RequestTest extends TestCase
         $this->assertSame($params, $test);
     }
 
-    public function testShouldBeAbleToAddMixedIndexedAndNamedParamsAtOnce()
+    public function testShouldBeAbleToAddMixedIndexedAndNamedParamsAtOnce() : void
     {
         $params = [
             'foo' => 'bar',
@@ -107,7 +107,7 @@ class RequestTest extends TestCase
         $this->assertContains('baz', $test);
     }
 
-    public function testSetParamsShouldOverwriteParams()
+    public function testSetParamsShouldOverwriteParams() : void
     {
         $this->testShouldBeAbleToAddMixedIndexedAndNamedParamsAtOnce();
         $params = [
@@ -119,7 +119,7 @@ class RequestTest extends TestCase
         $this->assertSame($params, $this->request->getParams());
     }
 
-    public function testShouldBeAbleToRetrieveParamByKeyOrIndex()
+    public function testShouldBeAbleToRetrieveParamByKeyOrIndex() : void
     {
         $this->testShouldBeAbleToAddMixedIndexedAndNamedParamsAtOnce();
         $params = $this->request->getParams();
@@ -128,23 +128,23 @@ class RequestTest extends TestCase
         $this->assertEquals('bat', $this->request->getParam('baz'), var_export($params, 1));
     }
 
-    public function testMethodShouldBeNullByDefault()
+    public function testMethodShouldBeNullByDefault() : void
     {
         $this->assertNull($this->request->getMethod());
     }
 
-    public function testMethodErrorShouldBeFalseByDefault()
+    public function testMethodErrorShouldBeFalseByDefault() : void
     {
         $this->assertFalse($this->request->isMethodError());
     }
 
-    public function testMethodAccessorsShouldWorkUnderNormalInput()
+    public function testMethodAccessorsShouldWorkUnderNormalInput() : void
     {
         $this->request->setMethod('foo');
         $this->assertEquals('foo', $this->request->getMethod());
     }
 
-    public function testSettingMethodWithInvalidNameShouldSetError()
+    public function testSettingMethodWithInvalidNameShouldSetError() : void
     {
         foreach (['1ad', 'abc-123', 'ad$$832r#@'] as $method) {
             $this->request->setMethod($method);
@@ -153,23 +153,23 @@ class RequestTest extends TestCase
         }
     }
 
-    public function testIdShouldBeNullByDefault()
+    public function testIdShouldBeNullByDefault() : void
     {
         $this->assertNull($this->request->getId());
     }
 
-    public function testIdAccessorsShouldWorkUnderNormalInput()
+    public function testIdAccessorsShouldWorkUnderNormalInput() : void
     {
         $this->request->setId('foo');
         $this->assertEquals('foo', $this->request->getId());
     }
 
-    public function testVersionShouldBeJSONRpcV1ByDefault()
+    public function testVersionShouldBeJSONRpcV1ByDefault() : void
     {
         $this->assertEquals('1.0', $this->request->getVersion());
     }
 
-    public function testVersionShouldBeLimitedToV1AndV2()
+    public function testVersionShouldBeLimitedToV1AndV2() : void
     {
         $this->testVersionShouldBeJSONRpcV1ByDefault();
         $this->request->setVersion('2.0');
@@ -178,7 +178,7 @@ class RequestTest extends TestCase
         $this->assertEquals('1.0', $this->request->getVersion());
     }
 
-    public function testShouldBeAbleToLoadRequestFromJSONString()
+    public function testShouldBeAbleToLoadRequestFromJSONString() : void
     {
         $options = $this->getOptions();
         $json    = Json::encode($options);
@@ -189,7 +189,7 @@ class RequestTest extends TestCase
         $this->assertEquals($options['params'], $this->request->getParams());
     }
 
-    public function testLoadingFromJSONShouldSetJSONRpcVersionWhenPresent()
+    public function testLoadingFromJSONShouldSetJSONRpcVersionWhenPresent() : void
     {
         $options = $this->getOptions();
         $options['jsonrpc'] = '2.0';
@@ -198,7 +198,7 @@ class RequestTest extends TestCase
         $this->assertEquals('2.0', $this->request->getVersion());
     }
 
-    public function testShouldBeAbleToCastToJSON()
+    public function testShouldBeAbleToCastToJSON() : void
     {
         $options = $this->getOptions();
         $this->request->setOptions($options);
@@ -206,7 +206,7 @@ class RequestTest extends TestCase
         $this->validateJSON($json, $options);
     }
 
-    public function testCastingToStringShouldCastToJSON()
+    public function testCastingToStringShouldCastToJSON() : void
     {
         $options = $this->getOptions();
         $this->request->setOptions($options);
@@ -217,20 +217,20 @@ class RequestTest extends TestCase
     /**
      * @group Laminas-6187
      */
-    public function testMethodNamesShouldAllowDotNamespacing()
+    public function testMethodNamesShouldAllowDotNamespacing() : void
     {
         $this->request->setMethod('foo.bar');
         $this->assertEquals('foo.bar', $this->request->getMethod());
     }
 
-    public function testIsParseErrorSetOnMalformedJson()
+    public function testIsParseErrorSetOnMalformedJson() : void
     {
         $testJson = '{"id":1, "method": "test", "params:"[1,2,3]}';
         $this->request->loadJson($testJson);
         $this->assertTrue($this->request->isParseError());
     }
 
-    public function getOptions()
+    public function getOptions() : array
     {
         return [
             'method' => 'foo',
@@ -243,7 +243,7 @@ class RequestTest extends TestCase
         ];
     }
 
-    public function validateJSON($json, array $options)
+    public function validateJSON($json, array $options) : void
     {
         $test = Json::decode($json, Json::TYPE_ARRAY);
         $this->assertIsArray($test, var_export($json, 1));

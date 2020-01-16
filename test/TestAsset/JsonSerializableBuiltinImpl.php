@@ -17,7 +17,7 @@ use JsonSerializable;
  */
 class JsonSerializableBuiltinImpl implements JsonSerializable
 {
-    public function jsonSerialize()
+    public function jsonSerialize() : array
     {
         return [__FUNCTION__];
     }

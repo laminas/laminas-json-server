@@ -150,7 +150,7 @@ class Service
      * @param  array $options
      * @return self
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options) : self
     {
         $methods = get_class_methods($this);
         foreach ($options as $key => $value) {
@@ -174,7 +174,7 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setName($name)
+    public function setName($name) : self
     {
         $name = (string) $name;
         if (! preg_match($this->nameRegex, $name)) {
@@ -193,7 +193,7 @@ class Service
      *
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
@@ -207,7 +207,7 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setTransport($transport)
+    public function setTransport($transport) : self
     {
         if (! in_array($transport, $this->transportTypes)) {
             throw new InvalidArgumentException(sprintf(
@@ -226,7 +226,7 @@ class Service
      *
      * @return string
      */
-    public function getTransport()
+    public function getTransport() : string
     {
         return $this->transport;
     }
@@ -237,7 +237,7 @@ class Service
      * @param  string  $target
      * @return self
      */
-    public function setTarget($target)
+    public function setTarget($target) : self
     {
         $this->target = (string) $target;
         return $this;
@@ -248,7 +248,7 @@ class Service
      *
      * @return string
      */
-    public function getTarget()
+    public function getTarget() : string
     {
         return $this->target;
     }
@@ -260,7 +260,7 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setEnvelope($envelopeType)
+    public function setEnvelope($envelopeType) : self
     {
         if (! in_array($envelopeType, $this->envelopeTypes)) {
             throw new InvalidArgumentException(sprintf(
@@ -279,7 +279,7 @@ class Service
      *
      * @return string
      */
-    public function getEnvelope()
+    public function getEnvelope() : string
     {
         return $this->envelope;
     }
@@ -293,7 +293,7 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function addParam($type, array $options = [], $order = null)
+    public function addParam($type, array $options = [], $order = null) : self
     {
         if (! is_string($type) && ! is_array($type)) {
             throw new InvalidArgumentException('Invalid param type provided');
@@ -337,7 +337,7 @@ class Service
      * @param array $params
      * @return self
      */
-    public function addParams(array $params)
+    public function addParams(array $params) : self
     {
         ksort($params);
 
@@ -364,7 +364,7 @@ class Service
      * @param array $params
      * @return self
      */
-    public function setParams(array $params)
+    public function setParams(array $params) : self
     {
         $this->params = [];
         return $this->addParams($params);
@@ -377,7 +377,7 @@ class Service
      *
      * @return array
      */
-    public function getParams()
+    public function getParams() : array
     {
         $params = [];
         $index  = 0;
@@ -407,7 +407,7 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setReturn($type)
+    public function setReturn($type) : self
     {
         if (! is_string($type) && ! is_array($type)) {
             throw new InvalidArgumentException("Invalid param type provided ('" . gettype($type) . "')");
@@ -442,7 +442,7 @@ class Service
      *
      * @return array
      */
-    public function toArray()
+    public function toArray() : array
     {
         $envelope   = $this->getEnvelope();
         $target     = $this->getTarget();
@@ -463,7 +463,7 @@ class Service
      *
      * @return string
      */
-    public function toJson()
+    public function toJson() : string
     {
         return Json::encode([
             $this->getName() => $this->toArray(),
@@ -475,7 +475,7 @@ class Service
      *
      * @return string
      */
-    public function __toString()
+    public function __toString() : string
     {
         return $this->toJson();
     }
@@ -488,7 +488,7 @@ class Service
      * @return string
      * @throws InvalidArgumentException
      */
-    protected function validateParamType($type, $isReturn = false)
+    protected function validateParamType($type, $isReturn = false) : string
     {
         if (! is_string($type)) {
             throw new InvalidArgumentException(sprintf(

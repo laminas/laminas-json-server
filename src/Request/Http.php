@@ -40,7 +40,7 @@ class Http extends JsonRequest
      *
      * @return string
      */
-    public function getRawJson()
+    public function getRawJson() : string
     {
         return $this->rawJson;
     }

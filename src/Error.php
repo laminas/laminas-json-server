@@ -68,7 +68,7 @@ class Error
      * @param  int $code
      * @return self
      */
-    public function setCode($code)
+    public function setCode($code) : self
     {
         if (! is_scalar($code) || is_bool($code) || is_float($code)) {
             return $this;
@@ -94,7 +94,7 @@ class Error
      *
      * @return int|null
      */
-    public function getCode()
+    public function getCode() : ?int
     {
         return $this->code;
     }
@@ -105,7 +105,7 @@ class Error
      * @param  string $message
      * @return self
      */
-    public function setMessage($message)
+    public function setMessage($message) : self
     {
         if (! is_scalar($message)) {
             return $this;
@@ -120,7 +120,7 @@ class Error
      *
      * @return string
      */
-    public function getMessage()
+    public function getMessage() : string
     {
         return $this->message;
     }
@@ -131,7 +131,7 @@ class Error
      * @param  mixed $data
      * @return self
      */
-    public function setData($data)
+    public function setData($data) : self
     {
         $this->data = $data;
         return $this;
@@ -152,7 +152,7 @@ class Error
      *
      * @return array
      */
-    public function toArray()
+    public function toArray() : array
     {
         return [
             'code'    => $this->getCode(),
@@ -166,7 +166,7 @@ class Error
      *
      * @return string
      */
-    public function toJson()
+    public function toJson() : string
     {
         return Json::encode($this->toArray());
     }
@@ -176,7 +176,7 @@ class Error
      *
      * @return string
      */
-    public function __toString()
+    public function __toString() : string
     {
         return $this->toJson();
     }

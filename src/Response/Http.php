@@ -26,7 +26,7 @@ class Http extends JsonResponse
      *
      * @return string
      */
-    public function toJson()
+    public function toJson(): string
     {
         $this->sendHeaders();
 
@@ -49,7 +49,7 @@ class Http extends JsonResponse
      *
      * @return void
      */
-    public function sendHeaders()
+    public function sendHeaders() : void
     {
         if (headers_sent()) {
             return;
