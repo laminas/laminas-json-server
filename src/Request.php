@@ -13,6 +13,14 @@ namespace Laminas\Json\Server;
 use Exception;
 use Laminas\Json\Json;
 
+use function array_key_exists;
+use function count;
+use function get_class_methods;
+use function in_array;
+use function is_string;
+use function preg_match;
+use function ucfirst;
+
 /**
  * @todo Revised method regex to allow NS; however, should SMD be revised to
  *     strip PHP NS instead when attaching functions?

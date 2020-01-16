@@ -14,6 +14,22 @@ use Laminas\Json\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Smd;
 
+use function array_key_exists;
+use function array_keys;
+use function array_search;
+use function compact;
+use function get_class_methods;
+use function gettype;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_string;
+use function ksort;
+use function preg_match;
+use function sprintf;
+use function strtolower;
+use function ucfirst;
+
 /**
  * Create Service Mapping Description for a method
  *

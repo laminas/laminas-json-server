@@ -14,6 +14,14 @@ use Laminas\Json\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
 
+use function array_key_exists;
+use function compact;
+use function in_array;
+use function is_array;
+use function method_exists;
+use function preg_match;
+use function ucfirst;
+
 class Smd
 {
     const ENV_JSONRPC_1 = 'JSON-RPC-1.0';
@@ -124,7 +132,7 @@ class Smd
      *
      * @param  string $transport
      * @return self
-     * @throws Exception\InvalidArgumentException
+      * @throws InvalidArgumentException
      */
     public function setTransport($transport)
     {
@@ -151,7 +159,7 @@ class Smd
      *
      * @param  string $envelopeType
      * @return self
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setEnvelope($envelopeType)
     {
@@ -178,7 +186,7 @@ class Smd
      *
      * @param  string $type
      * @return self
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setContentType($type)
     {
@@ -295,8 +303,8 @@ class Smd
      *
      * @param Smd\Service|array $service
      * @return self
-     * @throws Exception\RuntimeException
-     * @throws Exception\InvalidArgumentException
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     public function addService($service)
     {

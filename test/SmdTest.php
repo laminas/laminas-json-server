@@ -16,6 +16,11 @@ use Laminas\Json\Server\Exception\RuntimeException;
 use Laminas\Json\Server\Smd;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
+use function array_shift;
+use function array_values;
+use function uniqid;
+
 class SmdTest extends TestCase
 {
     /**
@@ -174,7 +179,7 @@ class SmdTest extends TestCase
         ];
         $this->smd->addService($service);
         $foo = $this->smd->getService('foo');
-        $this->assertInstanceOf('Laminas\Json\Server\Smd\Service', $foo);
+        $this->assertInstanceOf(Json::class, $foo);
         $this->assertEquals('foo', $foo->getName());
     }
 
@@ -390,7 +395,7 @@ class SmdTest extends TestCase
         $smdSource->setTarget('http://foo');
         $smdSource->setTransport('POST');
         $smdSource->setServices([
-            ['name' => 'foo']
+            ['name' => 'foo'],
         ]);
 
         $smdDestination = new Smd();

@@ -12,6 +12,12 @@ namespace Laminas\Json\Server;
 
 use Laminas\Json\Json;
 
+use function is_bool;
+use function is_float;
+use function is_numeric;
+use function is_scalar;
+use function is_string;
+
 class Error
 {
     const ERROR_PARSE           = -32700;

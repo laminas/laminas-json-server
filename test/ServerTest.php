@@ -18,6 +18,12 @@ use Laminas\Json\Server\Response;
 use Laminas\Server\Reflection\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
+use function count;
+use function get_class_methods;
+use function ob_get_clean;
+use function ob_start;
+use function var_export;
+
 class ServerTest extends TestCase
 {
     public function dummyCallable() : void

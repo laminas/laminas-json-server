@@ -13,6 +13,11 @@ namespace Laminas\Json\Server;
 use Laminas\Json\Exception\RuntimeException;
 use Laminas\Json\Json;
 
+use function get_class_methods;
+use function in_array;
+use function is_array;
+use function ucfirst;
+
 class Response
 {
     /**

@@ -12,6 +12,8 @@ namespace Laminas\Json\Server\Request;
 
 use Laminas\Json\Server\Request as JsonRequest;
 
+use function file_get_contents;
+
 class Http extends JsonRequest
 {
     /**

@@ -12,6 +12,19 @@ namespace Laminas\Json\Server;
 
 use Laminas\Server\Cache as ServerCache;
 
+use function dirname;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function is_readable;
+use function is_string;
+use function is_writable;
+use function restore_error_handler;
+use function set_error_handler;
+use function unlink;
+
+use const E_WARNING;
+
 /**
  * Cache server definition and SMD.
  */

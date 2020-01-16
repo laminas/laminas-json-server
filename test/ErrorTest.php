@@ -13,6 +13,9 @@ namespace LaminasTest\Json\Server;
 use Laminas\Json;
 use Laminas\Json\Server;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function range;
 
 class ErrorTest extends TestCase
 {
@@ -40,7 +43,7 @@ class ErrorTest extends TestCase
 
     public function testCodeShouldBeLimitedToStandardIntegers()
     {
-        foreach ([null, true, 'foo', [], new \stdClass, 2.0] as $code) {
+        foreach ([null, true, 'foo', [], new stdClass(), 2.0] as $code) {
             $this->error->setCode($code);
             $this->assertEquals(Server\Error::ERROR_OTHER, $this->error->getCode());
         }
@@ -87,7 +90,7 @@ class ErrorTest extends TestCase
 
     public function testSetMessageToNonScalarShouldSilentlyFail()
     {
-        foreach ([[], new \stdClass] as $message) {
+        foreach ([[], new stdClass()] as $message) {
             $this->error->setMessage($message);
             $this->assertNull($this->error->getMessage());
         }
@@ -100,7 +103,7 @@ class ErrorTest extends TestCase
 
     public function testShouldAllowArbitraryData()
     {
-        foreach ([true, 'foo', 2, 2.0, [], new \stdClass] as $datum) {
+        foreach ([true, 'foo', 2, 2.0, [], new stdClass()] as $datum) {
             $this->error->setData($datum);
             $this->assertEquals($datum, $this->error->getData());
         }

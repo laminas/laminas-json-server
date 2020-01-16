@@ -18,6 +18,28 @@ use Laminas\Server\Reflection;
 use ReflectionFunction;
 use ReflectionMethod;
 
+use function array_key_exists;
+use function array_keys;
+use function array_push;
+use function array_reduce;
+use function array_shift;
+use function array_slice;
+use function count;
+use function func_get_args;
+use function func_num_args;
+use function get_class;
+use function get_class_methods;
+use function gettype;
+use function in_array;
+use function is_array;
+use function is_callable;
+use function is_object;
+use function is_string;
+use function key;
+use function preg_match;
+use function sprintf;
+use function strstr;
+
 class Server extends AbstractServer
 {
     /**#@+

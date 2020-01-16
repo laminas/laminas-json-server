@@ -13,6 +13,12 @@ namespace LaminasTest\Json\Server;
 use Laminas\Json\Server;
 use PHPUnit\Framework\TestCase;
 
+use function file_exists;
+use function is_writable;
+use function sys_get_temp_dir;
+use function tempnam;
+use function unlink;
+
 class CacheTest extends TestCase
 {
     /**

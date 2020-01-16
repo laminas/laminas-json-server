@@ -13,6 +13,11 @@ namespace LaminasTest\Json\Server;
 use Laminas\Json\Json;
 use Laminas\Json\Server\Request;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function array_shift;
+use function array_values;
+use function var_export;
 
 class RequestTest extends TestCase
 {

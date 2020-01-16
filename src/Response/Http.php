@@ -12,6 +12,9 @@ namespace Laminas\Json\Server\Response;
 
 use Laminas\Json\Server\Response as JsonResponse;
 
+use function header;
+use function headers_sent;
+
 class Http extends JsonResponse
 {
     /**
