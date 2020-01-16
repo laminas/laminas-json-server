@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#3](https://github.com/laminas/laminas-json-server/pull/3) Drops support for PHP 7.1 and below
 
 ### Fixed
 
