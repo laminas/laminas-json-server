@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class ResponseTest extends TestCase
 {
+    private $response;
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
@@ -211,5 +212,23 @@ class ResponseTest extends TestCase
             0 => '2.0',
         ]);
         $this->assertNull($this->response->getVersion());
+    }
+
+    /**
+     * Assert that error data can be omitted
+     * @see https://www.jsonrpc.org/specification#response_object
+     */
+    public function testSetOptionsAcceptsErrorWithEmptyDate()
+    {
+        $this->response->setOptions([
+            'error' => [
+                'code' => 0,
+                'message' => 'Lorem Ipsum',
+            ],
+        ]);
+        $this->assertInstanceOf(Error::class, $this->response->getError());
+        $this->assertEquals(-32000, $this->response->getError()->getCode());
+        $this->assertEquals('Lorem Ipsum', $this->response->getError()->getMessage());
+        $this->assertEquals(null, $this->response->getError()->getData());
     }
 }
