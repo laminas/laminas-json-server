@@ -35,7 +35,7 @@ class ClientTest extends TestCase
      */
     protected $jsonClient;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->httpAdapter = new TestAdapter();
         $this->httpClient = new HttpClient(

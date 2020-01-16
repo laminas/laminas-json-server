@@ -20,7 +20,7 @@ class ErrorTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp() : void
     {
         $this->error = new Server\Error();
     }

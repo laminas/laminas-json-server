@@ -19,7 +19,7 @@ class CacheTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp() : void
     {
         $this->server = new Server\Server();
         $this->server->setClass(TestAsset\Foo::class, 'foo');
@@ -41,7 +41,7 @@ class CacheTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    protected function tearDown() : void
     {
         if (file_exists($this->cacheFile)) {
             unlink($this->cacheFile);

@@ -23,7 +23,7 @@ class ResponseTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp() : void
     {
         $this->response = new Response();
     }

@@ -20,7 +20,7 @@ class RequestTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp() : void
     {
         $this->request = new Request();
     }

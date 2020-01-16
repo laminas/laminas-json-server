@@ -24,7 +24,7 @@ class ServerTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp() : void
     {
         $this->server = new Server\Server();
     }
