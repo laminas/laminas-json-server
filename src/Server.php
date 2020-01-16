@@ -210,7 +210,7 @@ class Server extends AbstractServer
         // Emit response?
         if (! $this->returnResponse) {
             echo $response;
-            return;
+            return null;
         }
 
         // or return it?
@@ -573,9 +573,9 @@ class Server extends AbstractServer
     /**
      * Internal method for handling request.
      *
-     * @return void
+     * @return Error
      */
-    protected function handleRequest() : void
+    protected function handleRequest() : Error
     {
         $request = $this->getRequest();
 

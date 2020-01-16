@@ -258,9 +258,9 @@ class Smd
      * Set service description.
      *
      * @param  string $description
-     * @return self
+     * @return string
      */
-    public function setDescription($description) : self
+    public function setDescription($description) : string
     {
         $this->description = (string) $description;
         return $this->description;
