@@ -18,6 +18,10 @@ use PHPUnit\Framework\TestCase;
 
 class ServerTest extends TestCase
 {
+    public function dummyCallable() : void
+    {
+    }
+
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
@@ -39,12 +43,12 @@ class ServerTest extends TestCase
     public function testShouldBeAbleToBindCallbackToServer()
     {
         try {
-            $this->server->addFunction([$this, 'setUp']);
+            $this->server->addFunction([$this, 'dummyCallable']);
         } catch (RuntimeException $e) {
             $this->markTestIncomplete('PHPUnit docblocks may be incorrect');
         }
         $methods = $this->server->getFunctions();
-        $this->assertTrue($methods->hasMethod('setUp'));
+        $this->assertTrue($methods->hasMethod('dummyCallable'));
     }
 
     public function testShouldBeAbleToBindClassToServer()
