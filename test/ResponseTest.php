@@ -89,7 +89,7 @@ class ResponseTest extends TestCase
     {
         $this->response->setVersion('2.0');
         $this->assertEquals('2.0', $this->response->getVersion());
-        foreach (['a', 1, '1.0', true] as $version) {
+        foreach (['a', '1.0'] as $version) {
             $this->response->setVersion($version);
             $this->assertNull($this->response->getVersion());
         }
