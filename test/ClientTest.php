@@ -93,8 +93,8 @@ class ClientTest extends TestCase
         $this->setServerResponseTo(true);
         $this->jsonClient->call('foo');
 
-        //$this->assertInstanceOf('Laminas\\Json\\Server\\Request', $this->jsonClient->getLastRequest());
-        //$this->assertInstanceOf('Laminas\\Json\\Server\\Response', $this->jsonClient->getLastResponse());
+        $this->assertInstanceOf(Request::class, $this->jsonClient->getLastRequest());
+        $this->assertInstanceOf(Response::class, $this->jsonClient->getLastResponse());
     }
 
     public function testSuccessfulRpcMethodCallWithNoParameters() : void
