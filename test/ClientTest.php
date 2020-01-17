@@ -282,7 +282,7 @@ class ClientTest extends TestCase
         $this->assertSame('application/jsonrequest', $jsonClient->getHttpClient()->getHeader('Accept'));
     }
 
-    public function getServerResponseFor($nativeVars) : Response
+    public function getServerResponseFor($nativeVars) : string
     {
         $response = new Response();
         $response->setResult($nativeVars);

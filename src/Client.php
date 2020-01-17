@@ -89,7 +89,7 @@ class Client implements ServerClient
      *
      * @return Request
      */
-    public function getLastRequest() : Request
+    public function getLastRequest() : ?Request
     {
         return $this->lastRequest;
     }
@@ -99,7 +99,7 @@ class Client implements ServerClient
      *
      * @return Response
      */
-    public function getLastResponse() : Response
+    public function getLastResponse() : ?Response
     {
         return $this->lastResponse;
     }
