@@ -123,14 +123,14 @@ class RequestTest extends TestCase
     {
         $this->testShouldBeAbleToAddMixedIndexedAndNamedParamsAtOnce();
         $params = $this->request->getParams();
-        $this->assertEquals('bar', $this->request->getParam('foo'), var_export($params, 1));
-        $this->assertEquals('baz', $this->request->getParam(1), var_export($params, 1));
-        $this->assertEquals('bat', $this->request->getParam('baz'), var_export($params, 1));
+        $this->assertEquals('bar', $this->request->getParam('foo'), var_export($params, true));
+        $this->assertEquals('baz', $this->request->getParam(1), var_export($params, true));
+        $this->assertEquals('bat', $this->request->getParam('baz'), var_export($params, true));
     }
 
-    public function testMethodShouldBeNullByDefault() : void
+    public function testMethodShouldBeAnEmptyStringByDefault() : void
     {
-        $this->assertNull($this->request->getMethod());
+        $this->assertEquals('', $this->request->getMethod());
     }
 
     public function testMethodErrorShouldBeFalseByDefault() : void
@@ -148,7 +148,7 @@ class RequestTest extends TestCase
     {
         foreach (['1ad', 'abc-123', 'ad$$832r#@'] as $method) {
             $this->request->setMethod($method);
-            $this->assertNull($this->request->getMethod());
+            $this->assertEquals('', $this->request->getMethod());
             $this->assertTrue($this->request->isMethodError());
         }
     }
@@ -246,7 +246,7 @@ class RequestTest extends TestCase
     public function validateJSON(string $json, array $options) : void
     {
         $test = Json::decode($json, Json::TYPE_ARRAY);
-        $this->assertIsArray($test, var_export($json, 1));
+        $this->assertIsArray($test, var_export($json, true));
 
         $this->assertArrayHasKey('id', $test);
         $this->assertArrayHasKey('method', $test);

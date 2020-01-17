@@ -27,7 +27,18 @@ use function ucfirst;
 class Request
 {
     /**
-     * Request ID
+     * Request id
+     *
+     * JSON-RPC 1.0
+     * The request id. This can be of any type. It is used to match the response with the request that it is replying
+     * to.
+     * @see https://www.jsonrpc.org/specification_v1#a1.1Requestmethodinvocation
+     *
+     * JSON-RPC 2.0 allows any type
+     * An identifier established by the Client that MUST contain a String, Number, or NULL value if included. If it is
+     * not included it is assumed to be a notification. The value SHOULD normally not be Null and Numbers SHOULD NOT
+     * contain fractional parts
+     * @see https://www.jsonrpc.org/specification#request_object
      *
      * @var mixed
      */
@@ -52,7 +63,7 @@ class Request
      *
      * @var string
      */
-    protected $method;
+    protected $method = '';
 
     /**
      * Regex for method.
@@ -106,9 +117,9 @@ class Request
      * @param  string $key
      * @return self
      */
-    public function addParam($value, ?string $key = null) : self
+    public function addParam($value,  $key = null) : self
     {
-        if (null === $key) {
+        if ((null === $key) || ! is_string($key)) {
             $index = count($this->params);
             $this->params[$index] = $value;
             return $this;
@@ -224,16 +235,16 @@ class Request
      */
     public function setId($name) : self
     {
-        $this->id = (string) $name;
+        $this->id = $name;
         return $this;
     }
 
     /**
      * Retrieve request identifier.
      *
-     * @return string
+     * @return mixed
      */
-    public function getId() : string
+    public function getId()
     {
         return $this->id;
     }
