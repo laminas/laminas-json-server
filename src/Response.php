@@ -77,6 +77,10 @@ class Response
 
         $methods = get_class_methods($this);
         foreach ($options as $key => $value) {
+            if (! is_string($key)) {
+                continue;
+            }
+
             $method = 'set' . ucfirst($key);
             if (in_array($method, $methods)) {
                 $this->$method($value);
