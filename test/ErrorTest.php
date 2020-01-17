@@ -35,20 +35,6 @@ class ErrorTest extends TestCase
         $this->assertEquals(Server\Error::ERROR_OTHER, $this->error->getCode());
     }
 
-    public function testSetCodeShouldCastToInteger() : void
-    {
-        $this->error->setCode('-32700');
-        $this->assertEquals(-32700, $this->error->getCode());
-    }
-
-    public function testCodeShouldBeLimitedToStandardIntegers() : void
-    {
-        foreach ([null, true, 'foo', [], new stdClass(), 2.0] as $code) {
-            $this->error->setCode($code);
-            $this->assertEquals(Server\Error::ERROR_OTHER, $this->error->getCode());
-        }
-    }
-
     public function testCodeShouldAllowArbitraryAppErrorCodesInXmlRpcErrorCodeRange() : void
     {
         foreach (range(-32099, -32000) as $code) {
@@ -75,25 +61,9 @@ class ErrorTest extends TestCase
         $this->assertEquals($code, $this->error->getCode());
     }
 
-    public function testMessageShouldBeNullByDefault() : void
+    public function testMessageShouldBeAnEmptyStringByDefault() : void
     {
-        $this->assertNull($this->error->getMessage());
-    }
-
-    public function testSetMessageShouldCastToString() : void
-    {
-        foreach ([true, 2.0, 25] as $message) {
-            $this->error->setMessage($message);
-            $this->assertEquals((string) $message, $this->error->getMessage());
-        }
-    }
-
-    public function testSetMessageToNonScalarShouldSilentlyFail() : void
-    {
-        foreach ([[], new stdClass()] as $message) {
-            $this->error->setMessage($message);
-            $this->assertNull($this->error->getMessage());
-        }
+        $this->assertEquals('', $this->error->getMessage());
     }
 
     public function testDataShouldBeNullByDefault() : void

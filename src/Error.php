@@ -40,14 +40,14 @@ class Error
      *
      * @var string
      */
-    protected $message;
+    protected $message = '';
 
     /**
      * @param  string $message
      * @param  int $code
      * @param  mixed $data
      */
-    public function __construct(?string $message = null, int $code = self::ERROR_OTHER, $data = null)
+    public function __construct(?string $message = '', int $code = self::ERROR_OTHER, $data = null)
     {
         $this->setMessage($message)
              ->setCode($code)
