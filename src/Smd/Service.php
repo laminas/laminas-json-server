@@ -174,9 +174,8 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setName($name) : self
+    public function setName(string $name) : self
     {
-        $name = (string) $name;
         if (! preg_match($this->nameRegex, $name)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid name "%s" provided for service; must follow PHP method naming conventions',
@@ -207,7 +206,7 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setTransport($transport) : self
+    public function setTransport(string $transport) : self
     {
         if (! in_array($transport, $this->transportTypes)) {
             throw new InvalidArgumentException(sprintf(
@@ -237,9 +236,9 @@ class Service
      * @param  string  $target
      * @return self
      */
-    public function setTarget($target) : self
+    public function setTarget(string $target) : self
     {
-        $this->target = (string) $target;
+        $this->target = $target;
         return $this;
     }
 
@@ -260,7 +259,7 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setEnvelope($envelopeType) : self
+    public function setEnvelope(string $envelopeType) : self
     {
         if (! in_array($envelopeType, $this->envelopeTypes)) {
             throw new InvalidArgumentException(sprintf(
@@ -293,7 +292,7 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function addParam($type, array $options = [], $order = null) : self
+    public function addParam($type, array $options = [], ?int $order = null) : self
     {
         if (! is_string($type) && ! is_array($type)) {
             throw new InvalidArgumentException('Invalid param type provided');
@@ -488,7 +487,7 @@ class Service
      * @return string
      * @throws InvalidArgumentException
      */
-    protected function validateParamType($type, $isReturn = false) : string
+    protected function validateParamType(string $type, bool $isReturn = false) : string
     {
         if (! is_string($type)) {
             throw new InvalidArgumentException(sprintf(

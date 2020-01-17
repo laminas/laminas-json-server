@@ -69,7 +69,7 @@ class ErrorTest extends TestCase
     /**
      * @dataProvider arbitraryErrorCodes
      */
-    public function testCodeShouldAllowArbitraryErrorCode($code) : void
+    public function testCodeShouldAllowArbitraryErrorCode(int $code) : void
     {
         $this->error->setCode($code);
         $this->assertEquals($code, $this->error->getCode());
@@ -137,7 +137,7 @@ class ErrorTest extends TestCase
                     ->setData(['foo' => 'bar']);
     }
 
-    public function validateArray($error) : void
+    public function validateArray(array $error) : void
     {
         $this->assertIsArray($error);
         $this->assertArrayHasKey('code', $error);

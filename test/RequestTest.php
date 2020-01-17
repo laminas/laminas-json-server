@@ -243,7 +243,7 @@ class RequestTest extends TestCase
         ];
     }
 
-    public function validateJSON($json, array $options) : void
+    public function validateJSON(string $json, array $options) : void
     {
         $test = Json::decode($json, Json::TYPE_ARRAY);
         $this->assertIsArray($test, var_export($json, 1));

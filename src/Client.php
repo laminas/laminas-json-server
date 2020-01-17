@@ -56,7 +56,7 @@ class Client implements ServerClient
      * @param string $server Full address of the JSON-RPC service.
      * @param HttpClient $httpClient HTTP Client to use for requests.
      */
-    public function __construct($server, HttpClient $httpClient = null)
+    public function __construct(string $server, HttpClient $httpClient = null)
     {
         $this->httpClient = $httpClient ?: new HttpClient();
         $this->serverAddress = $server;
@@ -111,7 +111,7 @@ class Client implements ServerClient
      * @return Response Response.
      * @throws Exception\HttpException When HTTP communication fails.
      */
-    public function doRequest($request) : Response
+    public function doRequest(Request $request) : Response
     {
         $this->lastRequest = $request;
 
@@ -188,7 +188,7 @@ class Client implements ServerClient
      * @param  array $params List of arguments.
      * @return Request Created request.
      */
-    protected function createRequest($method, array $params) : Request
+    protected function createRequest(string $method, array $params) : Request
     {
         $request = new Request();
         $request->setMethod($method)

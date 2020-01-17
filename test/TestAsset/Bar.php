@@ -29,7 +29,7 @@ class Bar
      * @param  mixed $three
      * @return array
      */
-    public function foo($one, $two = 'two', $three = null) : array
+    public function foo(bool $one, string $two = 'two', $three = null) : array
     {
         return [$one, $two, $three, $this->val];
     }

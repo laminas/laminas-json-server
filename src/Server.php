@@ -333,7 +333,7 @@ class Server extends AbstractServer
      * @param  array $args
      * @return mixed
      */
-    public function __call($method, $args)
+    public function __call(string $method, array $args)
     {
         if (! preg_match('/^(set|get)/', $method, $matches)) {
             return;

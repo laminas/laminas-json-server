@@ -98,7 +98,7 @@ class Response
      * @return void
      * @throws Exception\RuntimeException
      */
-    public function loadJson($json) : void
+    public function loadJson(string $json) : void
     {
         try {
             $options = Json::decode($json, Json::TYPE_ARRAY);
@@ -201,9 +201,8 @@ class Response
      * @param  string $version
      * @return self
      */
-    public function setVersion($version) : self
+    public function setVersion(string $version) : self
     {
-        $version = (string) $version;
         if ('2.0' == $version) {
             $this->version = '2.0';
             return $this;
@@ -273,7 +272,7 @@ class Response
      * @param  Smd $serviceMap
      * @return self
      */
-    public function setServiceMap($serviceMap) : self
+    public function setServiceMap(Smd $serviceMap) : self
     {
         $this->serviceMap = $serviceMap;
         return $this;

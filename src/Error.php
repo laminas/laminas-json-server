@@ -12,12 +12,6 @@ namespace Laminas\Json\Server;
 
 use Laminas\Json\Json;
 
-use function is_bool;
-use function is_float;
-use function is_numeric;
-use function is_scalar;
-use function is_string;
-
 class Error
 {
     const ERROR_PARSE           = -32700;
@@ -53,7 +47,7 @@ class Error
      * @param  int $code
      * @param  mixed $data
      */
-    public function __construct($message = null, $code = self::ERROR_OTHER, $data = null)
+    public function __construct(?string $message = null, int $code = self::ERROR_OTHER, $data = null)
     {
         $this->setMessage($message)
              ->setCode($code)
@@ -68,18 +62,8 @@ class Error
      * @param  int $code
      * @return self
      */
-    public function setCode($code) : self
+    public function setCode(int $code) : self
     {
-        if (! is_scalar($code) || is_bool($code) || is_float($code)) {
-            return $this;
-        }
-
-        if (is_string($code) && ! is_numeric($code)) {
-            return $this;
-        }
-
-        $code = (int) $code;
-
         if (0 === $code) {
             $this->code = self::ERROR_OTHER;
             return $this;
@@ -92,9 +76,9 @@ class Error
     /**
      * Get error code
      *
-     * @return int|null
+     * @return int
      */
-    public function getCode() : ?int
+    public function getCode() : int
     {
         return $this->code;
     }
@@ -105,13 +89,9 @@ class Error
      * @param  string $message
      * @return self
      */
-    public function setMessage($message) : self
+    public function setMessage(string $message) : self
     {
-        if (! is_scalar($message)) {
-            return $this;
-        }
-
-        $this->message = (string) $message;
+        $this->message = $message;
         return $this;
     }
 

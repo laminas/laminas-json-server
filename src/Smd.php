@@ -134,7 +134,7 @@ class Smd
      * @return self
       * @throws InvalidArgumentException
      */
-    public function setTransport($transport) : self
+    public function setTransport(string $transport) : self
     {
         if (! in_array($transport, $this->transportTypes)) {
             throw new InvalidArgumentException("Invalid transport '{$transport}' specified");
@@ -161,7 +161,7 @@ class Smd
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setEnvelope($envelopeType) : self
+    public function setEnvelope(string $envelopeType) : self
     {
         if (! in_array($envelopeType, $this->envelopeTypes)) {
             throw new InvalidArgumentException("Invalid envelope type '{$envelopeType}'");
@@ -188,7 +188,7 @@ class Smd
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setContentType($type) : self
+    public function setContentType(string $type) : self
     {
         if (! preg_match($this->contentTypeRegex, $type)) {
             throw new InvalidArgumentException("Invalid content type '{$type}' specified");
@@ -216,9 +216,9 @@ class Smd
      * @param  string $target
      * @return self
      */
-    public function setTarget($target) : self
+    public function setTarget(string $target) : self
     {
-        $this->target = (string) $target;
+        $this->target = $target;
         return $this;
     }
 
@@ -238,9 +238,9 @@ class Smd
      * @param  string $id
      * @return self
      */
-    public function setId($id) : self
+    public function setId(string $id) : self
     {
-        $this->id = (string) $id;
+        $this->id = $id;
         return $this;
     }
 
@@ -260,9 +260,9 @@ class Smd
      * @param  string $description
      * @return string
      */
-    public function setDescription($description) : string
+    public function setDescription(string $description) : string
     {
-        $this->description = (string) $description;
+        $this->description = $description;
         return $this->description;
     }
 
@@ -282,9 +282,9 @@ class Smd
      * @param  bool $flag
      * @return self
      */
-    public function setDojoCompatible($flag) : self
+    public function setDojoCompatible(bool $flag) : self
     {
-        $this->dojoCompatible = (bool) $flag;
+        $this->dojoCompatible = $flag;
         return $this;
     }
 
@@ -359,7 +359,7 @@ class Smd
      * @param  string $name
      * @return bool|Smd\Service
      */
-    public function getService($name)
+    public function getService(string $name)
     {
         if (! array_key_exists($name, $this->services)) {
             return false;
@@ -384,7 +384,7 @@ class Smd
      * @param  string $name
      * @return bool
      */
-    public function removeService($name) : bool
+    public function removeService(string $name) : bool
     {
         if (! array_key_exists($name, $this->services)) {
             return false;

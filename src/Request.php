@@ -17,7 +17,6 @@ use function array_key_exists;
 use function count;
 use function get_class_methods;
 use function in_array;
-use function is_string;
 use function preg_match;
 use function ucfirst;
 
@@ -107,9 +106,9 @@ class Request
      * @param  string $key
      * @return self
      */
-    public function addParam($value, $key = null) : self
+    public function addParam($value, ?string $key = null) : self
     {
-        if ((null === $key) || ! is_string($key)) {
+        if (null === $key) {
             $index = count($this->params);
             $this->params[$index] = $value;
             return $this;
@@ -176,7 +175,7 @@ class Request
      * @param  string $name
      * @return self
      */
-    public function setMethod($name) : self
+    public function setMethod(string $name) : self
     {
         if (! preg_match($this->methodRegex, $name)) {
             $this->isMethodError = true;
@@ -245,7 +244,7 @@ class Request
      * @param  string $version
      * @return self
      */
-    public function setVersion($version) : self
+    public function setVersion(string $version) : self
     {
         if ('2.0' == $version) {
             $this->version = '2.0';
@@ -272,7 +271,7 @@ class Request
      * @param  string $json
      * @return void
      */
-    public function loadJson($json) : void
+    public function loadJson(string $json) : void
     {
         try {
             $options = Json::decode($json, Json::TYPE_ARRAY);

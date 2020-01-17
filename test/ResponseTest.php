@@ -179,7 +179,7 @@ class ResponseTest extends TestCase
      *
      * @dataProvider provideScalarJSONResponses
      */
-    public function testLoadingScalarJSONResponseShouldThrowException($json) : void
+    public function testLoadingScalarJSONResponseShouldThrowException(string $json) : void
     {
         $this->expectException(RuntimeException::class);
         $this->response->loadJson($json);
