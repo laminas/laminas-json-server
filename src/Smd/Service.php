@@ -44,9 +44,9 @@ class Service
      * @var string
      */
     protected $envelope  = Smd::ENV_JSONRPC_1;
-    protected $name;
+    protected $name = '';
     protected $return;
-    protected $target;
+    protected $target = '';
     protected $transport = 'POST';
     /**#@-*/
 
@@ -139,7 +139,7 @@ class Service
             $this->setOptions($spec);
         }
 
-        if (null == $this->getName()) {
+        if ('' == $this->getName()) {
             throw new InvalidArgumentException('SMD service description requires a name; none provided');
         }
     }
@@ -450,7 +450,7 @@ class Service
         $returns    = $this->getReturn();
         $name       = $this->getName();
 
-        if (empty($target)) {
+        if ('' === $target) {
             return compact('envelope', 'transport', 'name', 'parameters', 'returns');
         }
 

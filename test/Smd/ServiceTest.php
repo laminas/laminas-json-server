@@ -120,25 +120,16 @@ class ServiceTest extends TestCase
         $this->assertEquals('POST', $this->service->getTransport());
     }
 
-    public function testTargetShouldBeNullInitially() : void
+    public function testTargetShouldBeAnEmptyStringInitially() : void
     {
-        $this->assertNull($this->service->getTarget());
+        $this->assertEquals('', $this->service->getTarget());
     }
 
     public function testTargetAccessorsShouldWorkUnderNormalInput() : void
     {
-        $this->testTargetShouldBeNullInitially();
+        $this->testTargetShouldBeAnEmptyStringInitially();
         $this->service->setTarget('foo');
         $this->assertEquals('foo', $this->service->getTarget());
-    }
-
-    public function testTargetAccessorsShouldNormalizeToString() : void
-    {
-        $this->testTargetShouldBeNullInitially();
-        $this->service->setTarget(123);
-        $value = $this->service->getTarget();
-        $this->assertIsString($value);
-        $this->assertEquals((string) 123, $value);
     }
 
     public function testEnvelopeShouldBeJSONRpc1CompliantByDefault() : void
@@ -204,11 +195,11 @@ class ServiceTest extends TestCase
         $this->assertCount(3, $params);
 
         $param = array_shift($params);
-        $this->assertEquals('string', $param['type'], var_export($params, 1));
+        $this->assertEquals('string', $param['type'], var_export($params, true));
         $param = array_shift($params);
-        $this->assertEquals('boolean', $param['type'], var_export($params, 1));
+        $this->assertEquals('boolean', $param['type'], var_export($params, true));
         $param = array_shift($params);
-        $this->assertEquals('integer', $param['type'], var_export($params, 1));
+        $this->assertEquals('integer', $param['type'], var_export($params, true));
     }
 
     public function testShouldBeAbleToAddArbitraryParamOptions() : void
