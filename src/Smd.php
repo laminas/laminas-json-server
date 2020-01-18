@@ -47,7 +47,7 @@ class Smd
      *
      * @var string
      */
-    protected $description;
+    protected $description = '';
 
     /**
      * Generate Dojo-compatible SMD?
@@ -78,7 +78,7 @@ class Smd
      *
      * @var string
      */
-    protected $id;
+    protected $id = '';
 
     /**
      * Services offered.
@@ -92,7 +92,7 @@ class Smd
      *
      * @var string
      */
-    protected $target;
+    protected $target = '';
 
     /**
      * Global transport.
@@ -258,12 +258,12 @@ class Smd
      * Set service description.
      *
      * @param  string $description
-     * @return string
+     * @return self
      */
-    public function setDescription(string $description) : string
+    public function setDescription(string $description) : self
     {
         $this->description = $description;
-        return $this->description;
+        return $this;
     }
 
     /**

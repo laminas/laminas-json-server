@@ -10,10 +10,11 @@ declare(strict_types=1);
 
 namespace LaminasTest\Json\Server;
 
-use Laminas\Json;
+use Laminas\Json\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
 use Laminas\Json\Server\Smd;
+use Laminas\Json\Server\Smd\Service;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
@@ -108,38 +109,38 @@ class SmdTest extends TestCase
         }
     }
 
-    public function testTargetShouldDefaultToNull() : void
+    public function testTargetShouldDefaultToAnEmptyString() : void
     {
-        $this->assertNull($this->smd->getTarget());
+        $this->assertEquals('', $this->smd->getTarget());
     }
 
     public function testTargetAccessorsShouldWorkUnderNormalInput() : void
     {
-        $this->testTargetShouldDefaultToNull();
+        $this->testTargetShouldDefaultToAnEmptyString();
         $this->smd->setTarget('foo');
         $this->assertEquals('foo', $this->smd->getTarget());
     }
 
-    public function testIdShouldDefaultToNull() : void
+    public function testIdShouldDefaultToAnEmptyString() : void
     {
-        $this->assertNull($this->smd->getId());
+        $this->assertEquals('', $this->smd->getId());
     }
 
     public function testIdAccessorsShouldWorkUnderNormalInput() : void
     {
-        $this->testIdShouldDefaultToNull();
+        $this->testIdShouldDefaultToAnEmptyString();
         $this->smd->setId('foo');
         $this->assertEquals('foo', $this->smd->getId());
     }
 
-    public function testDescriptionShouldDefaultToNull() : void
+    public function testDescriptionShouldDefaultToAnEmptyString() : void
     {
-        $this->assertNull($this->smd->getDescription());
+        $this->assertEquals('', $this->smd->getDescription());
     }
 
     public function testDescriptionAccessorsShouldWorkUnderNormalInput() : void
     {
-        $this->testDescriptionShouldDefaultToNull();
+        $this->testDescriptionShouldDefaultToAnEmptyString();
         $this->smd->setDescription('foo');
         $this->assertEquals('foo', $this->smd->getDescription());
     }
@@ -179,7 +180,7 @@ class SmdTest extends TestCase
         ];
         $this->smd->addService($service);
         $foo = $this->smd->getService('foo');
-        $this->assertInstanceOf(Json::class, $foo);
+        $this->assertInstanceOf(Service::class, $foo);
         $this->assertEquals('foo', $foo->getName());
     }
 
@@ -321,7 +322,7 @@ class SmdTest extends TestCase
         $options = $this->getOptions();
         $this->smd->setOptions($options);
         $json = $this->smd->toJSON();
-        $smd  = Json\Json::decode($json, Json\Json::TYPE_ARRAY);
+        $smd  = Json::decode($json, Json::TYPE_ARRAY);
         $this->validateServiceArray($smd, $options);
     }
 
@@ -330,7 +331,7 @@ class SmdTest extends TestCase
         $options = $this->getOptions();
         $this->smd->setOptions($options);
         $json = $this->smd->__toString();
-        $smd  = Json\Json::decode($json, Json\Json::TYPE_ARRAY);
+        $smd  = Json::decode($json, Json::TYPE_ARRAY);
         $this->validateServiceArray($smd, $options);
     }
 
