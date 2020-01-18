@@ -117,7 +117,7 @@ class Request
      * @param  string $key
      * @return self
      */
-    public function addParam($value,  $key = null) : self
+    public function addParam($value, $key = null) : self
     {
         if ((null === $key) || ! is_string($key)) {
             $index = count($this->params);
