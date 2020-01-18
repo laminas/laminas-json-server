@@ -575,7 +575,7 @@ class Server extends AbstractServer
      *
      * @return Error
      */
-    protected function handleRequest() : Error
+    protected function handleRequest() : ?Error
     {
         $request = $this->getRequest();
 
@@ -583,7 +583,7 @@ class Server extends AbstractServer
             return $this->fault('Parse error', Error::ERROR_PARSE);
         }
 
-        if (! $request->isMethodError() && null === $request->getMethod()) {
+        if (! $request->isMethodError() && '' === $request->getMethod()) {
             return $this->fault('Invalid Request', Error::ERROR_INVALID_REQUEST);
         }
 
@@ -616,6 +616,8 @@ class Server extends AbstractServer
         }
 
         $this->getResponse()->setResult($result);
+
+        return null;
     }
 
     /**

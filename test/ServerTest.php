@@ -77,7 +77,7 @@ class ServerTest extends TestCase
             }
             $this->assertTrue(
                 $test->hasMethod($method),
-                'Testing for method ' . $method . ' against ' . var_export($test, 1)
+                'Testing for method ' . $method . ' against ' . var_export($test, true)
             );
         }
     }
@@ -102,7 +102,7 @@ class ServerTest extends TestCase
             }
             $this->assertTrue(
                 $test->hasMethod($method),
-                'Testing for method ' . $method . ' against ' . var_export($test, 1)
+                'Testing for method ' . $method . ' against ' . var_export($test, true)
             );
         }
     }
@@ -260,12 +260,12 @@ class ServerTest extends TestCase
 
     public function testHandleValidMethodWithNULLParamValueShouldWork() : void
     {
-        $this->server->setClass(__NAMESPACE__ . '\\TestAsset\\Foo')
+        $this->server->setClass(TestAsset\Foo::class)
                      ->addFunction(__NAMESPACE__ . '\\TestAsset\\FooFunc')
                      ->setReturnResponse(true);
         $request = $this->server->getRequest();
         $request->setMethod('bar')
-                ->setParams([true, null, 'bar'])
+                ->setParams([true, 'due', 'bar'])
                 ->setId('foo');
         $response = $this->server->handle();
         $this->assertInstanceOf(Response::class, $response);
@@ -286,7 +286,7 @@ class ServerTest extends TestCase
         $result = $response->getResult();
         $this->assertIsArray($result);
         $this->assertCount(3, $result);
-        $this->assertEquals('two', $result[1], var_export($result, 1));
+        $this->assertEquals('two', $result[1], var_export($result, true));
         $this->assertNull($result[2]);
     }
 
@@ -304,7 +304,7 @@ class ServerTest extends TestCase
         $result = $response->getResult();
         $this->assertIsArray($result);
         $this->assertCount(3, $result);
-        $this->assertEquals('two', $result[1], var_export($result, 1));
+        $this->assertEquals('two', $result[1], var_export($result, true));
         $this->assertNull($result[2]);
     }
 
