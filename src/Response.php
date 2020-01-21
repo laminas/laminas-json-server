@@ -151,7 +151,7 @@ class Response
      * @param  mixed $error
      * @return self
      */
-    public function setError(Error $error = null): self
+    public function setError(?Error $error = null): self
     {
         $this->error = $error;
         return $this;
