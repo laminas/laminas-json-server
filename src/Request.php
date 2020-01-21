@@ -92,7 +92,7 @@ class Request
      * @param  array $options
      * @return self
      */
-    public function setOptions(array $options) : self
+    public function setOptions(array $options): self
     {
         $methods = get_class_methods($this);
         foreach ($options as $key => $value) {
@@ -117,7 +117,7 @@ class Request
      * @param  string $key
      * @return self
      */
-    public function addParam($value, $key = null) : self
+    public function addParam($value, $key = null): self
     {
         if ((null === $key) || ! is_string($key)) {
             $index = count($this->params);
@@ -135,7 +135,7 @@ class Request
      * @param  array $params
      * @return self
      */
-    public function addParams(array $params) : self
+    public function addParams(array $params): self
     {
         foreach ($params as $key => $value) {
             $this->addParam($value, $key);
@@ -149,7 +149,7 @@ class Request
      * @param  array $params
      * @return Request
      */
-    public function setParams(array $params) : Request
+    public function setParams(array $params): Request
     {
         $this->params = [];
         return $this->addParams($params);
@@ -175,7 +175,7 @@ class Request
      *
      * @return array
      */
-    public function getParams() : array
+    public function getParams(): array
     {
         return $this->params;
     }
@@ -186,7 +186,7 @@ class Request
      * @param  string $name
      * @return self
      */
-    public function setMethod(string $name) : self
+    public function setMethod(string $name): self
     {
         if (! preg_match($this->methodRegex, $name)) {
             $this->isMethodError = true;
@@ -202,7 +202,7 @@ class Request
      *
      * @return string
      */
-    public function getMethod() : string
+    public function getMethod(): string
     {
         return $this->method;
     }
@@ -212,7 +212,7 @@ class Request
      *
      * @return bool
      */
-    public function isMethodError() : bool
+    public function isMethodError(): bool
     {
         return $this->isMethodError;
     }
@@ -222,7 +222,7 @@ class Request
      *
      * @return bool
      */
-    public function isParseError() : bool
+    public function isParseError(): bool
     {
         return $this->isParseError;
     }
@@ -233,7 +233,7 @@ class Request
      * @param  mixed $name
      * @return self
      */
-    public function setId($name) : self
+    public function setId($name): self
     {
         $this->id = $name;
         return $this;
@@ -255,7 +255,7 @@ class Request
      * @param  string $version
      * @return self
      */
-    public function setVersion(string $version) : self
+    public function setVersion(string $version): self
     {
         if ('2.0' == $version) {
             $this->version = '2.0';
@@ -271,7 +271,7 @@ class Request
      *
      * @return string
      */
-    public function getVersion() : string
+    public function getVersion(): string
     {
         return $this->version;
     }
@@ -282,7 +282,7 @@ class Request
      * @param  string $json
      * @return void
      */
-    public function loadJson(string $json) : void
+    public function loadJson(string $json): void
     {
         try {
             $options = Json::decode($json, Json::TYPE_ARRAY);
@@ -297,7 +297,7 @@ class Request
      *
      * @return string
      */
-    public function toJson() : string
+    public function toJson(): string
     {
         $jsonArray = [
             'method' => $this->getMethod()
@@ -324,7 +324,7 @@ class Request
      *
      * @return string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->toJson();
     }

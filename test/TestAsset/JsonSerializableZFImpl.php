@@ -14,7 +14,7 @@ use Laminas\Stdlib\JsonSerializable;
 
 class JsonSerializableLaminasImpl implements JsonSerializable
 {
-    public function jsonSerialize() : array
+    public function jsonSerialize(): array
     {
         return [__FUNCTION__];
     }

@@ -22,7 +22,7 @@ class FooParameters
      * @param  string $two
      * @return array
      */
-    public function bar(bool $one, string $two) : array
+    public function bar(bool $one, string $two): array
     {
         return [$one, $two];
     }
@@ -35,7 +35,7 @@ class FooParameters
      * @param  string $three
      * @return array
      */
-    public function baz(bool $one, string $two, string $three = "default") : array
+    public function baz(bool $one, string $two, string $three = "default"): array
     {
         return [$one, $two, $three];
     }

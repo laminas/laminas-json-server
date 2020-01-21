@@ -27,7 +27,7 @@ class CacheTest extends TestCase
      *
      * @return void
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->server = new Server\Server();
         $this->server->setClass(TestAsset\Foo::class, 'foo');
@@ -49,24 +49,24 @@ class CacheTest extends TestCase
      *
      * @return void
      */
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         if (file_exists($this->cacheFile)) {
             unlink($this->cacheFile);
         }
     }
 
-    public function testRetrievingSmdCacheShouldReturnFalseIfCacheDoesNotExist() : void
+    public function testRetrievingSmdCacheShouldReturnFalseIfCacheDoesNotExist(): void
     {
         $this->assertFalse(Server\Cache::getSmd($this->cacheFile));
     }
 
-    public function testSavingSmdCacheShouldReturnTrueOnSuccess() : void
+    public function testSavingSmdCacheShouldReturnTrueOnSuccess(): void
     {
         $this->assertTrue(Server\Cache::saveSmd($this->cacheFile, $this->server));
     }
 
-    public function testSavedCacheShouldMatchGeneratedCache() : void
+    public function testSavedCacheShouldMatchGeneratedCache(): void
     {
         $this->testSavingSmdCacheShouldReturnTrueOnSuccess();
         $json = $this->server->getServiceMap()->toJSON();
@@ -74,12 +74,12 @@ class CacheTest extends TestCase
         $this->assertSame($json, $test);
     }
 
-    public function testDeletingSmdShouldReturnFalseOnFailure() : void
+    public function testDeletingSmdShouldReturnFalseOnFailure(): void
     {
         $this->assertFalse(Server\Cache::deleteSmd($this->cacheFile));
     }
 
-    public function testDeletingSmdShouldReturnTrueOnSuccess() : void
+    public function testDeletingSmdShouldReturnTrueOnSuccess(): void
     {
         $this->testSavingSmdCacheShouldReturnTrueOnSuccess();
         $this->assertTrue(Server\Cache::deleteSmd($this->cacheFile));

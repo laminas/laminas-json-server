@@ -49,7 +49,7 @@ class Http extends JsonResponse
      *
      * @return void
      */
-    public function sendHeaders() : void
+    public function sendHeaders(): void
     {
         if (headers_sent()) {
             return;

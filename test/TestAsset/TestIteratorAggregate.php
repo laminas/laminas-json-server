@@ -23,7 +23,7 @@ class TestIteratorAggregate implements IteratorAggregate
         'baz' => 5,
     ];
 
-    public function getIterator() : ArrayIterator
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->array);
     }

@@ -66,7 +66,7 @@ class Response
      * @param  array $options
      * @return self
      */
-    public function setOptions(array $options) : self
+    public function setOptions(array $options): self
     {
         // re-produce error state
         if (isset($options['error']) && is_array($options['error'])) {
@@ -102,7 +102,7 @@ class Response
      * @return void
      * @throws Exception\RuntimeException
      */
-    public function loadJson(string $json) : void
+    public function loadJson(string $json): void
     {
         try {
             $options = Json::decode($json, Json::TYPE_ARRAY);
@@ -127,7 +127,7 @@ class Response
      * @param  mixed $value
      * @return self
      */
-    public function setResult($value) : self
+    public function setResult($value): self
     {
         $this->result = $value;
         return $this;
@@ -151,7 +151,7 @@ class Response
      * @param  mixed $error
      * @return self
      */
-    public function setError(Error $error = null) : self
+    public function setError(Error $error = null): self
     {
         $this->error = $error;
         return $this;
@@ -162,7 +162,7 @@ class Response
      *
      * @return null|Error
      */
-    public function getError() : ?Error
+    public function getError(): ?Error
     {
         return $this->error;
     }
@@ -172,7 +172,7 @@ class Response
      *
      * @return bool
      */
-    public function isError() : bool
+    public function isError(): bool
     {
         return $this->getError() instanceof Error;
     }
@@ -183,7 +183,7 @@ class Response
      * @param  mixed $name
      * @return self
      */
-    public function setId($name) : self
+    public function setId($name): self
     {
         $this->id = $name;
         return $this;
@@ -205,7 +205,7 @@ class Response
      * @param  string $version
      * @return self
      */
-    public function setVersion(?string $version) : self
+    public function setVersion(?string $version): self
     {
         if ('2.0' == $version) {
             $this->version = '2.0';
@@ -221,7 +221,7 @@ class Response
      *
      * @return null|string
      */
-    public function getVersion() : ?string
+    public function getVersion(): ?string
     {
         return $this->version;
     }
@@ -264,7 +264,7 @@ class Response
      * @param mixed $args
      * @return self
      */
-    public function setArgs($args) : self
+    public function setArgs($args): self
     {
         $this->args = $args;
         return $this;
@@ -276,7 +276,7 @@ class Response
      * @param  Smd $serviceMap
      * @return self
      */
-    public function setServiceMap(Smd $serviceMap) : self
+    public function setServiceMap(Smd $serviceMap): self
     {
         $this->serviceMap = $serviceMap;
         return $this;
@@ -287,7 +287,7 @@ class Response
      *
      * @return Smd|null
      */
-    public function getServiceMap() : ?Smd
+    public function getServiceMap(): ?Smd
     {
         return $this->serviceMap;
     }
@@ -297,7 +297,7 @@ class Response
      *
      * @return string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->toJson();
     }

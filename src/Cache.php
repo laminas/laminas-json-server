@@ -38,7 +38,7 @@ class Cache extends ServerCache
      * @param  Server $server
      * @return bool
      */
-    public static function saveSmd(string $filename, Server $server) : bool
+    public static function saveSmd(string $filename, Server $server): bool
     {
         if (! file_exists($filename)
             && ! is_writable(dirname($filename))
@@ -99,7 +99,7 @@ class Cache extends ServerCache
      * @param  string $filename
      * @return bool
      */
-    public static function deleteSmd(string $filename) : bool
+    public static function deleteSmd(string $filename): bool
     {
         if (file_exists($filename)) {
             unlink($filename);

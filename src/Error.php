@@ -62,7 +62,7 @@ class Error
      * @param  int $code
      * @return self
      */
-    public function setCode(int $code) : self
+    public function setCode(int $code): self
     {
         if (0 === $code) {
             $this->code = self::ERROR_OTHER;
@@ -78,7 +78,7 @@ class Error
      *
      * @return int
      */
-    public function getCode() : int
+    public function getCode(): int
     {
         return $this->code;
     }
@@ -89,7 +89,7 @@ class Error
      * @param  string $message
      * @return self
      */
-    public function setMessage(string $message) : self
+    public function setMessage(string $message): self
     {
         $this->message = $message;
         return $this;
@@ -100,7 +100,7 @@ class Error
      *
      * @return string
      */
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -111,7 +111,7 @@ class Error
      * @param  mixed $data
      * @return self
      */
-    public function setData($data) : self
+    public function setData($data): self
     {
         $this->data = $data;
         return $this;
@@ -132,7 +132,7 @@ class Error
      *
      * @return array
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         return [
             'code'    => $this->getCode(),
@@ -146,7 +146,7 @@ class Error
      *
      * @return string
      */
-    public function toJson() : string
+    public function toJson(): string
     {
         return Json::encode($this->toArray());
     }
@@ -156,7 +156,7 @@ class Error
      *
      * @return string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->toJson();
     }

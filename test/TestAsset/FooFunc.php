@@ -15,7 +15,7 @@ namespace LaminasTest\Json\Server\TestAsset;
  *
  * @return bool
  */
-function FooFunc() : bool
+function FooFunc(): bool
 {
     return true;
 }

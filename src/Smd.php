@@ -114,7 +114,7 @@ class Smd
      * @param  array $options
      * @return self
      */
-    public function setOptions(array $options) : self
+    public function setOptions(array $options): self
     {
         foreach ($options as $key => $value) {
             $method = 'set' . ucfirst($key);
@@ -134,7 +134,7 @@ class Smd
      * @return self
       * @throws InvalidArgumentException
      */
-    public function setTransport(string $transport) : self
+    public function setTransport(string $transport): self
     {
         if (! in_array($transport, $this->transportTypes)) {
             throw new InvalidArgumentException("Invalid transport '{$transport}' specified");
@@ -149,7 +149,7 @@ class Smd
      *
      * @return string
      */
-    public function getTransport() : string
+    public function getTransport(): string
     {
         return $this->transport;
     }
@@ -161,7 +161,7 @@ class Smd
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setEnvelope(string $envelopeType) : self
+    public function setEnvelope(string $envelopeType): self
     {
         if (! in_array($envelopeType, $this->envelopeTypes)) {
             throw new InvalidArgumentException("Invalid envelope type '{$envelopeType}'");
@@ -176,7 +176,7 @@ class Smd
      *
      * @return string
      */
-    public function getEnvelope() : string
+    public function getEnvelope(): string
     {
         return $this->envelope;
     }
@@ -188,7 +188,7 @@ class Smd
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setContentType(string $type) : self
+    public function setContentType(string $type): self
     {
         if (! preg_match($this->contentTypeRegex, $type)) {
             throw new InvalidArgumentException("Invalid content type '{$type}' specified");
@@ -205,7 +205,7 @@ class Smd
      *
      * @return string
      */
-    public function getContentType() : string
+    public function getContentType(): string
     {
         return $this->contentType;
     }
@@ -216,7 +216,7 @@ class Smd
      * @param  string $target
      * @return self
      */
-    public function setTarget(string $target) : self
+    public function setTarget(string $target): self
     {
         $this->target = $target;
         return $this;
@@ -227,7 +227,7 @@ class Smd
      *
      * @return string
      */
-    public function getTarget() : string
+    public function getTarget(): string
     {
         return $this->target;
     }
@@ -238,7 +238,7 @@ class Smd
      * @param  string $id
      * @return self
      */
-    public function setId(string $id) : self
+    public function setId(string $id): self
     {
         $this->id = $id;
         return $this;
@@ -249,7 +249,7 @@ class Smd
      *
      * @return string
      */
-    public function getId() : string
+    public function getId(): string
     {
         return $this->id;
     }
@@ -260,7 +260,7 @@ class Smd
      * @param  string $description
      * @return self
      */
-    public function setDescription(string $description) : self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
         return $this;
@@ -271,7 +271,7 @@ class Smd
      *
      * @return string
      */
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -282,7 +282,7 @@ class Smd
      * @param  bool $flag
      * @return self
      */
-    public function setDojoCompatible(bool $flag) : self
+    public function setDojoCompatible(bool $flag): self
     {
         $this->dojoCompatible = $flag;
         return $this;
@@ -293,7 +293,7 @@ class Smd
      *
      * @return bool
      */
-    public function isDojoCompatible() : bool
+    public function isDojoCompatible(): bool
     {
         return $this->dojoCompatible;
     }
@@ -306,7 +306,7 @@ class Smd
      * @throws RuntimeException
      * @throws InvalidArgumentException
      */
-    public function addService($service) : self
+    public function addService($service): self
     {
         if (is_array($service)) {
             $service = new Smd\Service($service);
@@ -332,7 +332,7 @@ class Smd
      * @param  array $services
      * @return self
      */
-    public function addServices(array $services) : self
+    public function addServices(array $services): self
     {
         foreach ($services as $service) {
             $this->addService($service);
@@ -347,7 +347,7 @@ class Smd
      * @param  array $services
      * @return self
      */
-    public function setServices(array $services) : self
+    public function setServices(array $services): self
     {
         $this->services = [];
         return $this->addServices($services);
@@ -373,7 +373,7 @@ class Smd
      *
      * @return array
      */
-    public function getServices() : array
+    public function getServices(): array
     {
         return $this->services;
     }
@@ -384,7 +384,7 @@ class Smd
      * @param  string $name
      * @return bool
      */
-    public function removeService(string $name) : bool
+    public function removeService(string $name): bool
     {
         if (! array_key_exists($name, $this->services)) {
             return false;
@@ -399,7 +399,7 @@ class Smd
      *
      * @return array
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         if ($this->isDojoCompatible()) {
             return $this->toDojoArray();
@@ -439,7 +439,7 @@ class Smd
      *
      * @return array
      */
-    public function toDojoArray() : array
+    public function toDojoArray(): array
     {
         $SMDVersion  = '.1';
         $serviceType = 'JSON-RPC';
@@ -481,7 +481,7 @@ class Smd
      *
      * @return string
      */
-    public function toJson() : string
+    public function toJson(): string
     {
         return Json::encode($this->toArray());
     }
@@ -491,7 +491,7 @@ class Smd
      *
      * @return string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->toJson();
     }

@@ -25,17 +25,17 @@ class ErrorTest extends TestCase
      *
      * @return void
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->error = new Server\Error();
     }
 
-    public function testCodeShouldBeErrOtherByDefault() : void
+    public function testCodeShouldBeErrOtherByDefault(): void
     {
         $this->assertEquals(Server\Error::ERROR_OTHER, $this->error->getCode());
     }
 
-    public function testCodeShouldAllowArbitraryAppErrorCodesInXmlRpcErrorCodeRange() : void
+    public function testCodeShouldAllowArbitraryAppErrorCodesInXmlRpcErrorCodeRange(): void
     {
         foreach (range(-32099, -32000) as $code) {
             $this->error->setCode($code);
@@ -43,7 +43,7 @@ class ErrorTest extends TestCase
         }
     }
 
-    public function arbitraryErrorCodes() : array
+    public function arbitraryErrorCodes(): array
     {
         return [
             '1000'  => [1000],
@@ -55,23 +55,23 @@ class ErrorTest extends TestCase
     /**
      * @dataProvider arbitraryErrorCodes
      */
-    public function testCodeShouldAllowArbitraryErrorCode(int $code) : void
+    public function testCodeShouldAllowArbitraryErrorCode(int $code): void
     {
         $this->error->setCode($code);
         $this->assertEquals($code, $this->error->getCode());
     }
 
-    public function testMessageShouldBeAnEmptyStringByDefault() : void
+    public function testMessageShouldBeAnEmptyStringByDefault(): void
     {
         $this->assertEquals('', $this->error->getMessage());
     }
 
-    public function testDataShouldBeNullByDefault() : void
+    public function testDataShouldBeNullByDefault(): void
     {
         $this->assertNull($this->error->getData());
     }
 
-    public function testShouldAllowArbitraryData() : void
+    public function testShouldAllowArbitraryData(): void
     {
         foreach ([true, 'foo', 2, 2.0, [], new stdClass()] as $datum) {
             $this->error->setData($datum);
@@ -79,35 +79,35 @@ class ErrorTest extends TestCase
         }
     }
 
-    public function testShouldBeAbleToCastToArray() : void
+    public function testShouldBeAbleToCastToArray(): void
     {
         $this->setupError();
         $array = $this->error->toArray();
         $this->validateArray($array);
     }
 
-    public function testShouldBeAbleToCastToJSON() : void
+    public function testShouldBeAbleToCastToJSON(): void
     {
         $this->setupError();
         $json = $this->error->toJSON();
         $this->validateArray(Json\Json::decode($json, Json\Json::TYPE_ARRAY));
     }
 
-    public function testCastingToStringShouldCastToJSON() : void
+    public function testCastingToStringShouldCastToJSON(): void
     {
         $this->setupError();
         $json = $this->error->__toString();
         $this->validateArray(Json\Json::decode($json, Json\Json::TYPE_ARRAY));
     }
 
-    public function setupError() : void
+    public function setupError(): void
     {
         $this->error->setCode(Server\Error::ERROR_OTHER)
                     ->setMessage('Unknown Error')
                     ->setData(['foo' => 'bar']);
     }
 
-    public function validateArray(array $error) : void
+    public function validateArray(array $error): void
     {
         $this->assertIsArray($error);
         $this->assertArrayHasKey('code', $error);

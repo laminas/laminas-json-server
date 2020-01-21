@@ -68,7 +68,7 @@ class Client implements ServerClient
      * @param  HttpClient $httpClient New HTTP client to use.
      * @return Client Self instance.
      */
-    public function setHttpClient(HttpClient $httpClient) : Client
+    public function setHttpClient(HttpClient $httpClient): Client
     {
         $this->httpClient = $httpClient;
         return $this;
@@ -79,7 +79,7 @@ class Client implements ServerClient
      *
      * @return HttpClient HTTP client.
      */
-    public function getHttpClient() : HttpClient
+    public function getHttpClient(): HttpClient
     {
         return $this->httpClient;
     }
@@ -89,7 +89,7 @@ class Client implements ServerClient
      *
      * @return Request
      */
-    public function getLastRequest() : ?Request
+    public function getLastRequest(): ?Request
     {
         return $this->lastRequest;
     }
@@ -99,7 +99,7 @@ class Client implements ServerClient
      *
      * @return Response
      */
-    public function getLastResponse() : ?Response
+    public function getLastResponse(): ?Response
     {
         return $this->lastResponse;
     }
@@ -111,7 +111,7 @@ class Client implements ServerClient
      * @return Response Response.
      * @throws Exception\HttpException When HTTP communication fails.
      */
-    public function doRequest(Request $request) : Response
+    public function doRequest(Request $request): Response
     {
         $this->lastRequest = $request;
 
@@ -188,7 +188,7 @@ class Client implements ServerClient
      * @param  array $params List of arguments.
      * @return Request Created request.
      */
-    protected function createRequest(string $method, array $params) : Request
+    protected function createRequest(string $method, array $params): Request
     {
         $request = new Request();
         $request->setMethod($method)
