@@ -39,7 +39,7 @@ class ResponseTest extends TestCase
     {
         foreach ([true, 'foo', 2, 2.0, [], ['foo' => 'bar']] as $result) {
             $this->response->setResult($result);
-            $this->assertEquals($result, $this->response->getResult());
+            $this->assertSame($result, $this->response->getResult());
         }
     }
 
@@ -77,7 +77,7 @@ class ResponseTest extends TestCase
     public function testIdAccesorsShouldWorkWithNormalInput(): void
     {
         $this->response->setId('foo');
-        $this->assertEquals('foo', $this->response->getId());
+        $this->assertSame('foo', $this->response->getId());
     }
 
     public function testVersionShouldBeNullByDefault(): void
@@ -88,7 +88,7 @@ class ResponseTest extends TestCase
     public function testVersionShouldBeLimitedToV2(): void
     {
         $this->response->setVersion('2.0');
-        $this->assertEquals('2.0', $this->response->getVersion());
+        $this->assertSame('2.0', $this->response->getVersion());
         foreach (['a', '1.0'] as $version) {
             $this->response->setVersion($version);
             $this->assertNull($this->response->getVersion());
@@ -101,8 +101,8 @@ class ResponseTest extends TestCase
         $json    = Json::encode($options);
         $this->response->loadJSON($json);
 
-        $this->assertEquals('foobar', $this->response->getId());
-        $this->assertEquals($options['result'], $this->response->getResult());
+        $this->assertSame('foobar', $this->response->getId());
+        $this->assertSame($options['result'], $this->response->getResult());
     }
 
     public function testLoadingFromJSONShouldSetJSONRpcVersionWhenPresent(): void
@@ -111,7 +111,7 @@ class ResponseTest extends TestCase
         $options['jsonrpc'] = '2.0';
         $json    = Json::encode($options);
         $this->response->loadJSON($json);
-        $this->assertEquals('2.0', $this->response->getVersion());
+        $this->assertSame('2.0', $this->response->getVersion());
     }
 
     public function testResponseShouldBeAbleToCastToJSON(): void
@@ -129,8 +129,8 @@ class ResponseTest extends TestCase
         $this->assertArrayHasKey('jsonrpc', $test);
 
         $this->assertTrue($test['result']);
-        $this->assertEquals($this->response->getId(), $test['id']);
-        $this->assertEquals($this->response->getVersion(), $test['jsonrpc']);
+        $this->assertSame($this->response->getId(), $test['id']);
+        $this->assertSame($this->response->getVersion(), $test['jsonrpc']);
     }
 
     public function testResponseShouldCastErrorToJSONIfIsError(): void
@@ -150,9 +150,9 @@ class ResponseTest extends TestCase
         $this->assertArrayHasKey('id', $test);
         $this->assertArrayNotHasKey('jsonrpc', $test);
 
-        $this->assertEquals($this->response->getId(), $test['id']);
-        $this->assertEquals($error->getCode(), $test['error']['code']);
-        $this->assertEquals($error->getMessage(), $test['error']['message']);
+        $this->assertSame($this->response->getId(), $test['id']);
+        $this->assertSame($error->getCode(), $test['error']['code']);
+        $this->assertSame($error->getMessage(), $test['error']['message']);
     }
 
     public function testCastToStringShouldCastToJSON(): void
@@ -169,7 +169,7 @@ class ResponseTest extends TestCase
         $this->assertArrayNotHasKey('jsonrpc', $test);
 
         $this->assertTrue($test['result']);
-        $this->assertEquals($this->response->getId(), $test['id']);
+        $this->assertSame($this->response->getId(), $test['id']);
     }
 
     /**
@@ -229,8 +229,8 @@ class ResponseTest extends TestCase
             ],
         ]);
         $this->assertInstanceOf(Error::class, $this->response->getError());
-        $this->assertEquals(-32000, $this->response->getError()->getCode());
-        $this->assertEquals('Lorem Ipsum', $this->response->getError()->getMessage());
-        $this->assertEquals(null, $this->response->getError()->getData());
+        $this->assertSame(-32000, $this->response->getError()->getCode());
+        $this->assertSame('Lorem Ipsum', $this->response->getError()->getMessage());
+        $this->assertSame(null, $this->response->getError()->getData());
     }
 }

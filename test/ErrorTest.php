@@ -32,14 +32,14 @@ class ErrorTest extends TestCase
 
     public function testCodeShouldBeErrOtherByDefault(): void
     {
-        $this->assertEquals(Server\Error::ERROR_OTHER, $this->error->getCode());
+        $this->assertSame(Server\Error::ERROR_OTHER, $this->error->getCode());
     }
 
     public function testCodeShouldAllowArbitraryAppErrorCodesInXmlRpcErrorCodeRange(): void
     {
         foreach (range(-32099, -32000) as $code) {
             $this->error->setCode($code);
-            $this->assertEquals($code, $this->error->getCode());
+            $this->assertSame($code, $this->error->getCode());
         }
     }
 
@@ -58,12 +58,12 @@ class ErrorTest extends TestCase
     public function testCodeShouldAllowArbitraryErrorCode(int $code): void
     {
         $this->error->setCode($code);
-        $this->assertEquals($code, $this->error->getCode());
+        $this->assertSame($code, $this->error->getCode());
     }
 
     public function testMessageShouldBeAnEmptyStringByDefault(): void
     {
-        $this->assertEquals('', $this->error->getMessage());
+        $this->assertSame('', $this->error->getMessage());
     }
 
     public function testDataShouldBeNullByDefault(): void
@@ -75,7 +75,7 @@ class ErrorTest extends TestCase
     {
         foreach ([true, 'foo', 2, 2.0, [], new stdClass()] as $datum) {
             $this->error->setData($datum);
-            $this->assertEquals($datum, $this->error->getData());
+            $this->assertSame($datum, $this->error->getData());
         }
     }
 
@@ -118,8 +118,8 @@ class ErrorTest extends TestCase
         $this->assertIsString($error['message']);
         $this->assertIsArray($error['data']);
 
-        $this->assertEquals($this->error->getCode(), $error['code']);
-        $this->assertEquals($this->error->getMessage(), $error['message']);
+        $this->assertSame($this->error->getCode(), $error['code']);
+        $this->assertSame($this->error->getMessage(), $error['message']);
         $this->assertSame($this->error->getData(), $error['data']);
     }
 }

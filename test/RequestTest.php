@@ -44,7 +44,7 @@ class RequestTest extends TestCase
         $params = $this->request->getParams();
         $this->assertCount(1, $params);
         $test = array_shift($params);
-        $this->assertEquals('foo', $test);
+        $this->assertSame('foo', $test);
     }
 
     public function testShouldBeAbleToAddAParamAsKeyValuePair(): void
@@ -53,7 +53,7 @@ class RequestTest extends TestCase
         $params = $this->request->getParams();
         $this->assertCount(1, $params);
         $this->assertArrayHasKey('foo', $params);
-        $this->assertEquals('bar', $params['foo']);
+        $this->assertSame('bar', $params['foo']);
     }
 
     public function testInvalidKeysShouldBeIgnored(): void
@@ -101,7 +101,7 @@ class RequestTest extends TestCase
         ];
         $this->request->addParams($params);
         $test = $this->request->getParams();
-        $this->assertEquals(array_values($params), array_values($test));
+        $this->assertSame(array_values($params), array_values($test));
         $this->assertArrayHasKey('foo', $test);
         $this->assertArrayHasKey('baz', $test);
         $this->assertContains('baz', $test);
@@ -123,14 +123,14 @@ class RequestTest extends TestCase
     {
         $this->testShouldBeAbleToAddMixedIndexedAndNamedParamsAtOnce();
         $params = $this->request->getParams();
-        $this->assertEquals('bar', $this->request->getParam('foo'), var_export($params, true));
-        $this->assertEquals('baz', $this->request->getParam(1), var_export($params, true));
-        $this->assertEquals('bat', $this->request->getParam('baz'), var_export($params, true));
+        $this->assertSame('bar', $this->request->getParam('foo'), var_export($params, true));
+        $this->assertSame('baz', $this->request->getParam(1), var_export($params, true));
+        $this->assertSame('bat', $this->request->getParam('baz'), var_export($params, true));
     }
 
     public function testMethodShouldBeAnEmptyStringByDefault(): void
     {
-        $this->assertEquals('', $this->request->getMethod());
+        $this->assertSame('', $this->request->getMethod());
     }
 
     public function testMethodErrorShouldBeFalseByDefault(): void
@@ -141,14 +141,14 @@ class RequestTest extends TestCase
     public function testMethodAccessorsShouldWorkUnderNormalInput(): void
     {
         $this->request->setMethod('foo');
-        $this->assertEquals('foo', $this->request->getMethod());
+        $this->assertSame('foo', $this->request->getMethod());
     }
 
     public function testSettingMethodWithInvalidNameShouldSetError(): void
     {
         foreach (['1ad', 'abc-123', 'ad$$832r#@'] as $method) {
             $this->request->setMethod($method);
-            $this->assertEquals('', $this->request->getMethod());
+            $this->assertSame('', $this->request->getMethod());
             $this->assertTrue($this->request->isMethodError());
         }
     }
@@ -161,21 +161,21 @@ class RequestTest extends TestCase
     public function testIdAccessorsShouldWorkUnderNormalInput(): void
     {
         $this->request->setId('foo');
-        $this->assertEquals('foo', $this->request->getId());
+        $this->assertSame('foo', $this->request->getId());
     }
 
     public function testVersionShouldBeJSONRpcV1ByDefault(): void
     {
-        $this->assertEquals('1.0', $this->request->getVersion());
+        $this->assertSame('1.0', $this->request->getVersion());
     }
 
     public function testVersionShouldBeLimitedToV1AndV2(): void
     {
         $this->testVersionShouldBeJSONRpcV1ByDefault();
         $this->request->setVersion('2.0');
-        $this->assertEquals('2.0', $this->request->getVersion());
+        $this->assertSame('2.0', $this->request->getVersion());
         $this->request->setVersion('foo');
-        $this->assertEquals('1.0', $this->request->getVersion());
+        $this->assertSame('1.0', $this->request->getVersion());
     }
 
     public function testShouldBeAbleToLoadRequestFromJSONString(): void
@@ -184,9 +184,9 @@ class RequestTest extends TestCase
         $json    = Json::encode($options);
         $this->request->loadJSON($json);
 
-        $this->assertEquals('foo', $this->request->getMethod());
-        $this->assertEquals('foobar', $this->request->getId());
-        $this->assertEquals($options['params'], $this->request->getParams());
+        $this->assertSame('foo', $this->request->getMethod());
+        $this->assertSame('foobar', $this->request->getId());
+        $this->assertSame($options['params'], $this->request->getParams());
     }
 
     public function testLoadingFromJSONShouldSetJSONRpcVersionWhenPresent(): void
@@ -195,7 +195,7 @@ class RequestTest extends TestCase
         $options['jsonrpc'] = '2.0';
         $json    = Json::encode($options);
         $this->request->loadJSON($json);
-        $this->assertEquals('2.0', $this->request->getVersion());
+        $this->assertSame('2.0', $this->request->getVersion());
     }
 
     public function testShouldBeAbleToCastToJSON(): void
@@ -220,7 +220,7 @@ class RequestTest extends TestCase
     public function testMethodNamesShouldAllowDotNamespacing(): void
     {
         $this->request->setMethod('foo.bar');
-        $this->assertEquals('foo.bar', $this->request->getMethod());
+        $this->assertSame('foo.bar', $this->request->getMethod());
     }
 
     public function testIsParseErrorSetOnMalformedJson(): void
@@ -256,8 +256,8 @@ class RequestTest extends TestCase
         $this->assertIsString($test['method']);
         $this->assertIsArray($test['params']);
 
-        $this->assertEquals($options['id'], $test['id']);
-        $this->assertEquals($options['method'], $test['method']);
+        $this->assertSame($options['id'], $test['id']);
+        $this->assertSame($options['method'], $test['method']);
         $this->assertSame($options['params'], $test['params']);
     }
 }

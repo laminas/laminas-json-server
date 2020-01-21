@@ -187,7 +187,7 @@ class ClientTest extends TestCase
         $this->jsonClient->call('foo');
         $uri = $this->jsonClient->getHttpClient()->getUri()->toString();
 
-        $this->assertEquals($changedUri, $uri);
+        $this->assertSame($changedUri, $uri);
     }
 
     public function testSettingNoHttpClientUriForcesClientToSetUri(): void
@@ -204,7 +204,7 @@ class ClientTest extends TestCase
         $this->jsonClient->call('foo');
         $uri = $this->jsonClient->getHttpClient()->getUri();
 
-        $this->assertEquals($baseUri, $uri->toString());
+        $this->assertSame($baseUri, $uri->toString());
     }
 
     public function testCustomHttpClientUserAgentIsNotOverridden(): void

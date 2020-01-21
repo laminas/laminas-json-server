@@ -127,7 +127,7 @@ class ServerTest extends TestCase
         $methods = $this->server->getFunctions();
         $this->assertTrue($methods->hasMethod('hello'));
         $toJSON = $methods->getMethod('hello');
-        $this->assertEquals(ServiceB::class, $toJSON->getCallback()->getClass());
+        $this->assertSame(ServiceB::class, $toJSON->getCallback()->getClass());
     }
 
     public function testGetRequestShouldInstantiateRequestObjectByDefault(): void
@@ -169,8 +169,8 @@ class ServerTest extends TestCase
         $this->server->fault('error condition', -32000);
         $this->assertTrue($response->isError());
         $error = $response->getError();
-        $this->assertEquals(-32000, $error->getCode());
-        $this->assertEquals('error condition', $error->getMessage());
+        $this->assertSame(-32000, $error->getCode());
+        $this->assertSame('error condition', $error->getMessage());
     }
 
     public function testResponseShouldBeEmittedAutomaticallyByDefault(): void
@@ -200,12 +200,12 @@ class ServerTest extends TestCase
                      ->setId('foobar')
                      ->setDescription('This is a test service');
 
-        $this->assertEquals('POST', $this->server->getTransport());
-        $this->assertEquals('JSON-RPC-1.0', $this->server->getEnvelope());
-        $this->assertEquals('application/x-json', $this->server->getContentType());
-        $this->assertEquals('/foo/bar', $this->server->getTarget());
-        $this->assertEquals('foobar', $this->server->getId());
-        $this->assertEquals('This is a test service', $this->server->getDescription());
+        $this->assertSame('POST', $this->server->getTransport());
+        $this->assertSame('JSON-RPC-1.0', $this->server->getEnvelope());
+        $this->assertSame('application/x-json', $this->server->getContentType());
+        $this->assertSame('/foo/bar', $this->server->getTarget());
+        $this->assertSame('foobar', $this->server->getId());
+        $this->assertSame('This is a test service', $this->server->getDescription());
     }
 
     public function testSmdObjectRetrievedFromServerShouldReflectServerState(): void
@@ -219,12 +219,12 @@ class ServerTest extends TestCase
                      ->setId('foobar')
                      ->setDescription('This is a test service');
         $smd = $this->server->getServiceMap();
-        $this->assertEquals('POST', $this->server->getTransport());
-        $this->assertEquals('JSON-RPC-1.0', $this->server->getEnvelope());
-        $this->assertEquals('application/x-json', $this->server->getContentType());
-        $this->assertEquals('/foo/bar', $this->server->getTarget());
-        $this->assertEquals('foobar', $this->server->getId());
-        $this->assertEquals('This is a test service', $this->server->getDescription());
+        $this->assertSame('POST', $this->server->getTransport());
+        $this->assertSame('JSON-RPC-1.0', $this->server->getEnvelope());
+        $this->assertSame('application/x-json', $this->server->getContentType());
+        $this->assertSame('/foo/bar', $this->server->getTarget());
+        $this->assertSame('foobar', $this->server->getId());
+        $this->assertSame('This is a test service', $this->server->getDescription());
 
         $services = $smd->getServices();
         $this->assertIsArray($services);
@@ -288,7 +288,7 @@ class ServerTest extends TestCase
         $result = $response->getResult();
         $this->assertIsArray($result);
         $this->assertCount(3, $result);
-        $this->assertEquals('two', $result[1], var_export($result, true));
+        $this->assertSame('two', $result[1], var_export($result, true));
         $this->assertNull($result[2]);
     }
 
@@ -306,7 +306,7 @@ class ServerTest extends TestCase
         $result = $response->getResult();
         $this->assertIsArray($result);
         $this->assertCount(3, $result);
-        $this->assertEquals('two', $result[1], var_export($result, true));
+        $this->assertSame('two', $result[1], var_export($result, true));
         $this->assertNull($result[2]);
     }
 
@@ -324,8 +324,8 @@ class ServerTest extends TestCase
         $result = $response->getResult();
         $this->assertIsArray($result);
         $this->assertCount(3, $result);
-        $this->assertEquals('foo', $result[1]);
-        $this->assertEquals('bar', $result[2]);
+        $this->assertSame('foo', $result[1]);
+        $this->assertSame('bar', $result[2]);
     }
 
     public function testHandleShouldAllowNamedParamsInAnyOrder1(): void
@@ -344,8 +344,8 @@ class ServerTest extends TestCase
         $result = $response->getResult();
 
         $this->assertIsArray($result);
-        $this->assertEquals(1, $result[0]);
-        $this->assertEquals(2, $result[1]);
+        $this->assertSame(true, $result[0]);
+        $this->assertSame('2', $result[1]);
         $this->assertEquals(3, $result[2]);
     }
 
@@ -365,9 +365,9 @@ class ServerTest extends TestCase
         $result = $response->getResult();
 
         $this->assertIsArray($result);
-        $this->assertEquals(1, $result[0]);
-        $this->assertEquals(2, $result[1]);
-        $this->assertEquals(3, $result[2]);
+        $this->assertSame(true, $result[0]);
+        $this->assertSame('2', $result[1]);
+        $this->assertSame(3, $result[2]);
     }
 
     public function testHandleValidWithoutRequiredParamShouldReturnError(): void
@@ -385,7 +385,7 @@ class ServerTest extends TestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertTrue($response->isError());
-        $this->assertEquals(Server\Error::ERROR_INVALID_PARAMS, $response->getError()->getCode());
+        $this->assertSame(Server\Error::ERROR_INVALID_PARAMS, $response->getError()->getCode());
     }
 
     public function testHandleRequestWithErrorsShouldReturnErrorResponse(): void
@@ -395,7 +395,7 @@ class ServerTest extends TestCase
         $response = $this->server->handle();
         $this->assertInstanceOf(Response::class, $response);
         $this->assertTrue($response->isError());
-        $this->assertEquals(Server\Error::ERROR_INVALID_REQUEST, $response->getError()->getCode());
+        $this->assertSame(Server\Error::ERROR_INVALID_REQUEST, $response->getError()->getCode());
     }
 
     public function testHandleRequestWithInvalidMethodShouldReturnErrorResponse(): void
@@ -408,7 +408,7 @@ class ServerTest extends TestCase
         $response = $this->server->handle();
         $this->assertInstanceOf(Response::class, $response);
         $this->assertTrue($response->isError());
-        $this->assertEquals(Server\Error::ERROR_INVALID_METHOD, $response->getError()->getCode());
+        $this->assertSame(Server\Error::ERROR_INVALID_METHOD, $response->getError()->getCode());
     }
 
     public function testHandleRequestWithExceptionShouldReturnErrorResponse(): void
@@ -421,8 +421,8 @@ class ServerTest extends TestCase
         $response = $this->server->handle();
         $this->assertInstanceOf(Response::class, $response);
         $this->assertTrue($response->isError());
-        $this->assertEquals(Server\Error::ERROR_OTHER, $response->getError()->getCode());
-        $this->assertEquals('application error', $response->getError()->getMessage());
+        $this->assertSame(Server\Error::ERROR_OTHER, $response->getError()->getCode());
+        $this->assertSame('application error', $response->getError()->getMessage());
     }
 
     public function testHandleShouldEmitResponseByDefault(): void
@@ -442,8 +442,8 @@ class ServerTest extends TestCase
         $this->assertArrayHasKey('id', $decoded);
 
         $response = $this->server->getResponse();
-        $this->assertEquals($response->getResult(), $decoded['result']);
-        $this->assertEquals($response->getId(), $decoded['id']);
+        $this->assertSame($response->getResult(), $decoded['result']);
+        $this->assertSame($response->getId(), $decoded['id']);
     }
 
     public function testResponseShouldBeEmptyWhenRequestHasNoId(): void
@@ -465,7 +465,7 @@ class ServerTest extends TestCase
         $functions = $this->server->getFunctions();
         $server = new Server\Server();
         $server->loadFunctions($functions);
-        $this->assertEquals($functions->toArray(), $server->getFunctions()->toArray());
+        $this->assertSame($functions->toArray(), $server->getFunctions()->toArray());
     }
 
     /**
@@ -493,8 +493,8 @@ class ServerTest extends TestCase
         $this->assertContains('unique', $decoded['result']);
 
         $response = $this->server->getResponse();
-        $this->assertEquals($response->getResult(), $decoded['result']);
-        $this->assertEquals($response->getId(), $decoded['id']);
+        $this->assertSame($response->getResult(), $decoded['result']);
+        $this->assertSame($response->getId(), $decoded['id']);
     }
 
     /**
@@ -515,9 +515,9 @@ class ServerTest extends TestCase
         $result = $response->getResult();
 
         $this->assertIsArray($result);
-        $this->assertEquals(1, $result[0]);
-        $this->assertEquals(2, $result[1]);
-        $this->assertEquals(null, $result[2]);
+        $this->assertSame(true, $result[0]);
+        $this->assertSame('2', $result[1]);
+        $this->assertSame(null, $result[2]);
     }
 
     /**
@@ -538,9 +538,9 @@ class ServerTest extends TestCase
         $result = $response->getResult();
 
         $this->assertIsArray($result);
-        $this->assertEquals(1, $result[0]);
-        $this->assertEquals('two', $result[1]);
-        $this->assertEquals(3, $result[2]);
+        $this->assertSame(true, $result[0]);
+        $this->assertSame('two', $result[1]);
+        $this->assertSame(3, $result[2]);
     }
 
     public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys(): void
@@ -554,7 +554,7 @@ class ServerTest extends TestCase
         $server->handle();
 
         $response = $server->getResponse();
-        $this->assertEquals($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
+        $this->assertSame($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
     }
 
     public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys1(): void
@@ -568,6 +568,6 @@ class ServerTest extends TestCase
         $server->handle();
         $response = $server->getResponse();
         $this->assertNotEmpty($response->getError());
-        $this->assertEquals($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
+        $this->assertSame($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
     }
 }

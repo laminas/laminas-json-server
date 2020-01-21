@@ -57,7 +57,7 @@ class ServiceTest extends TestCase
     public function testSettingNameShouldNotThrowExceptionWhenContainingValidFormatStartingWithUnderscore(): void
     {
         $this->service->setName('_getMyProperty');
-        $this->assertEquals('_getMyProperty', $this->service->getName());
+        $this->assertSame('_getMyProperty', $this->service->getName());
     }
 
     public function testSettingNameShouldThrowExceptionWhenContainingInvalidFormatStartingWithRpc(): void
@@ -71,7 +71,7 @@ class ServiceTest extends TestCase
     public function testSettingNameShouldNotThrowExceptionWhenContainingInvalidFormatStartingWithRpcWithoutPeriodChar(): void
     {
         $this->service->setName('rpcFoo');
-        $this->assertEquals('rpcFoo', $this->service->getName());
+        $this->assertSame('rpcFoo', $this->service->getName());
     }
     // @codingStandardsIgnoreEnd
 
@@ -79,29 +79,29 @@ class ServiceTest extends TestCase
     public function testSettingNameShouldNotThrowExceptionWhenContainingInvalidFormatStartingWithRpcInsensitiveCase(): void
     {
         $this->service->setName('RpcFoo');
-        $this->assertEquals('RpcFoo', $this->service->getName());
+        $this->assertSame('RpcFoo', $this->service->getName());
     }
     // @codingStandardsIgnoreEnd
 
     public function testSettingNameShouldNotThrowExceptionWhenContainingValidFormatContainingRpc(): void
     {
         $this->service->setName('_rpcFoo');
-        $this->assertEquals('_rpcFoo', $this->service->getName());
+        $this->assertSame('_rpcFoo', $this->service->getName());
 
         $this->service->setName('MyRpcFoo');
-        $this->assertEquals('MyRpcFoo', $this->service->getName());
+        $this->assertSame('MyRpcFoo', $this->service->getName());
     }
 
     public function testNameAccessorsShouldWorkWithNormalInput(): void
     {
-        $this->assertEquals('foo', $this->service->getName());
+        $this->assertSame('foo', $this->service->getName());
         $this->service->setName('bar');
-        $this->assertEquals('bar', $this->service->getName());
+        $this->assertSame('bar', $this->service->getName());
     }
 
     public function testTransportShouldDefaultToPost(): void
     {
-        $this->assertEquals('POST', $this->service->getTransport());
+        $this->assertSame('POST', $this->service->getTransport());
     }
 
     public function testSettingTransportThrowsExceptionWhenSetToGet(): void
@@ -121,33 +121,33 @@ class ServiceTest extends TestCase
     public function testTransportAccessorsShouldWorkUnderNormalInput(): void
     {
         $this->service->setTransport('POST');
-        $this->assertEquals('POST', $this->service->getTransport());
+        $this->assertSame('POST', $this->service->getTransport());
     }
 
     public function testTargetShouldBeAnEmptyStringInitially(): void
     {
-        $this->assertEquals('', $this->service->getTarget());
+        $this->assertSame('', $this->service->getTarget());
     }
 
     public function testTargetAccessorsShouldWorkUnderNormalInput(): void
     {
         $this->testTargetShouldBeAnEmptyStringInitially();
         $this->service->setTarget('foo');
-        $this->assertEquals('foo', $this->service->getTarget());
+        $this->assertSame('foo', $this->service->getTarget());
     }
 
     public function testEnvelopeShouldBeJSONRpc1CompliantByDefault(): void
     {
-        $this->assertEquals(Smd::ENV_JSONRPC_1, $this->service->getEnvelope());
+        $this->assertSame(Smd::ENV_JSONRPC_1, $this->service->getEnvelope());
     }
 
     public function testEnvelopeShouldOnlyComplyWithJSONRpc1And2(): void
     {
         $this->testEnvelopeShouldBeJSONRpc1CompliantByDefault();
         $this->service->setEnvelope(Smd::ENV_JSONRPC_2);
-        $this->assertEquals(Smd::ENV_JSONRPC_2, $this->service->getEnvelope());
+        $this->assertSame(Smd::ENV_JSONRPC_2, $this->service->getEnvelope());
         $this->service->setEnvelope(Smd::ENV_JSONRPC_1);
-        $this->assertEquals(Smd::ENV_JSONRPC_1, $this->service->getEnvelope());
+        $this->assertSame(Smd::ENV_JSONRPC_1, $this->service->getEnvelope());
         try {
             $this->service->setEnvelope('JSON-P');
             $this->fail('Should not be able to set non-JSON-RPC spec envelopes');
@@ -168,7 +168,7 @@ class ServiceTest extends TestCase
         $params = $this->service->getParams();
         $this->assertCount(1, $params);
         $param = array_shift($params);
-        $this->assertEquals('integer', $param['type']);
+        $this->assertSame('integer', $param['type']);
     }
 
     public function testParamsShouldAcceptArrayOfTypes(): void
@@ -179,7 +179,7 @@ class ServiceTest extends TestCase
         $param  = array_shift($params);
         $test   = $param['type'];
         $this->assertIsArray($test);
-        $this->assertEquals($type, $test);
+        $this->assertSame($type, $test);
     }
 
     public function testInvalidParamTypeShouldThrowException(): void
@@ -199,11 +199,11 @@ class ServiceTest extends TestCase
         $this->assertCount(3, $params);
 
         $param = array_shift($params);
-        $this->assertEquals('string', $param['type'], var_export($params, true));
+        $this->assertSame('string', $param['type'], var_export($params, true));
         $param = array_shift($params);
-        $this->assertEquals('boolean', $param['type'], var_export($params, true));
+        $this->assertSame('boolean', $param['type'], var_export($params, true));
         $param = array_shift($params);
-        $this->assertEquals('integer', $param['type'], var_export($params, true));
+        $this->assertSame('integer', $param['type'], var_export($params, true));
     }
 
     public function testShouldBeAbleToAddArbitraryParamOptions(): void
@@ -219,10 +219,10 @@ class ServiceTest extends TestCase
         );
         $params = $this->service->getParams();
         $param  = array_shift($params);
-        $this->assertEquals('foo', $param['name']);
+        $this->assertSame('foo', $param['name']);
         $this->assertFalse($param['optional']);
-        $this->assertEquals(1, $param['default']);
-        $this->assertEquals('Foo parameter', $param['description']);
+        $this->assertSame(1, $param['default']);
+        $this->assertSame('Foo parameter', $param['description']);
     }
 
     public function testShouldBeAbleToAddMultipleParamsAtOnce(): void
@@ -236,14 +236,14 @@ class ServiceTest extends TestCase
 
         $this->assertCount(3, $params);
         $param = array_shift($params);
-        $this->assertEquals('string', $param['type']);
-        $this->assertEquals('foo', $param['name']);
+        $this->assertSame('string', $param['type']);
+        $this->assertSame('foo', $param['name']);
 
         $param = array_shift($params);
-        $this->assertEquals('boolean', $param['type']);
+        $this->assertSame('boolean', $param['type']);
 
         $param = array_shift($params);
-        $this->assertEquals('integer', $param['type']);
+        $this->assertSame('integer', $param['type']);
     }
 
     public function testSetparamsShouldOverwriteExistingParams(): void
@@ -270,7 +270,7 @@ class ServiceTest extends TestCase
     {
         $this->testReturnShouldBeNullByDefault();
         $this->service->setReturn('integer');
-        $this->assertEquals('integer', $this->service->getReturn());
+        $this->assertSame('integer', $this->service->getReturn());
     }
 
     public function testReturnAccessorsShouldAllowArrayOfTypes(): void
@@ -278,7 +278,7 @@ class ServiceTest extends TestCase
         $this->testReturnShouldBeNullByDefault();
         $type = ['integer', 'string'];
         $this->service->setReturn($type);
-        $this->assertEquals($type, $this->service->getReturn());
+        $this->assertSame($type, $this->service->getReturn());
     }
 
     public function testInvalidReturnTypeShouldThrowException(): void
@@ -322,22 +322,22 @@ class ServiceTest extends TestCase
     public function validateSmdArray(array $smd): void
     {
         $this->assertArrayHasKey('transport', $smd);
-        $this->assertEquals('POST', $smd['transport']);
+        $this->assertSame('POST', $smd['transport']);
 
         $this->assertArrayHasKey('envelope', $smd);
-        $this->assertEquals(Smd::ENV_JSONRPC_2, $smd['envelope']);
+        $this->assertSame(Smd::ENV_JSONRPC_2, $smd['envelope']);
 
         $this->assertArrayHasKey('parameters', $smd);
         $params = $smd['parameters'];
         $this->assertCount(3, $params);
         $param = array_shift($params);
-        $this->assertEquals('boolean', $param['type']);
+        $this->assertSame('boolean', $param['type']);
         $param = array_shift($params);
-        $this->assertEquals('array', $param['type']);
+        $this->assertSame('array', $param['type']);
         $param = array_shift($params);
-        $this->assertEquals('object', $param['type']);
+        $this->assertSame('object', $param['type']);
 
         $this->assertArrayHasKey('returns', $smd);
-        $this->assertEquals('boolean', $smd['returns']);
+        $this->assertSame('boolean', $smd['returns']);
     }
 }
