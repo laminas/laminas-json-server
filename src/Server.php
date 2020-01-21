@@ -573,7 +573,7 @@ class Server extends AbstractServer
     /**
      * Internal method for handling request.
      *
-     * @return Error
+     * @return Error|null
      */
     protected function handleRequest(): ?Error
     {
