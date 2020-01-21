@@ -207,7 +207,7 @@ class Response
      */
     public function setVersion(?string $version): self
     {
-        if ('2.0' == $version) {
+        if ('2.0' === $version) {
             $this->version = '2.0';
             return $this;
         }
