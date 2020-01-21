@@ -139,7 +139,7 @@ class Service
             $this->setOptions($spec);
         }
 
-        if ('' == $this->getName()) {
+        if ('' === $this->getName()) {
             throw new InvalidArgumentException('SMD service description requires a name; none provided');
         }
     }
