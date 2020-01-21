@@ -38,17 +38,30 @@ use function ucfirst;
  */
 class Service
 {
-    /**#@+
-     * Service metadata
-     *
+    /**
      * @var string
      */
     protected $envelope  = Smd::ENV_JSONRPC_1;
+
+    /**
+     * @var string
+     */
     protected $name = '';
+
+    /**
+     * @var string|array
+     */
     protected $return;
+
+    /**
+     * @var string
+     */
     protected $target = '';
+
+    /**
+     * @var string
+     */
     protected $transport = 'POST';
-    /**#@-*/
 
     /**
      * Allowed envelope types.
