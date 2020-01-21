@@ -127,7 +127,7 @@ class Server extends AbstractServer
             $methods = $reflection->getMethods();
             $found   = false;
             foreach ($methods as $method) {
-                if ($action == $method->getName()) {
+                if ($action === $method->getName()) {
                     $found = true;
                     break;
                 }
@@ -343,7 +343,7 @@ class Server extends AbstractServer
             return;
         }
 
-        if ('set' == $matches[1]) {
+        if ('set' === $matches[1]) {
             $value = array_shift($args);
             $this->getServiceMap()->$method($value);
             return $this;
@@ -533,7 +533,7 @@ class Server extends AbstractServer
             $return[] = $prototype->getReturnType();
         }
 
-        if (1 == count($return)) {
+        if (1 === count($return)) {
             return $return[0];
         }
 
@@ -658,7 +658,7 @@ class Server extends AbstractServer
         }
 
         $callback = $invokable->getCallback();
-        $reflection = 'function' == $callback->getType()
+        $reflection = 'function' === $callback->getType()
             ? new ReflectionFunction($callback->getFunction())
             : new ReflectionMethod($callback->getClass(), $callback->getMethod());
 

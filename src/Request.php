@@ -102,7 +102,7 @@ class Request
                 continue;
             }
 
-            if ($key == 'jsonrpc') {
+            if ($key === 'jsonrpc') {
                 $this->setVersion($value);
                 continue;
             }
@@ -312,7 +312,7 @@ class Request
             $jsonArray['params'] = $params;
         }
 
-        if ('2.0' == $this->getVersion()) {
+        if ('2.0' === $this->getVersion()) {
             $jsonArray['jsonrpc'] = '2.0';
         }
 

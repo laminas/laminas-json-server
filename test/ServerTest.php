@@ -74,7 +74,7 @@ class ServerTest extends TestCase
         $test = $this->server->getFunctions();
         $methods = get_class_methods(Server\Server::class);
         foreach ($methods as $method) {
-            if ('_' == $method[0]) {
+            if ('_' === $method[0]) {
                 continue;
             }
             $this->assertTrue(
@@ -99,7 +99,7 @@ class ServerTest extends TestCase
         $test = $this->server->getFunctions();
         $methods = get_class_methods($object);
         foreach ($methods as $method) {
-            if ('_' == $method[0]) {
+            if ('_' === $method[0]) {
                 continue;
             }
             $this->assertTrue(
@@ -232,7 +232,7 @@ class ServerTest extends TestCase
         $this->assertArrayHasKey('strtolower', $services);
         $methods = get_class_methods(Server\Server::class);
         foreach ($methods as $method) {
-            if ('_' == $method[0]) {
+            if ('_' === $method[0]) {
                 continue;
             }
             $this->assertArrayHasKey($method, $services);

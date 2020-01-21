@@ -167,7 +167,7 @@ class Service
     {
         $methods = get_class_methods($this);
         foreach ($options as $key => $value) {
-            if ('options' == strtolower($key)) {
+            if ('options' === strtolower($key)) {
                 continue;
             }
 
@@ -514,7 +514,7 @@ class Service
         }
 
         $paramType = $this->paramMap[$type];
-        if (! $isReturn && ('null' == $paramType)) {
+        if (! $isReturn && ('null' === $paramType)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid param type provided ("%s")',
                 $type
