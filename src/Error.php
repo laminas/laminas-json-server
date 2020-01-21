@@ -47,7 +47,7 @@ class Error
      * @param  int $code
      * @param  mixed $data
      */
-    public function __construct(?string $message = '', int $code = self::ERROR_OTHER, $data = null)
+    public function __construct(string $message = '', int $code = self::ERROR_OTHER, $data = null)
     {
         $this->setMessage($message)
              ->setCode($code)
