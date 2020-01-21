@@ -16,6 +16,8 @@ use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Request;
 use Laminas\Json\Server\Response;
 use Laminas\Server\Reflection\Exception\RuntimeException;
+use LaminasTest\Json\Server\TestAsset\ServiceA;
+use LaminasTest\Json\Server\TestAsset\ServiceB;
 use PHPUnit\Framework\TestCase;
 
 use function count;
@@ -120,12 +122,12 @@ class ServerTest extends TestCase
 
     public function testNamingCollisionsShouldResolveToLastRegisteredMethod(): void
     {
-        $this->server->setClass(Request::class)
-                     ->setClass(Response::class);
+        $this->server->setClass(ServiceA::class)
+                     ->setClass(ServiceB::class);
         $methods = $this->server->getFunctions();
-        $this->assertTrue($methods->hasMethod('toJson'));
-        $toJSON = $methods->getMethod('toJson');
-        $this->assertEquals(Response::class, $toJSON->getCallback()->getClass());
+        $this->assertTrue($methods->hasMethod('hello'));
+        $toJSON = $methods->getMethod('hello');
+        $this->assertEquals(ServiceB::class, $toJSON->getCallback()->getClass());
     }
 
     public function testGetRequestShouldInstantiateRequestObjectByDefault(): void

@@ -274,9 +274,9 @@ class Response
      * Set service map object.
      *
      * @param  Smd $serviceMap
-     * @return self
+     * @return self|null
      */
-    public function setServiceMap(Smd $serviceMap): self
+    public function setServiceMap(?Smd $serviceMap): self
     {
         $this->serviceMap = $serviceMap;
         return $this;
