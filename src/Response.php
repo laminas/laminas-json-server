@@ -82,7 +82,7 @@ class Response
             }
 
             $method = 'set' . ucfirst($key);
-            if (in_array($method, $methods)) {
+            if (in_array($method, $methods, true)) {
                 $this->$method($value);
                 continue;
             }

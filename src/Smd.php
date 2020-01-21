@@ -136,7 +136,7 @@ class Smd
      */
     public function setTransport(string $transport): self
     {
-        if (! in_array($transport, $this->transportTypes)) {
+        if (! in_array($transport, $this->transportTypes, true)) {
             throw new InvalidArgumentException("Invalid transport '{$transport}' specified");
         }
 
@@ -163,7 +163,7 @@ class Smd
      */
     public function setEnvelope(string $envelopeType): self
     {
-        if (! in_array($envelopeType, $this->envelopeTypes)) {
+        if (! in_array($envelopeType, $this->envelopeTypes, true)) {
             throw new InvalidArgumentException("Invalid envelope type '{$envelopeType}'");
         }
 

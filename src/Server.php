@@ -339,7 +339,7 @@ class Server extends AbstractServer
             return;
         }
 
-        if (! in_array($method, $this->getSmdMethods())) {
+        if (! in_array($method, $this->getSmdMethods(), true)) {
             return;
         }
 
@@ -476,7 +476,7 @@ class Server extends AbstractServer
                 $newType = $parameter->getType();
 
                 if (is_array($params[$key]['type'])
-                    && in_array($newType, $params[$key]['type'])
+                    && in_array($newType, $params[$key]['type'], true)
                 ) {
                     continue;
                 }

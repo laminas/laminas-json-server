@@ -172,7 +172,7 @@ class Service
             }
 
             $method = 'set' . ucfirst($key);
-            if (in_array($method, $methods)) {
+            if (in_array($method, $methods, true)) {
                 $this->$method($value);
             }
         }
@@ -221,7 +221,7 @@ class Service
      */
     public function setTransport(string $transport): self
     {
-        if (! in_array($transport, $this->transportTypes)) {
+        if (! in_array($transport, $this->transportTypes, true)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid transport "%s"; please select one of (%s)',
                 $transport,
@@ -274,7 +274,7 @@ class Service
      */
     public function setEnvelope(string $envelopeType): self
     {
-        if (! in_array($envelopeType, $this->envelopeTypes)) {
+        if (! in_array($envelopeType, $this->envelopeTypes, true)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid envelope type "%s"; please specify one of (%s)',
                 $envelopeType,
@@ -323,7 +323,7 @@ class Service
 
         $paramOptions = ['type' => $type];
         foreach ($options as $key => $value) {
-            if (in_array($key, array_keys($this->paramOptionTypes))) {
+            if (in_array($key, array_keys($this->paramOptionTypes), true)) {
                 if (null !== ($callback = $this->paramOptionTypes[$key])) {
                     if (! $callback($value)) {
                         continue;
