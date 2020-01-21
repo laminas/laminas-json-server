@@ -132,7 +132,7 @@ class Smd
      *
      * @param  string $transport
      * @return self
-      * @throws InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setTransport(string $transport): self
     {
