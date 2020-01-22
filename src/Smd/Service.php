@@ -502,13 +502,6 @@ class Service
      */
     protected function validateParamType(string $type, bool $isReturn = false): string
     {
-        if (! is_string($type)) {
-            throw new InvalidArgumentException(sprintf(
-                'Invalid param type provided ("%s")',
-                $type
-            ));
-        }
-
         if (! array_key_exists($type, $this->paramMap)) {
             $type = 'object';
         }
