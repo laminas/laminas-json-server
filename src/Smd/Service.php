@@ -54,9 +54,9 @@ class Service
     protected $return;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $target = '';
+    protected $target;
 
     /**
      * @var string
@@ -246,10 +246,10 @@ class Service
     /**
      * Set service target.
      *
-     * @param  string  $target
+     * @param  string|null $target
      * @return self
      */
-    public function setTarget(string $target): self
+    public function setTarget(?string $target): self
     {
         $this->target = $target;
         return $this;
@@ -258,9 +258,9 @@ class Service
     /**
      * Get service target.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTarget(): string
+    public function getTarget(): ?string
     {
         return $this->target;
     }
@@ -463,7 +463,7 @@ class Service
         $returns    = $this->getReturn();
         $name       = $this->getName();
 
-        if ('' === $target) {
+        if (empty($target)) {
             return compact('envelope', 'transport', 'name', 'parameters', 'returns');
         }
 

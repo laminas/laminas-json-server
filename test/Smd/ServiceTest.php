@@ -124,14 +124,14 @@ class ServiceTest extends TestCase
         $this->assertSame('POST', $this->service->getTransport());
     }
 
-    public function testTargetShouldBeAnEmptyStringInitially(): void
+    public function testTargetShouldBeNullInitially(): void
     {
-        $this->assertSame('', $this->service->getTarget());
+        $this->assertNull($this->service->getTarget());
     }
 
     public function testTargetAccessorsShouldWorkUnderNormalInput(): void
     {
-        $this->testTargetShouldBeAnEmptyStringInitially();
+        $this->testTargetShouldBeNullInitially();
         $this->service->setTarget('foo');
         $this->assertSame('foo', $this->service->getTarget());
     }
