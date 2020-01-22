@@ -203,7 +203,7 @@ class Response
      * Set JSON-RPC version.
      *
      * @param  string $version
-     * @return self
+     * @return self|null
      */
     public function setVersion(?string $version): self
     {
