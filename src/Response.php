@@ -273,8 +273,8 @@ class Response
     /**
      * Set service map object.
      *
-     * @param  Smd $serviceMap
-     * @return self|null
+     * @param  Smd|null $serviceMap
+     * @return self
      */
     public function setServiceMap(?Smd $serviceMap): self
     {
