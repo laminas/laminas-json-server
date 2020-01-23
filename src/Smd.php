@@ -253,7 +253,7 @@ class Smd
     public function setDescription($description)
     {
         $this->description = (string) $description;
-        return $this->description;
+        return $this;
     }
 
     /**
