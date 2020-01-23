@@ -6,6 +6,8 @@
  * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Laminas\Http\Client as HttpClient;
@@ -54,7 +56,7 @@ class Client implements ServerClient
      * @param string $server Full address of the JSON-RPC service.
      * @param HttpClient $httpClient HTTP Client to use for requests.
      */
-    public function __construct($server, HttpClient $httpClient = null)
+    public function __construct(string $server, HttpClient $httpClient = null)
     {
         $this->httpClient = $httpClient ?: new HttpClient();
         $this->serverAddress = $server;
@@ -66,7 +68,7 @@ class Client implements ServerClient
      * @param  HttpClient $httpClient New HTTP client to use.
      * @return Client Self instance.
      */
-    public function setHttpClient(HttpClient $httpClient)
+    public function setHttpClient(HttpClient $httpClient): Client
     {
         $this->httpClient = $httpClient;
         return $this;
@@ -77,7 +79,7 @@ class Client implements ServerClient
      *
      * @return HttpClient HTTP client.
      */
-    public function getHttpClient()
+    public function getHttpClient(): HttpClient
     {
         return $this->httpClient;
     }
@@ -87,7 +89,7 @@ class Client implements ServerClient
      *
      * @return Request
      */
-    public function getLastRequest()
+    public function getLastRequest(): ?Request
     {
         return $this->lastRequest;
     }
@@ -97,7 +99,7 @@ class Client implements ServerClient
      *
      * @return Response
      */
-    public function getLastResponse()
+    public function getLastResponse(): ?Response
     {
         return $this->lastResponse;
     }
@@ -109,7 +111,7 @@ class Client implements ServerClient
      * @return Response Response.
      * @throws Exception\HttpException When HTTP communication fails.
      */
-    public function doRequest($request)
+    public function doRequest(Request $request): Response
     {
         $this->lastRequest = $request;
 
@@ -186,7 +188,7 @@ class Client implements ServerClient
      * @param  array $params List of arguments.
      * @return Request Created request.
      */
-    protected function createRequest($method, array $params)
+    protected function createRequest(string $method, array $params): Request
     {
         $request = new Request();
         $request->setMethod($method)

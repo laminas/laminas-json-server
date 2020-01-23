@@ -6,10 +6,17 @@
  * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Laminas\Json\Exception\RuntimeException;
 use Laminas\Json\Json;
+
+use function get_class_methods;
+use function in_array;
+use function is_array;
+use function ucfirst;
 
 class Response
 {
@@ -59,7 +66,7 @@ class Response
      * @param  array $options
      * @return self
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): self
     {
         // re-produce error state
         if (isset($options['error']) && is_array($options['error'])) {
@@ -70,8 +77,12 @@ class Response
 
         $methods = get_class_methods($this);
         foreach ($options as $key => $value) {
+            if (! is_string($key)) {
+                continue;
+            }
+
             $method = 'set' . ucfirst($key);
-            if (in_array($method, $methods)) {
+            if (in_array($method, $methods, true)) {
                 $this->$method($value);
                 continue;
             }
@@ -91,7 +102,7 @@ class Response
      * @return void
      * @throws Exception\RuntimeException
      */
-    public function loadJson($json)
+    public function loadJson(string $json): void
     {
         try {
             $options = Json::decode($json, Json::TYPE_ARRAY);
@@ -116,7 +127,7 @@ class Response
      * @param  mixed $value
      * @return self
      */
-    public function setResult($value)
+    public function setResult($value): self
     {
         $this->result = $value;
         return $this;
@@ -140,7 +151,7 @@ class Response
      * @param  mixed $error
      * @return self
      */
-    public function setError(Error $error = null)
+    public function setError(?Error $error = null): self
     {
         $this->error = $error;
         return $this;
@@ -151,7 +162,7 @@ class Response
      *
      * @return null|Error
      */
-    public function getError()
+    public function getError(): ?Error
     {
         return $this->error;
     }
@@ -161,7 +172,7 @@ class Response
      *
      * @return bool
      */
-    public function isError()
+    public function isError(): bool
     {
         return $this->getError() instanceof Error;
     }
@@ -172,7 +183,7 @@ class Response
      * @param  mixed $name
      * @return self
      */
-    public function setId($name)
+    public function setId($name): self
     {
         $this->id = $name;
         return $this;
@@ -191,13 +202,12 @@ class Response
     /**
      * Set JSON-RPC version.
      *
-     * @param  string $version
+     * @param  string|null $version
      * @return self
      */
-    public function setVersion($version)
+    public function setVersion(?string $version): self
     {
-        $version = (string) $version;
-        if ('2.0' == $version) {
+        if ('2.0' === $version) {
             $this->version = '2.0';
             return $this;
         }
@@ -211,7 +221,7 @@ class Response
      *
      * @return null|string
      */
-    public function getVersion()
+    public function getVersion(): ?string
     {
         return $this->version;
     }
@@ -221,7 +231,7 @@ class Response
      *
      * @return string
      */
-    public function toJson()
+    public function toJson(): string
     {
         $response = ['id' => $this->getId()];
 
@@ -254,7 +264,7 @@ class Response
      * @param mixed $args
      * @return self
      */
-    public function setArgs($args)
+    public function setArgs($args): self
     {
         $this->args = $args;
         return $this;
@@ -263,10 +273,10 @@ class Response
     /**
      * Set service map object.
      *
-     * @param  Smd $serviceMap
+     * @param  Smd|null $serviceMap
      * @return self
      */
-    public function setServiceMap($serviceMap)
+    public function setServiceMap(?Smd $serviceMap): self
     {
         $this->serviceMap = $serviceMap;
         return $this;
@@ -277,7 +287,7 @@ class Response
      *
      * @return Smd|null
      */
-    public function getServiceMap()
+    public function getServiceMap(): ?Smd
     {
         return $this->serviceMap;
     }
@@ -287,7 +297,7 @@ class Response
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toJson();
     }

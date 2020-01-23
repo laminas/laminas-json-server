@@ -6,11 +6,21 @@
  * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Laminas\Json\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
+
+use function array_key_exists;
+use function compact;
+use function in_array;
+use function is_array;
+use function method_exists;
+use function preg_match;
+use function ucfirst;
 
 class Smd
 {
@@ -37,7 +47,7 @@ class Smd
      *
      * @var string
      */
-    protected $description;
+    protected $description = '';
 
     /**
      * Generate Dojo-compatible SMD?
@@ -68,7 +78,7 @@ class Smd
      *
      * @var string
      */
-    protected $id;
+    protected $id = '';
 
     /**
      * Services offered.
@@ -82,7 +92,7 @@ class Smd
      *
      * @var string
      */
-    protected $target;
+    protected $target = '';
 
     /**
      * Global transport.
@@ -104,7 +114,7 @@ class Smd
      * @param  array $options
      * @return self
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): self
     {
         foreach ($options as $key => $value) {
             $method = 'set' . ucfirst($key);
@@ -122,11 +132,11 @@ class Smd
      *
      * @param  string $transport
      * @return self
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function setTransport($transport)
+    public function setTransport(string $transport): self
     {
-        if (! in_array($transport, $this->transportTypes)) {
+        if (! in_array($transport, $this->transportTypes, true)) {
             throw new InvalidArgumentException("Invalid transport '{$transport}' specified");
         }
 
@@ -139,7 +149,7 @@ class Smd
      *
      * @return string
      */
-    public function getTransport()
+    public function getTransport(): string
     {
         return $this->transport;
     }
@@ -149,11 +159,11 @@ class Smd
      *
      * @param  string $envelopeType
      * @return self
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function setEnvelope($envelopeType)
+    public function setEnvelope(string $envelopeType): self
     {
-        if (! in_array($envelopeType, $this->envelopeTypes)) {
+        if (! in_array($envelopeType, $this->envelopeTypes, true)) {
             throw new InvalidArgumentException("Invalid envelope type '{$envelopeType}'");
         }
 
@@ -166,7 +176,7 @@ class Smd
      *
      * @return string
      */
-    public function getEnvelope()
+    public function getEnvelope(): string
     {
         return $this->envelope;
     }
@@ -176,9 +186,9 @@ class Smd
      *
      * @param  string $type
      * @return self
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    public function setContentType($type)
+    public function setContentType(string $type): self
     {
         if (! preg_match($this->contentTypeRegex, $type)) {
             throw new InvalidArgumentException("Invalid content type '{$type}' specified");
@@ -195,7 +205,7 @@ class Smd
      *
      * @return string
      */
-    public function getContentType()
+    public function getContentType(): string
     {
         return $this->contentType;
     }
@@ -206,9 +216,9 @@ class Smd
      * @param  string $target
      * @return self
      */
-    public function setTarget($target)
+    public function setTarget(string $target): self
     {
-        $this->target = (string) $target;
+        $this->target = $target;
         return $this;
     }
 
@@ -217,7 +227,7 @@ class Smd
      *
      * @return string
      */
-    public function getTarget()
+    public function getTarget(): string
     {
         return $this->target;
     }
@@ -228,9 +238,9 @@ class Smd
      * @param  string $id
      * @return self
      */
-    public function setId($id)
+    public function setId(string $id): self
     {
-        $this->id = (string) $id;
+        $this->id = $id;
         return $this;
     }
 
@@ -239,7 +249,7 @@ class Smd
      *
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -250,10 +260,10 @@ class Smd
      * @param  string $description
      * @return self
      */
-    public function setDescription($description)
+    public function setDescription(string $description): self
     {
-        $this->description = (string) $description;
-        return $this->description;
+        $this->description = $description;
+        return $this;
     }
 
     /**
@@ -261,7 +271,7 @@ class Smd
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -272,9 +282,9 @@ class Smd
      * @param  bool $flag
      * @return self
      */
-    public function setDojoCompatible($flag)
+    public function setDojoCompatible(bool $flag): self
     {
-        $this->dojoCompatible = (bool) $flag;
+        $this->dojoCompatible = $flag;
         return $this;
     }
 
@@ -283,7 +293,7 @@ class Smd
      *
      * @return bool
      */
-    public function isDojoCompatible()
+    public function isDojoCompatible(): bool
     {
         return $this->dojoCompatible;
     }
@@ -293,10 +303,10 @@ class Smd
      *
      * @param Smd\Service|array $service
      * @return self
-     * @throws Exception\RuntimeException
-     * @throws Exception\InvalidArgumentException
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
-    public function addService($service)
+    public function addService($service): self
     {
         if (is_array($service)) {
             $service = new Smd\Service($service);
@@ -322,7 +332,7 @@ class Smd
      * @param  array $services
      * @return self
      */
-    public function addServices(array $services)
+    public function addServices(array $services): self
     {
         foreach ($services as $service) {
             $this->addService($service);
@@ -337,7 +347,7 @@ class Smd
      * @param  array $services
      * @return self
      */
-    public function setServices(array $services)
+    public function setServices(array $services): self
     {
         $this->services = [];
         return $this->addServices($services);
@@ -349,7 +359,7 @@ class Smd
      * @param  string $name
      * @return bool|Smd\Service
      */
-    public function getService($name)
+    public function getService(string $name)
     {
         if (! array_key_exists($name, $this->services)) {
             return false;
@@ -363,7 +373,7 @@ class Smd
      *
      * @return array
      */
-    public function getServices()
+    public function getServices(): array
     {
         return $this->services;
     }
@@ -374,7 +384,7 @@ class Smd
      * @param  string $name
      * @return bool
      */
-    public function removeService($name)
+    public function removeService(string $name): bool
     {
         if (! array_key_exists($name, $this->services)) {
             return false;
@@ -389,7 +399,7 @@ class Smd
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         if ($this->isDojoCompatible()) {
             return $this->toDojoArray();
@@ -429,7 +439,7 @@ class Smd
      *
      * @return array
      */
-    public function toDojoArray()
+    public function toDojoArray(): array
     {
         $SMDVersion  = '.1';
         $serviceType = 'JSON-RPC';
@@ -471,7 +481,7 @@ class Smd
      *
      * @return string
      */
-    public function toJson()
+    public function toJson(): string
     {
         return Json::encode($this->toArray());
     }
@@ -481,7 +491,7 @@ class Smd
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toJson();
     }

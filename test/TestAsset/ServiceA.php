@@ -10,15 +10,10 @@ declare(strict_types=1);
 
 namespace LaminasTest\Json\Server\TestAsset;
 
-use JsonSerializable;
-
-/**
- * Implementation of the built-in JsonSerializable interface.
- */
-class JsonSerializableBuiltinImpl implements JsonSerializable
+class ServiceA
 {
-    public function jsonSerialize(): array
+    public function hello(string $name): string
     {
-        return [__FUNCTION__];
+        return sprintf('Hello %s!', $name);
     }
 }

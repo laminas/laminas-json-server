@@ -6,9 +6,23 @@
  * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Laminas\Server\Cache as ServerCache;
+
+use function dirname;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function is_readable;
+use function is_writable;
+use function restore_error_handler;
+use function set_error_handler;
+use function unlink;
+
+use const E_WARNING;
 
 /**
  * Cache server definition and SMD.
@@ -24,10 +38,10 @@ class Cache extends ServerCache
      * @param  Server $server
      * @return bool
      */
-    public static function saveSmd($filename, Server $server)
+    public static function saveSmd(string $filename, Server $server): bool
     {
-        if (! is_string($filename)
-            || (! file_exists($filename) && ! is_writable(dirname($filename)))
+        if (! file_exists($filename)
+            && ! is_writable(dirname($filename))
         ) {
             return false;
         }
@@ -56,10 +70,9 @@ class Cache extends ServerCache
      * @param  string $filename
      * @return string|false
      */
-    public static function getSmd($filename)
+    public static function getSmd(string $filename)
     {
-        if (! is_string($filename)
-            || ! file_exists($filename)
+        if (! file_exists($filename)
             || ! is_readable($filename)
         ) {
             return false;
@@ -86,9 +99,9 @@ class Cache extends ServerCache
      * @param  string $filename
      * @return bool
      */
-    public static function deleteSmd($filename)
+    public static function deleteSmd(string $filename): bool
     {
-        if (is_string($filename) && file_exists($filename)) {
+        if (file_exists($filename)) {
             unlink($filename);
             return true;
         }

@@ -10,50 +10,22 @@ call the class `Calculator`, and define methods for `add`, `subtract`,
  */
 class Calculator
 {
-    /**
-     * Return sum of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function add($x, $y)
+    public function add(int $x, int $y): int
     {
         return $x + $y;
     }
 
-    /**
-     * Return difference of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function subtract($x, $y)
+    public function subtract(int $x, int $y): int
     {
         return $x - $y;
     }
 
-    /**
-     * Return product of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return int
-     */
-    public function multiply($x, $y)
+    public function multiply(int $x, int $y): int
     {
         return $x * $y;
     }
 
-    /**
-     * Return the division of two variables
-     *
-     * @param  int $x
-     * @param  int $y
-     * @return float
-     */
-    public function divide($x, $y)
+    public function divide(int $x, int $y): float
     {
         return $x / $y;
     }

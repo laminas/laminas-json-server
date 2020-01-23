@@ -6,6 +6,8 @@
  * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server;
 
 use Laminas\Json;
@@ -14,11 +16,19 @@ use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Request;
 use Laminas\Json\Server\Response;
 use Laminas\Server\Reflection\Exception\RuntimeException;
+use LaminasTest\Json\Server\TestAsset\ServiceA;
+use LaminasTest\Json\Server\TestAsset\ServiceB;
 use PHPUnit\Framework\TestCase;
+
+use function count;
+use function get_class_methods;
+use function ob_get_clean;
+use function ob_start;
+use function var_export;
 
 class ServerTest extends TestCase
 {
-    public function dummyCallable() : void
+    public function dummyCallable(): void
     {
     }
 
@@ -28,19 +38,19 @@ class ServerTest extends TestCase
      *
      * @return void
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->server = new Server\Server();
     }
 
-    public function testShouldBeAbleToBindFunctionToServer()
+    public function testShouldBeAbleToBindFunctionToServer(): void
     {
         $this->server->addFunction('strtolower');
         $methods = $this->server->getFunctions();
         $this->assertTrue($methods->hasMethod('strtolower'));
     }
 
-    public function testShouldBeAbleToBindCallbackToServer()
+    public function testShouldBeAbleToBindCallbackToServer(): void
     {
         try {
             $this->server->addFunction([$this, 'dummyCallable']);
@@ -51,30 +61,30 @@ class ServerTest extends TestCase
         $this->assertTrue($methods->hasMethod('dummyCallable'));
     }
 
-    public function testShouldBeAbleToBindClassToServer()
+    public function testShouldBeAbleToBindClassToServer(): void
     {
         $this->server->setClass(Server\Server::class);
         $test = $this->server->getFunctions();
         $this->assertNotEmpty($test);
     }
 
-    public function testBindingClassToServerShouldRegisterAllPublicMethods()
+    public function testBindingClassToServerShouldRegisterAllPublicMethods(): void
     {
         $this->server->setClass(Server\Server::class);
         $test = $this->server->getFunctions();
         $methods = get_class_methods(Server\Server::class);
         foreach ($methods as $method) {
-            if ('_' == $method[0]) {
+            if ('_' === $method[0]) {
                 continue;
             }
             $this->assertTrue(
                 $test->hasMethod($method),
-                'Testing for method ' . $method . ' against ' . var_export($test, 1)
+                'Testing for method ' . $method . ' against ' . var_export($test, true)
             );
         }
     }
 
-    public function testShouldBeAbleToBindObjectToServer()
+    public function testShouldBeAbleToBindObjectToServer(): void
     {
         $object = new Server\Server();
         $this->server->setClass($object);
@@ -82,24 +92,24 @@ class ServerTest extends TestCase
         $this->assertNotEmpty($test);
     }
 
-    public function testBindingObjectToServerShouldRegisterAllPublicMethods()
+    public function testBindingObjectToServerShouldRegisterAllPublicMethods(): void
     {
         $object = new Server\Server();
         $this->server->setClass($object);
         $test = $this->server->getFunctions();
         $methods = get_class_methods($object);
         foreach ($methods as $method) {
-            if ('_' == $method[0]) {
+            if ('_' === $method[0]) {
                 continue;
             }
             $this->assertTrue(
                 $test->hasMethod($method),
-                'Testing for method ' . $method . ' against ' . var_export($test, 1)
+                'Testing for method ' . $method . ' against ' . var_export($test, true)
             );
         }
     }
 
-    public function testShouldBeAbleToBindMultipleClassesAndObjectsToServer()
+    public function testShouldBeAbleToBindMultipleClassesAndObjectsToServer(): void
     {
         $this->server->setClass(Server\Server::class)
                      ->setClass(new Json\Json());
@@ -110,23 +120,23 @@ class ServerTest extends TestCase
         $this->assertGreaterThan(count($zjMethods), count($methods));
     }
 
-    public function testNamingCollisionsShouldResolveToLastRegisteredMethod()
+    public function testNamingCollisionsShouldResolveToLastRegisteredMethod(): void
     {
-        $this->server->setClass(Request::class)
-                     ->setClass(Response::class);
+        $this->server->setClass(ServiceA::class)
+                     ->setClass(ServiceB::class);
         $methods = $this->server->getFunctions();
-        $this->assertTrue($methods->hasMethod('toJson'));
-        $toJSON = $methods->getMethod('toJson');
-        $this->assertEquals(Response::class, $toJSON->getCallback()->getClass());
+        $this->assertTrue($methods->hasMethod('hello'));
+        $toJSON = $methods->getMethod('hello');
+        $this->assertSame(ServiceB::class, $toJSON->getCallback()->getClass());
     }
 
-    public function testGetRequestShouldInstantiateRequestObjectByDefault()
+    public function testGetRequestShouldInstantiateRequestObjectByDefault(): void
     {
         $request = $this->server->getRequest();
         $this->assertInstanceOf(Request::class, $request);
     }
 
-    public function testShouldAllowSettingRequestObjectManually()
+    public function testShouldAllowSettingRequestObjectManually(): void
     {
         $orig = $this->server->getRequest();
         $new  = new Request();
@@ -136,13 +146,13 @@ class ServerTest extends TestCase
         $this->assertNotSame($orig, $test);
     }
 
-    public function testGetResponseShouldInstantiateResponseObjectByDefault()
+    public function testGetResponseShouldInstantiateResponseObjectByDefault(): void
     {
         $response = $this->server->getResponse();
         $this->assertInstanceOf(Response::class, $response);
     }
 
-    public function testShouldAllowSettingResponseObjectManually()
+    public function testShouldAllowSettingResponseObjectManually(): void
     {
         $orig = $this->server->getResponse();
         $new  = new Response();
@@ -152,36 +162,36 @@ class ServerTest extends TestCase
         $this->assertNotSame($orig, $test);
     }
 
-    public function testFaultShouldCreateErrorResponse()
+    public function testFaultShouldCreateErrorResponse(): void
     {
         $response = $this->server->getResponse();
         $this->assertFalse($response->isError());
         $this->server->fault('error condition', -32000);
         $this->assertTrue($response->isError());
         $error = $response->getError();
-        $this->assertEquals(-32000, $error->getCode());
-        $this->assertEquals('error condition', $error->getMessage());
+        $this->assertSame(-32000, $error->getCode());
+        $this->assertSame('error condition', $error->getMessage());
     }
 
-    public function testResponseShouldBeEmittedAutomaticallyByDefault()
+    public function testResponseShouldBeEmittedAutomaticallyByDefault(): void
     {
         $this->assertFalse($this->server->getReturnResponse());
     }
 
-    public function testShouldBeAbleToDisableAutomaticResponseEmission()
+    public function testShouldBeAbleToDisableAutomaticResponseEmission(): void
     {
         $this->testResponseShouldBeEmittedAutomaticallyByDefault();
         $this->server->setReturnResponse(true);
         $this->assertTrue($this->server->getReturnResponse());
     }
 
-    public function testShouldBeAbleToRetrieveSmdObject()
+    public function testShouldBeAbleToRetrieveSmdObject(): void
     {
         $smd = $this->server->getServiceMap();
         $this->assertInstanceOf(Server\Smd::class, $smd);
     }
 
-    public function testShouldBeAbleToSetArbitrarySmdMetadata()
+    public function testShouldBeAbleToSetArbitrarySmdMetadata(): void
     {
         $this->server->setTransport('POST')
                      ->setEnvelope('JSON-RPC-1.0')
@@ -190,15 +200,15 @@ class ServerTest extends TestCase
                      ->setId('foobar')
                      ->setDescription('This is a test service');
 
-        $this->assertEquals('POST', $this->server->getTransport());
-        $this->assertEquals('JSON-RPC-1.0', $this->server->getEnvelope());
-        $this->assertEquals('application/x-json', $this->server->getContentType());
-        $this->assertEquals('/foo/bar', $this->server->getTarget());
-        $this->assertEquals('foobar', $this->server->getId());
-        $this->assertEquals('This is a test service', $this->server->getDescription());
+        $this->assertSame('POST', $this->server->getTransport());
+        $this->assertSame('JSON-RPC-1.0', $this->server->getEnvelope());
+        $this->assertSame('application/x-json', $this->server->getContentType());
+        $this->assertSame('/foo/bar', $this->server->getTarget());
+        $this->assertSame('foobar', $this->server->getId());
+        $this->assertSame('This is a test service', $this->server->getDescription());
     }
 
-    public function testSmdObjectRetrievedFromServerShouldReflectServerState()
+    public function testSmdObjectRetrievedFromServerShouldReflectServerState(): void
     {
         $this->server->addFunction('strtolower')
                      ->setClass(Server\Server::class)
@@ -209,12 +219,12 @@ class ServerTest extends TestCase
                      ->setId('foobar')
                      ->setDescription('This is a test service');
         $smd = $this->server->getServiceMap();
-        $this->assertEquals('POST', $this->server->getTransport());
-        $this->assertEquals('JSON-RPC-1.0', $this->server->getEnvelope());
-        $this->assertEquals('application/x-json', $this->server->getContentType());
-        $this->assertEquals('/foo/bar', $this->server->getTarget());
-        $this->assertEquals('foobar', $this->server->getId());
-        $this->assertEquals('This is a test service', $this->server->getDescription());
+        $this->assertSame('POST', $this->server->getTransport());
+        $this->assertSame('JSON-RPC-1.0', $this->server->getEnvelope());
+        $this->assertSame('application/x-json', $this->server->getContentType());
+        $this->assertSame('/foo/bar', $this->server->getTarget());
+        $this->assertSame('foobar', $this->server->getId());
+        $this->assertSame('This is a test service', $this->server->getDescription());
 
         $services = $smd->getServices();
         $this->assertIsArray($services);
@@ -222,14 +232,14 @@ class ServerTest extends TestCase
         $this->assertArrayHasKey('strtolower', $services);
         $methods = get_class_methods(Server\Server::class);
         foreach ($methods as $method) {
-            if ('_' == $method[0]) {
+            if ('_' === $method[0]) {
                 continue;
             }
             $this->assertArrayHasKey($method, $services);
         }
     }
 
-    public function testHandleValidMethodShouldWork()
+    public function testHandleValidMethodShouldWork(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->addFunction(__NAMESPACE__ . '\\TestAsset\\FooFunc')
@@ -250,21 +260,21 @@ class ServerTest extends TestCase
         $this->assertFalse($response->isError());
     }
 
-    public function testHandleValidMethodWithNULLParamValueShouldWork()
+    public function testHandleValidMethodWithNULLParamValueShouldWork(): void
     {
-        $this->server->setClass(__NAMESPACE__ . '\\TestAsset\\Foo')
+        $this->server->setClass(TestAsset\Foo::class)
                      ->addFunction(__NAMESPACE__ . '\\TestAsset\\FooFunc')
                      ->setReturnResponse(true);
         $request = $this->server->getRequest();
         $request->setMethod('bar')
-                ->setParams([true, null, 'bar'])
+                ->setParams([true, 'due', 'bar'])
                 ->setId('foo');
         $response = $this->server->handle();
         $this->assertInstanceOf(Response::class, $response);
         $this->assertFalse($response->isError());
     }
 
-    public function testHandleValidMethodWithTooFewParamsShouldPassDefaultsOrNullsForMissingParams()
+    public function testHandleValidMethodWithTooFewParamsShouldPassDefaultsOrNullsForMissingParams(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->setReturnResponse(true);
@@ -278,11 +288,11 @@ class ServerTest extends TestCase
         $result = $response->getResult();
         $this->assertIsArray($result);
         $this->assertCount(3, $result);
-        $this->assertEquals('two', $result[1], var_export($result, 1));
+        $this->assertSame('two', $result[1], var_export($result, true));
         $this->assertNull($result[2]);
     }
 
-    public function testHandleValidMethodWithTooFewAssociativeParamsShouldPassDefaultsOrNullsForMissingParams()
+    public function testHandleValidMethodWithTooFewAssociativeParamsShouldPassDefaultsOrNullsForMissingParams(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->setReturnResponse(true);
@@ -296,11 +306,11 @@ class ServerTest extends TestCase
         $result = $response->getResult();
         $this->assertIsArray($result);
         $this->assertCount(3, $result);
-        $this->assertEquals('two', $result[1], var_export($result, 1));
+        $this->assertSame('two', $result[1], var_export($result, true));
         $this->assertNull($result[2]);
     }
 
-    public function testHandleValidMethodWithTooManyParamsShouldWork()
+    public function testHandleValidMethodWithTooManyParamsShouldWork(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->setReturnResponse(true);
@@ -314,11 +324,11 @@ class ServerTest extends TestCase
         $result = $response->getResult();
         $this->assertIsArray($result);
         $this->assertCount(3, $result);
-        $this->assertEquals('foo', $result[1]);
-        $this->assertEquals('bar', $result[2]);
+        $this->assertSame('foo', $result[1]);
+        $this->assertSame('bar', $result[2]);
     }
 
-    public function testHandleShouldAllowNamedParamsInAnyOrder1()
+    public function testHandleShouldAllowNamedParamsInAnyOrder1(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->setReturnResponse(true);
@@ -334,12 +344,12 @@ class ServerTest extends TestCase
         $result = $response->getResult();
 
         $this->assertIsArray($result);
-        $this->assertEquals(1, $result[0]);
-        $this->assertEquals(2, $result[1]);
+        $this->assertSame(true, $result[0]);
+        $this->assertSame('2', $result[1]);
         $this->assertEquals(3, $result[2]);
     }
 
-    public function testHandleShouldAllowNamedParamsInAnyOrder2()
+    public function testHandleShouldAllowNamedParamsInAnyOrder2(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->setReturnResponse(true);
@@ -355,12 +365,12 @@ class ServerTest extends TestCase
         $result = $response->getResult();
 
         $this->assertIsArray($result);
-        $this->assertEquals(1, $result[0]);
-        $this->assertEquals(2, $result[1]);
-        $this->assertEquals(3, $result[2]);
+        $this->assertSame(true, $result[0]);
+        $this->assertSame('2', $result[1]);
+        $this->assertSame(3, $result[2]);
     }
 
-    public function testHandleValidWithoutRequiredParamShouldReturnError()
+    public function testHandleValidWithoutRequiredParamShouldReturnError(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->setReturnResponse(true);
@@ -375,20 +385,20 @@ class ServerTest extends TestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertTrue($response->isError());
-        $this->assertEquals(Server\Error::ERROR_INVALID_PARAMS, $response->getError()->getCode());
+        $this->assertSame(Server\Error::ERROR_INVALID_PARAMS, $response->getError()->getCode());
     }
 
-    public function testHandleRequestWithErrorsShouldReturnErrorResponse()
+    public function testHandleRequestWithErrorsShouldReturnErrorResponse(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->setReturnResponse(true);
         $response = $this->server->handle();
         $this->assertInstanceOf(Response::class, $response);
         $this->assertTrue($response->isError());
-        $this->assertEquals(Server\Error::ERROR_INVALID_REQUEST, $response->getError()->getCode());
+        $this->assertSame(Server\Error::ERROR_INVALID_REQUEST, $response->getError()->getCode());
     }
 
-    public function testHandleRequestWithInvalidMethodShouldReturnErrorResponse()
+    public function testHandleRequestWithInvalidMethodShouldReturnErrorResponse(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->setReturnResponse(true);
@@ -398,10 +408,10 @@ class ServerTest extends TestCase
         $response = $this->server->handle();
         $this->assertInstanceOf(Response::class, $response);
         $this->assertTrue($response->isError());
-        $this->assertEquals(Server\Error::ERROR_INVALID_METHOD, $response->getError()->getCode());
+        $this->assertSame(Server\Error::ERROR_INVALID_METHOD, $response->getError()->getCode());
     }
 
-    public function testHandleRequestWithExceptionShouldReturnErrorResponse()
+    public function testHandleRequestWithExceptionShouldReturnErrorResponse(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->setReturnResponse(true);
@@ -411,11 +421,11 @@ class ServerTest extends TestCase
         $response = $this->server->handle();
         $this->assertInstanceOf(Response::class, $response);
         $this->assertTrue($response->isError());
-        $this->assertEquals(Server\Error::ERROR_OTHER, $response->getError()->getCode());
-        $this->assertEquals('application error', $response->getError()->getMessage());
+        $this->assertSame(Server\Error::ERROR_OTHER, $response->getError()->getCode());
+        $this->assertSame('application error', $response->getError()->getMessage());
     }
 
-    public function testHandleShouldEmitResponseByDefault()
+    public function testHandleShouldEmitResponseByDefault(): void
     {
         $this->server->setClass(TestAsset\Foo::class);
         $request = $this->server->getRequest();
@@ -432,11 +442,11 @@ class ServerTest extends TestCase
         $this->assertArrayHasKey('id', $decoded);
 
         $response = $this->server->getResponse();
-        $this->assertEquals($response->getResult(), $decoded['result']);
-        $this->assertEquals($response->getId(), $decoded['id']);
+        $this->assertSame($response->getResult(), $decoded['result']);
+        $this->assertSame($response->getId(), $decoded['id']);
     }
 
-    public function testResponseShouldBeEmptyWhenRequestHasNoId()
+    public function testResponseShouldBeEmptyWhenRequestHasNoId(): void
     {
         $this->server->setClass(TestAsset\Foo::class);
         $request = $this->server->getRequest();
@@ -449,19 +459,19 @@ class ServerTest extends TestCase
         $this->assertEmpty($buffer);
     }
 
-    public function testLoadFunctionsShouldLoadResultOfGetFunctions()
+    public function testLoadFunctionsShouldLoadResultOfGetFunctions(): void
     {
         $this->server->setClass(TestAsset\Foo::class);
         $functions = $this->server->getFunctions();
         $server = new Server\Server();
         $server->loadFunctions($functions);
-        $this->assertEquals($functions->toArray(), $server->getFunctions()->toArray());
+        $this->assertSame($functions->toArray(), $server->getFunctions()->toArray());
     }
 
     /**
      * @group Laminas-4604
      */
-    public function testAddFunctionAndClassThatContainsConstructor()
+    public function testAddFunctionAndClassThatContainsConstructor(): void
     {
         $bar = new TestAsset\Bar('unique');
 
@@ -483,14 +493,14 @@ class ServerTest extends TestCase
         $this->assertContains('unique', $decoded['result']);
 
         $response = $this->server->getResponse();
-        $this->assertEquals($response->getResult(), $decoded['result']);
-        $this->assertEquals($response->getId(), $decoded['id']);
+        $this->assertSame($response->getResult(), $decoded['result']);
+        $this->assertSame($response->getId(), $decoded['id']);
     }
 
     /**
      * @group 3773
      */
-    public function testHandleWithNamedParamsShouldSetMissingDefaults1()
+    public function testHandleWithNamedParamsShouldSetMissingDefaults1(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->setReturnResponse(true);
@@ -505,15 +515,15 @@ class ServerTest extends TestCase
         $result = $response->getResult();
 
         $this->assertIsArray($result);
-        $this->assertEquals(1, $result[0]);
-        $this->assertEquals(2, $result[1]);
-        $this->assertEquals(null, $result[2]);
+        $this->assertSame(true, $result[0]);
+        $this->assertSame('2', $result[1]);
+        $this->assertSame(null, $result[2]);
     }
 
     /**
      * @group 3773
      */
-    public function testHandleWithNamedParamsShouldSetMissingDefaults2()
+    public function testHandleWithNamedParamsShouldSetMissingDefaults2(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
                      ->setReturnResponse(true);
@@ -528,12 +538,12 @@ class ServerTest extends TestCase
         $result = $response->getResult();
 
         $this->assertIsArray($result);
-        $this->assertEquals(1, $result[0]);
-        $this->assertEquals('two', $result[1]);
-        $this->assertEquals(3, $result[2]);
+        $this->assertSame(true, $result[0]);
+        $this->assertSame('two', $result[1]);
+        $this->assertSame(3, $result[2]);
     }
 
-    public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys()
+    public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys(): void
     {
         $server = $this->server;
         $server->setClass(TestAsset\FooParameters::class);
@@ -544,10 +554,10 @@ class ServerTest extends TestCase
         $server->handle();
 
         $response = $server->getResponse();
-        $this->assertEquals($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
+        $this->assertSame($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
     }
 
-    public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys1()
+    public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys1(): void
     {
         $server = $this->server;
         $server->setClass(TestAsset\FooParameters::class);
@@ -558,6 +568,6 @@ class ServerTest extends TestCase
         $server->handle();
         $response = $server->getResponse();
         $this->assertNotEmpty($response->getError());
-        $this->assertEquals($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
+        $this->assertSame($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
     }
 }

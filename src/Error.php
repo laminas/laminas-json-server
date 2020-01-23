@@ -6,6 +6,8 @@
  * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Laminas\Json\Json;
@@ -38,14 +40,14 @@ class Error
      *
      * @var string
      */
-    protected $message;
+    protected $message = '';
 
     /**
      * @param  string $message
      * @param  int $code
      * @param  mixed $data
      */
-    public function __construct($message = null, $code = self::ERROR_OTHER, $data = null)
+    public function __construct(string $message = '', int $code = self::ERROR_OTHER, $data = null)
     {
         $this->setMessage($message)
              ->setCode($code)
@@ -60,18 +62,8 @@ class Error
      * @param  int $code
      * @return self
      */
-    public function setCode($code)
+    public function setCode(int $code): self
     {
-        if (! is_scalar($code) || is_bool($code) || is_float($code)) {
-            return $this;
-        }
-
-        if (is_string($code) && ! is_numeric($code)) {
-            return $this;
-        }
-
-        $code = (int) $code;
-
         if (0 === $code) {
             $this->code = self::ERROR_OTHER;
             return $this;
@@ -84,9 +76,9 @@ class Error
     /**
      * Get error code
      *
-     * @return int|null
+     * @return int
      */
-    public function getCode()
+    public function getCode(): int
     {
         return $this->code;
     }
@@ -97,13 +89,9 @@ class Error
      * @param  string $message
      * @return self
      */
-    public function setMessage($message)
+    public function setMessage(string $message): self
     {
-        if (! is_scalar($message)) {
-            return $this;
-        }
-
-        $this->message = (string) $message;
+        $this->message = $message;
         return $this;
     }
 
@@ -112,7 +100,7 @@ class Error
      *
      * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -123,7 +111,7 @@ class Error
      * @param  mixed $data
      * @return self
      */
-    public function setData($data)
+    public function setData($data): self
     {
         $this->data = $data;
         return $this;
@@ -144,7 +132,7 @@ class Error
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'code'    => $this->getCode(),
@@ -158,7 +146,7 @@ class Error
      *
      * @return string
      */
-    public function toJson()
+    public function toJson(): string
     {
         return Json::encode($this->toArray());
     }
@@ -168,7 +156,7 @@ class Error
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toJson();
     }

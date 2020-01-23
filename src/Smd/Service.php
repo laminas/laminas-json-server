@@ -6,11 +6,29 @@
  * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server\Smd;
 
 use Laminas\Json\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Smd;
+
+use function array_key_exists;
+use function array_keys;
+use function array_search;
+use function compact;
+use function get_class_methods;
+use function gettype;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_string;
+use function ksort;
+use function preg_match;
+use function sprintf;
+use function strtolower;
+use function ucfirst;
 
 /**
  * Create Service Mapping Description for a method
@@ -20,17 +38,30 @@ use Laminas\Json\Server\Smd;
  */
 class Service
 {
-    /**#@+
-     * Service metadata
-     *
+    /**
      * @var string
      */
     protected $envelope  = Smd::ENV_JSONRPC_1;
-    protected $name;
+
+    /**
+     * @var string
+     */
+    protected $name = '';
+
+    /**
+     * @var string|array
+     */
     protected $return;
+
+    /**
+     * @var string|null
+     */
     protected $target;
+
+    /**
+     * @var string
+     */
     protected $transport = 'POST';
-    /**#@-*/
 
     /**
      * Allowed envelope types.
@@ -121,7 +152,7 @@ class Service
             $this->setOptions($spec);
         }
 
-        if (null == $this->getName()) {
+        if ('' === $this->getName()) {
             throw new InvalidArgumentException('SMD service description requires a name; none provided');
         }
     }
@@ -132,16 +163,16 @@ class Service
      * @param  array $options
      * @return self
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): self
     {
         $methods = get_class_methods($this);
         foreach ($options as $key => $value) {
-            if ('options' == strtolower($key)) {
+            if ('options' === strtolower($key)) {
                 continue;
             }
 
             $method = 'set' . ucfirst($key);
-            if (in_array($method, $methods)) {
+            if (in_array($method, $methods, true)) {
                 $this->$method($value);
             }
         }
@@ -156,9 +187,8 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setName($name)
+    public function setName(string $name): self
     {
-        $name = (string) $name;
         if (! preg_match($this->nameRegex, $name)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid name "%s" provided for service; must follow PHP method naming conventions',
@@ -175,7 +205,7 @@ class Service
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -189,9 +219,9 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setTransport($transport)
+    public function setTransport(string $transport): self
     {
-        if (! in_array($transport, $this->transportTypes)) {
+        if (! in_array($transport, $this->transportTypes, true)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid transport "%s"; please select one of (%s)',
                 $transport,
@@ -208,7 +238,7 @@ class Service
      *
      * @return string
      */
-    public function getTransport()
+    public function getTransport(): string
     {
         return $this->transport;
     }
@@ -216,21 +246,21 @@ class Service
     /**
      * Set service target.
      *
-     * @param  string  $target
+     * @param  string|null $target
      * @return self
      */
-    public function setTarget($target)
+    public function setTarget(?string $target): self
     {
-        $this->target = (string) $target;
+        $this->target = $target;
         return $this;
     }
 
     /**
      * Get service target.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTarget()
+    public function getTarget(): ?string
     {
         return $this->target;
     }
@@ -242,9 +272,9 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setEnvelope($envelopeType)
+    public function setEnvelope(string $envelopeType): self
     {
-        if (! in_array($envelopeType, $this->envelopeTypes)) {
+        if (! in_array($envelopeType, $this->envelopeTypes, true)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid envelope type "%s"; please specify one of (%s)',
                 $envelopeType,
@@ -261,7 +291,7 @@ class Service
      *
      * @return string
      */
-    public function getEnvelope()
+    public function getEnvelope(): string
     {
         return $this->envelope;
     }
@@ -275,7 +305,7 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function addParam($type, array $options = [], $order = null)
+    public function addParam($type, array $options = [], ?int $order = null): self
     {
         if (! is_string($type) && ! is_array($type)) {
             throw new InvalidArgumentException('Invalid param type provided');
@@ -293,7 +323,7 @@ class Service
 
         $paramOptions = ['type' => $type];
         foreach ($options as $key => $value) {
-            if (in_array($key, array_keys($this->paramOptionTypes))) {
+            if (in_array($key, array_keys($this->paramOptionTypes), true)) {
                 if (null !== ($callback = $this->paramOptionTypes[$key])) {
                     if (! $callback($value)) {
                         continue;
@@ -319,7 +349,7 @@ class Service
      * @param array $params
      * @return self
      */
-    public function addParams(array $params)
+    public function addParams(array $params): self
     {
         ksort($params);
 
@@ -346,7 +376,7 @@ class Service
      * @param array $params
      * @return self
      */
-    public function setParams(array $params)
+    public function setParams(array $params): self
     {
         $this->params = [];
         return $this->addParams($params);
@@ -359,7 +389,7 @@ class Service
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         $params = [];
         $index  = 0;
@@ -389,7 +419,7 @@ class Service
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setReturn($type)
+    public function setReturn($type): self
     {
         if (! is_string($type) && ! is_array($type)) {
             throw new InvalidArgumentException("Invalid param type provided ('" . gettype($type) . "')");
@@ -424,7 +454,7 @@ class Service
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         $envelope   = $this->getEnvelope();
         $target     = $this->getTarget();
@@ -445,7 +475,7 @@ class Service
      *
      * @return string
      */
-    public function toJson()
+    public function toJson(): string
     {
         return Json::encode([
             $this->getName() => $this->toArray(),
@@ -457,7 +487,7 @@ class Service
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toJson();
     }
@@ -470,21 +500,14 @@ class Service
      * @return string
      * @throws InvalidArgumentException
      */
-    protected function validateParamType($type, $isReturn = false)
+    protected function validateParamType(string $type, bool $isReturn = false): string
     {
-        if (! is_string($type)) {
-            throw new InvalidArgumentException(sprintf(
-                'Invalid param type provided ("%s")',
-                $type
-            ));
-        }
-
         if (! array_key_exists($type, $this->paramMap)) {
             $type = 'object';
         }
 
         $paramType = $this->paramMap[$type];
-        if (! $isReturn && ('null' == $paramType)) {
+        if (! $isReturn && ('null' === $paramType)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid param type provided ("%s")',
                 $type

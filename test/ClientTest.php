@@ -6,17 +6,24 @@
  * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server;
 
 use Laminas\Http\Client\Adapter\Test as TestAdapter;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Response as HttpResponse;
+use Laminas\Json\Json;
 use Laminas\Json\Server\Client;
 use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Exception;
 use Laminas\Json\Server\Request;
 use Laminas\Json\Server\Response;
 use PHPUnit\Framework\TestCase;
+
+use function count;
+use function implode;
+use function strlen;
 
 class ClientTest extends TestCase
 {
@@ -35,7 +42,7 @@ class ClientTest extends TestCase
      */
     protected $jsonClient;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->httpAdapter = new TestAdapter();
         $this->httpClient = new HttpClient(
@@ -49,7 +56,7 @@ class ClientTest extends TestCase
 
     // HTTP Client
 
-    public function testGettingDefaultHttpClient()
+    public function testGettingDefaultHttpClient(): void
     {
         $jsonClient = new Client('http://foo');
         $httpClient = $jsonClient->getHttpClient();
@@ -57,7 +64,7 @@ class ClientTest extends TestCase
         $this->assertSame($httpClient, $jsonClient->getHttpClient());
     }
 
-    public function testSettingAndGettingHttpClient()
+    public function testSettingAndGettingHttpClient(): void
     {
         $jsonClient = new Client('http://foo');
         $this->assertNotSame($this->httpClient, $jsonClient->getHttpClient());
@@ -66,7 +73,7 @@ class ClientTest extends TestCase
         $this->assertSame($this->httpClient, $jsonClient->getHttpClient());
     }
 
-    public function testSettingHttpClientViaConstructor()
+    public function testSettingHttpClientViaConstructor(): void
     {
         $jsonClient = new Client('http://foo', $this->httpClient);
         $httpClient   = $jsonClient->getHttpClient();
@@ -75,22 +82,22 @@ class ClientTest extends TestCase
 
     // Request & Response
 
-    public function testLastRequestAndResponseAreInitiallyNull()
+    public function testLastRequestAndResponseAreInitiallyNull(): void
     {
         $this->assertNull($this->jsonClient->getLastRequest());
         $this->assertNull($this->jsonClient->getLastResponse());
     }
 
-    public function testLastRequestAndResponseAreSetAfterRpcMethodCall()
+    public function testLastRequestAndResponseAreSetAfterRpcMethodCall(): void
     {
         $this->setServerResponseTo(true);
         $this->jsonClient->call('foo');
 
-        //$this->assertInstanceOf('Laminas\\Json\\Server\\Request', $this->jsonClient->getLastRequest());
-        //$this->assertInstanceOf('Laminas\\Json\\Server\\Response', $this->jsonClient->getLastResponse());
+        $this->assertInstanceOf(Request::class, $this->jsonClient->getLastRequest());
+        $this->assertInstanceOf(Response::class, $this->jsonClient->getLastResponse());
     }
 
-    public function testSuccessfulRpcMethodCallWithNoParameters()
+    public function testSuccessfulRpcMethodCallWithNoParameters(): void
     {
         $expectedMethod = 'foo';
         $expectedReturn = 7;
@@ -107,7 +114,7 @@ class ClientTest extends TestCase
         $this->assertFalse($response->isError());
     }
 
-    public function testSuccessfulRpcMethodCallWithParameters()
+    public function testSuccessfulRpcMethodCallWithParameters(): void
     {
         $expectedMethod = 'foobar';
         $expectedParams = [1, 1.1, true, 'foo' => 'bar'];
@@ -135,7 +142,7 @@ class ClientTest extends TestCase
 
     // Faults
 
-    public function testRpcMethodCallThrowsOnHttpFailure()
+    public function testRpcMethodCallThrowsOnHttpFailure(): void
     {
         $status  = 404;
         $message = 'Not Found';
@@ -150,7 +157,7 @@ class ClientTest extends TestCase
         $this->jsonClient->call('foo');
     }
 
-    public function testRpcMethodCallThrowsOnJsonRpcFault()
+    public function testRpcMethodCallThrowsOnJsonRpcFault(): void
     {
         $code = -32050;
         $message = 'foo';
@@ -171,7 +178,7 @@ class ClientTest extends TestCase
 
     // HTTP handling
 
-    public function testSettingUriOnHttpClientIsNotOverwrittenByJsonRpcClient()
+    public function testSettingUriOnHttpClientIsNotOverwrittenByJsonRpcClient(): void
     {
         $changedUri = 'http://bar:80/';
         // Overwrite: http://foo:80
@@ -180,10 +187,10 @@ class ClientTest extends TestCase
         $this->jsonClient->call('foo');
         $uri = $this->jsonClient->getHttpClient()->getUri()->toString();
 
-        $this->assertEquals($changedUri, $uri);
+        $this->assertSame($changedUri, $uri);
     }
 
-    public function testSettingNoHttpClientUriForcesClientToSetUri()
+    public function testSettingNoHttpClientUriForcesClientToSetUri(): void
     {
         $baseUri = 'http://foo:80/';
         $this->httpAdapter = new TestAdapter();
@@ -197,10 +204,10 @@ class ClientTest extends TestCase
         $this->jsonClient->call('foo');
         $uri = $this->jsonClient->getHttpClient()->getUri();
 
-        $this->assertEquals($baseUri, $uri->toString());
+        $this->assertSame($baseUri, $uri->toString());
     }
 
-    public function testCustomHttpClientUserAgentIsNotOverridden()
+    public function testCustomHttpClientUserAgentIsNotOverridden(): void
     {
         $this->assertFalse(
             $this->httpClient->getHeader('User-Agent'),
@@ -225,7 +232,7 @@ class ClientTest extends TestCase
     /**
      * @group 5956
      */
-    public function testScalarServerResponseThrowsException()
+    public function testScalarServerResponseThrowsException(): void
     {
         $response = $this->makeHttpResponseFrom('false');
         $this->httpAdapter->setResponse($response);
@@ -234,17 +241,17 @@ class ClientTest extends TestCase
     }
 
     // Helpers
-    public function setServerResponseTo($nativeVars)
+    public function setServerResponseTo($nativeVars): void
     {
         $response = $this->getServerResponseFor($nativeVars);
         $this->httpAdapter->setResponse($response);
     }
 
-    public function testClientShouldSetDefaultAcceptAndContentTypeHeadersOnRequest()
+    public function testClientShouldSetDefaultAcceptAndContentTypeHeadersOnRequest(): void
     {
         $request = new Request();
         $response = new HttpResponse();
-        $response->setContent(\Laminas\Json\Json::encode(['test' => 'test']));
+        $response->setContent(Json::encode(['test' => 'test']));
         $testAdapter = new TestAdapter();
         $testAdapter->setResponse($response);
         $jsonClient = new Client('http://foo');
@@ -254,11 +261,11 @@ class ClientTest extends TestCase
         $this->assertSame('application/json-rpc', $jsonClient->getHttpClient()->getHeader('Accept'));
     }
 
-    public function testClientShouldNotOverwriteAcceptAndContentTypeHeadersIfAlreadyPresentInRequest()
+    public function testClientShouldNotOverwriteAcceptAndContentTypeHeadersIfAlreadyPresentInRequest(): void
     {
         $request = new Request();
         $response = new HttpResponse();
-        $response->setContent(\Laminas\Json\Json::encode(['test' => 'test']));
+        $response->setContent(Json::encode(['test' => 'test']));
         $testAdapter = new TestAdapter();
         $testAdapter->setResponse($response);
 
@@ -275,7 +282,7 @@ class ClientTest extends TestCase
         $this->assertSame('application/jsonrequest', $jsonClient->getHttpClient()->getHeader('Accept'));
     }
 
-    public function getServerResponseFor($nativeVars)
+    public function getServerResponseFor($nativeVars): string
     {
         $response = new Response();
         $response->setResult($nativeVars);
@@ -285,7 +292,7 @@ class ClientTest extends TestCase
         return $response;
     }
 
-    public function makeHttpResponseFrom($data, $status = 200, $message = 'OK')
+    public function makeHttpResponseFrom($data, $status = 200, $message = 'OK'): string
     {
         $headers = [
             "HTTP/1.1 $status $message",
@@ -296,15 +303,15 @@ class ClientTest extends TestCase
         return implode("\r\n", $headers) . "\r\n\r\n$data\r\n\r\n";
     }
 
-    public function makeHttpResponseFor($nativeVars)
+    public function makeHttpResponseFor($nativeVars): HttpResponse
     {
         $response = $this->getServerResponseFor($nativeVars);
         return HttpResponse::fromString($response);
     }
 
-    public function mockHttpClient()
+    public function mockHttpClient(): void
     {
-        $this->mockedHttpClient = $this->getMock('Laminas\\Http\\Client');
+        $this->mockedHttpClient = $this->getMock(HttpClient::class);
         $this->jsonClient->setHttpClient($this->mockedHttpClient);
     }
 }

@@ -6,10 +6,19 @@
  * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Exception;
 use Laminas\Json\Json;
+
+use function array_key_exists;
+use function count;
+use function get_class_methods;
+use function in_array;
+use function preg_match;
+use function ucfirst;
 
 /**
  * @todo Revised method regex to allow NS; however, should SMD be revised to
@@ -18,7 +27,18 @@ use Laminas\Json\Json;
 class Request
 {
     /**
-     * Request ID
+     * Request id
+     *
+     * JSON-RPC 1.0
+     * The request id. This can be of any type. It is used to match the response with the request that it is replying
+     * to.
+     * @see https://www.jsonrpc.org/specification_v1#a1.1Requestmethodinvocation
+     *
+     * JSON-RPC 2.0 allows any type
+     * An identifier established by the Client that MUST contain a String, Number, or NULL value if included. If it is
+     * not included it is assumed to be a notification. The value SHOULD normally not be Null and Numbers SHOULD NOT
+     * contain fractional parts
+     * @see https://www.jsonrpc.org/specification#request_object
      *
      * @var mixed
      */
@@ -43,7 +63,7 @@ class Request
      *
      * @var string
      */
-    protected $method;
+    protected $method = '';
 
     /**
      * Regex for method.
@@ -72,17 +92,17 @@ class Request
      * @param  array $options
      * @return self
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): self
     {
         $methods = get_class_methods($this);
         foreach ($options as $key => $value) {
             $method = 'set' . ucfirst($key);
-            if (in_array($method, $methods)) {
+            if (in_array($method, $methods, true)) {
                 $this->$method($value);
                 continue;
             }
 
-            if ($key == 'jsonrpc') {
+            if ($key === 'jsonrpc') {
                 $this->setVersion($value);
                 continue;
             }
@@ -97,7 +117,7 @@ class Request
      * @param  string $key
      * @return self
      */
-    public function addParam($value, $key = null)
+    public function addParam($value, $key = null): self
     {
         if ((null === $key) || ! is_string($key)) {
             $index = count($this->params);
@@ -115,7 +135,7 @@ class Request
      * @param  array $params
      * @return self
      */
-    public function addParams(array $params)
+    public function addParams(array $params): self
     {
         foreach ($params as $key => $value) {
             $this->addParam($value, $key);
@@ -127,9 +147,9 @@ class Request
      * Overwrite params.
      *
      * @param  array $params
-     * @return \Laminas\Json\Server\Request
+     * @return Request
      */
-    public function setParams(array $params)
+    public function setParams(array $params): Request
     {
         $this->params = [];
         return $this->addParams($params);
@@ -155,7 +175,7 @@ class Request
      *
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
@@ -166,7 +186,7 @@ class Request
      * @param  string $name
      * @return self
      */
-    public function setMethod($name)
+    public function setMethod(string $name): self
     {
         if (! preg_match($this->methodRegex, $name)) {
             $this->isMethodError = true;
@@ -182,7 +202,7 @@ class Request
      *
      * @return string
      */
-    public function getMethod()
+    public function getMethod(): string
     {
         return $this->method;
     }
@@ -192,7 +212,7 @@ class Request
      *
      * @return bool
      */
-    public function isMethodError()
+    public function isMethodError(): bool
     {
         return $this->isMethodError;
     }
@@ -202,7 +222,7 @@ class Request
      *
      * @return bool
      */
-    public function isParseError()
+    public function isParseError(): bool
     {
         return $this->isParseError;
     }
@@ -213,16 +233,16 @@ class Request
      * @param  mixed $name
      * @return self
      */
-    public function setId($name)
+    public function setId($name): self
     {
-        $this->id = (string) $name;
+        $this->id = $name;
         return $this;
     }
 
     /**
      * Retrieve request identifier.
      *
-     * @return string
+     * @return mixed
      */
     public function getId()
     {
@@ -235,9 +255,9 @@ class Request
      * @param  string $version
      * @return self
      */
-    public function setVersion($version)
+    public function setVersion(string $version): self
     {
-        if ('2.0' == $version) {
+        if ('2.0' === $version) {
             $this->version = '2.0';
             return $this;
         }
@@ -251,7 +271,7 @@ class Request
      *
      * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
@@ -262,7 +282,7 @@ class Request
      * @param  string $json
      * @return void
      */
-    public function loadJson($json)
+    public function loadJson(string $json): void
     {
         try {
             $options = Json::decode($json, Json::TYPE_ARRAY);
@@ -277,7 +297,7 @@ class Request
      *
      * @return string
      */
-    public function toJson()
+    public function toJson(): string
     {
         $jsonArray = [
             'method' => $this->getMethod()
@@ -292,7 +312,7 @@ class Request
             $jsonArray['params'] = $params;
         }
 
-        if ('2.0' == $this->getVersion()) {
+        if ('2.0' === $this->getVersion()) {
             $jsonArray['jsonrpc'] = '2.0';
         }
 
@@ -304,7 +324,7 @@ class Request
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toJson();
     }

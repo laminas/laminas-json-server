@@ -6,6 +6,8 @@
  * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server\TestAsset;
 
 use Exception;
@@ -23,7 +25,7 @@ class Foo
      * @param  mixed $three
      * @return array
      */
-    public function bar($one, $two = 'two', $three = null)
+    public function bar(bool $one, string $two = 'two', $three = null): array
     {
         return [$one, $two, $three];
     }
@@ -33,7 +35,7 @@ class Foo
      *
      * @return void
      */
-    public function baz()
+    public function baz(): void
     {
         throw new Exception('application error');
     }

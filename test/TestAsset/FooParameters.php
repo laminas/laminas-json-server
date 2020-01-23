@@ -6,6 +6,8 @@
  * @license   https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server\TestAsset;
 
 /**
@@ -20,7 +22,7 @@ class FooParameters
      * @param  string $two
      * @return array
      */
-    public function bar($one, $two)
+    public function bar(bool $one, string $two): array
     {
         return [$one, $two];
     }
@@ -33,7 +35,7 @@ class FooParameters
      * @param  string $three
      * @return array
      */
-    public function baz($one, $two, $three = "default")
+    public function baz(bool $one, string $two, string $three = "default"): array
     {
         return [$one, $two, $three];
     }

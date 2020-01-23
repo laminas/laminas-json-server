@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#7](https://github.com/laminas/laminas-json-server/pull/7) Introduces PHP 7 scalar and return typehints across all methods
 
 ### Changed
 
