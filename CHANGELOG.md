@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 3.2.2 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- [#8](https://github.com/laminas/laminas-json-server/pull/8) fixes fluent interface on `Smd::setDescription()`. 
+
 ## 3.2.1 - 2020-01-16
 
 ### Added
@@ -22,8 +44,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#1](https://github.com/laminas/laminas-json-server/pull/1) Allows optional `data` field in Error object to be  omitted
-
+- [#1](https://github.com/laminas/laminas-json-server/pull/1) Allows optional `data` field in Error object to be omitted
 
 ## 3.2.0 - 2019-10-17
 
