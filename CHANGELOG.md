@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 3.2.2 - TBD
+## 3.2.2 - 2020-03-29
 
 ### Added
 
@@ -22,7 +22,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#8](https://github.com/laminas/laminas-json-server/pull/8) fixes fluent interface on `Smd::setDescription()`. 
+- [#8](https://github.com/laminas/laminas-json-server/pull/8) fixes fluent interface on `Smd::setDescription()`.
+
+- Fixed `replace` version constraint in composer.json so repository can be used as replacement of `zendframework/zend-json-server:^3.2.0`.
 
 ## 3.2.1 - 2020-01-16
 
