@@ -31,7 +31,7 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~1.0.0",
-        "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2"
+        "phpunit/phpunit": "^9.3.0"
     },
     "conflict": {
         "laminas/laminas-stdlib": "<3.2.1"
