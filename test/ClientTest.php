@@ -35,6 +35,11 @@ class ClientTest extends TestCase
      */
     protected $jsonClient;
 
+    /**
+     * @var HttpClient
+     */
+    protected $mockedHttpClient;
+
     public function setUp(): void
     {
         $this->httpAdapter = new TestAdapter();
@@ -304,7 +309,7 @@ class ClientTest extends TestCase
 
     public function mockHttpClient(): void
     {
-        $this->mockedHttpClient = $this->getMock('Laminas\\Http\\Client');
+        $this->mockedHttpClient = $this->createMock('Laminas\\Http\\Client');
         $this->jsonClient->setHttpClient($this->mockedHttpClient);
     }
 }

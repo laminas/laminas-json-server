@@ -19,6 +19,11 @@ use PHPUnit\Framework\TestCase;
 class ServerTest extends TestCase
 {
     /**
+     * @var Server\Server
+     */
+    protected $server;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      *

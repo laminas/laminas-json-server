@@ -15,6 +15,11 @@ use PHPUnit\Framework\TestCase;
 class ErrorTest extends TestCase
 {
     /**
+     * @var Server\Error
+     */
+    protected $error;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      *

@@ -16,6 +16,9 @@ use PHPUnit\Framework\TestCase;
 
 class ResponseTest extends TestCase
 {
+    /**
+     * @var Response
+     */
     private $response;
     /**
      * Sets up the fixture, for example, open a network connection.
