@@ -139,14 +139,14 @@ class ErrorTest extends TestCase
 
     public function validateArray($error): void
     {
-        $this->assertInternalType('array', $error);
+        $this->assertIsArray($error);
         $this->assertArrayHasKey('code', $error);
         $this->assertArrayHasKey('message', $error);
         $this->assertArrayHasKey('data', $error);
 
-        $this->assertInternalType('integer', $error['code']);
-        $this->assertInternalType('string', $error['message']);
-        $this->assertInternalType('array', $error['data']);
+        $this->assertIsInt($error['code']);
+        $this->assertIsString($error['message']);
+        $this->assertIsArray($error['data']);
 
         $this->assertEquals($this->error->getCode(), $error['code']);
         $this->assertEquals($this->error->getMessage(), $error['message']);

@@ -50,7 +50,7 @@ class SmdTest extends TestCase
                 $this->smd->setTransport($transport);
                 $this->fail('Invalid transport should throw exception');
             } catch (InvalidArgumentException $e) {
-                $this->assertContains('Invalid transport', $e->getMessage());
+                $this->assertStringContainsString('Invalid transport', $e->getMessage());
             }
         }
     }
@@ -76,7 +76,7 @@ class SmdTest extends TestCase
                 $this->smd->setEnvelope($env);
                 $this->fail('Invalid envelope type should throw exception');
             } catch (InvalidArgumentException $e) {
-                $this->assertContains('Invalid envelope', $e->getMessage());
+                $this->assertStringContainsString('Invalid envelope', $e->getMessage());
             }
         }
     }
@@ -101,7 +101,7 @@ class SmdTest extends TestCase
                 $this->smd->setContentType($type);
                 $this->fail('Invalid content type should raise exception');
             } catch (InvalidArgumentException $e) {
-                $this->assertContains('Invalid content type', $e->getMessage());
+                $this->assertStringContainsString('Invalid content type', $e->getMessage());
             }
         }
     }
@@ -159,7 +159,7 @@ class SmdTest extends TestCase
     public function testServicesShouldBeEmptyByDefault(): void
     {
         $services = $this->smd->getServices();
-        $this->assertInternalType('array', $services);
+        $this->assertIsArray($services);
         $this->assertEmpty($services);
     }
 
@@ -190,7 +190,7 @@ class SmdTest extends TestCase
             $this->smd->addService($test);
             $this->fail('Adding service with existing service name should throw exception');
         } catch (RuntimeException $e) {
-            $this->assertContains('already register', $e->getMessage());
+            $this->assertStringContainsString('already register', $e->getMessage());
         }
     }
 
@@ -201,7 +201,7 @@ class SmdTest extends TestCase
                 $this->smd->addService($service);
                 $this->fail('Attempt to register invalid service should throw exception');
             } catch (InvalidArgumentException $e) {
-                $this->assertContains('Invalid service', $e->getMessage());
+                $this->assertStringContainsString('Invalid service', $e->getMessage());
             }
         }
     }
@@ -284,7 +284,7 @@ class SmdTest extends TestCase
         $this->smd->setOptions($options);
         $smd = $this->smd->toDojoArray();
 
-        $this->assertInternalType('array', $smd);
+        $this->assertIsArray($smd);
 
         $this->assertArrayHasKey('SMDVersion', $smd);
         $this->assertArrayHasKey('serviceType', $smd);
@@ -301,7 +301,7 @@ class SmdTest extends TestCase
         $this->assertArrayHasKey('parameters', $foo);
         $this->assertEquals('foo', $foo['name']);
         $this->assertEquals($this->smd->getTarget(), $foo['serviceURL']);
-        $this->assertInternalType('array', $foo['parameters']);
+        $this->assertIsArray($foo['parameters']);
         $this->assertCount(1, $foo['parameters']);
 
         $bar = array_shift($methods);
@@ -310,7 +310,7 @@ class SmdTest extends TestCase
         $this->assertArrayHasKey('parameters', $bar);
         $this->assertEquals('bar', $bar['name']);
         $this->assertEquals($this->smd->getTarget(), $bar['serviceURL']);
-        $this->assertInternalType('array', $bar['parameters']);
+        $this->assertIsArray($bar['parameters']);
         $this->assertCount(1, $bar['parameters']);
     }
 
@@ -358,7 +358,7 @@ class SmdTest extends TestCase
 
     public function validateServiceArray(array $smd, array $options): void
     {
-        $this->assertInternalType('array', $smd);
+        $this->assertIsArray($smd);
 
         $this->assertArrayHasKey('SMDVersion', $smd);
         $this->assertArrayHasKey('target', $smd);

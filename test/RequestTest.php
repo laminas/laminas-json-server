@@ -244,15 +244,15 @@ class RequestTest extends TestCase
     public function validateJSON($json, array $options): void
     {
         $test = Json::decode($json, Json::TYPE_ARRAY);
-        $this->assertInternalType('array', $test, var_export($json, 1));
+        $this->assertIsArray($test, var_export($json, 1));
 
         $this->assertArrayHasKey('id', $test);
         $this->assertArrayHasKey('method', $test);
         $this->assertArrayHasKey('params', $test);
 
-        $this->assertInternalType('string', $test['id']);
-        $this->assertInternalType('string', $test['method']);
-        $this->assertInternalType('array', $test['params']);
+        $this->assertIsString($test['id']);
+        $this->assertIsString($test['method']);
+        $this->assertIsArray($test['params']);
 
         $this->assertEquals($options['id'], $test['id']);
         $this->assertEquals($options['method'], $test['method']);

@@ -75,7 +75,7 @@ class ResponseTest extends TestCase
         $this->assertNull($this->response->getId());
     }
 
-    public function testIdAccesorsShouldWorkWithNormalInput(): void
+    public function testIdAccessorsShouldWorkWithNormalInput(): void
     {
         $this->response->setId('foo');
         $this->assertEquals('foo', $this->response->getId());
@@ -123,7 +123,7 @@ class ResponseTest extends TestCase
         $json = $this->response->toJSON();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertArrayHasKey('result', $test);
         $this->assertArrayNotHasKey('error', $test, "'error' may not coexist with 'result'");
         $this->assertArrayHasKey('id', $test);
@@ -145,7 +145,7 @@ class ResponseTest extends TestCase
         $json = $this->response->toJSON();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertArrayNotHasKey('result', $test, "'result' may not coexist with 'error'");
         $this->assertArrayHasKey('error', $test);
         $this->assertArrayHasKey('id', $test);
@@ -163,7 +163,7 @@ class ResponseTest extends TestCase
         $json = $this->response->__toString();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertArrayHasKey('result', $test);
         $this->assertArrayNotHasKey('error', $test, "'error' may not coexist with 'result'");
         $this->assertArrayHasKey('id', $test);

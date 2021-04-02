@@ -218,7 +218,7 @@ class ServerTest extends TestCase
         $this->assertEquals('This is a test service', $this->server->getDescription());
 
         $services = $smd->getServices();
-        $this->assertInternalType('array', $services);
+        $this->assertIsArray($services);
         $this->assertNotEmpty($services);
         $this->assertArrayHasKey('strtolower', $services);
         $methods = get_class_methods(Server\Server::class);
@@ -277,7 +277,7 @@ class ServerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertFalse($response->isError());
         $result = $response->getResult();
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertCount(3, $result);
         $this->assertEquals('two', $result[1], var_export($result, 1));
         $this->assertNull($result[2]);
@@ -295,7 +295,7 @@ class ServerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertFalse($response->isError());
         $result = $response->getResult();
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertCount(3, $result);
         $this->assertEquals('two', $result[1], var_export($result, 1));
         $this->assertNull($result[2]);
@@ -313,7 +313,7 @@ class ServerTest extends TestCase
         $this->assertInstanceOf(Response::class, $response);
         $this->assertFalse($response->isError());
         $result = $response->getResult();
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertCount(3, $result);
         $this->assertEquals('foo', $result[1]);
         $this->assertEquals('bar', $result[2]);
@@ -334,7 +334,7 @@ class ServerTest extends TestCase
         $response = $this->server->handle();
         $result = $response->getResult();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals(1, $result[0]);
         $this->assertEquals(2, $result[1]);
         $this->assertEquals(3, $result[2]);
@@ -355,7 +355,7 @@ class ServerTest extends TestCase
         $response = $this->server->handle();
         $result = $response->getResult();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals(1, $result[0]);
         $this->assertEquals(2, $result[1]);
         $this->assertEquals(3, $result[2]);
@@ -428,7 +428,7 @@ class ServerTest extends TestCase
         $buffer = ob_get_clean();
 
         $decoded = Json\Json::decode($buffer, Json\Json::TYPE_ARRAY);
-        $this->assertInternalType('array', $decoded);
+        $this->assertIsArray($decoded);
         $this->assertArrayHasKey('result', $decoded);
         $this->assertArrayHasKey('id', $decoded);
 
@@ -478,7 +478,7 @@ class ServerTest extends TestCase
 
         $decoded = Json\Json::decode($buffer, Json\Json::TYPE_ARRAY);
 
-        $this->assertInternalType('array', $decoded);
+        $this->assertIsArray($decoded);
         $this->assertArrayHasKey('result', $decoded);
         $this->assertArrayHasKey('id', $decoded);
         $this->assertContains('unique', $decoded['result']);
@@ -505,7 +505,7 @@ class ServerTest extends TestCase
         $response = $this->server->handle();
         $result = $response->getResult();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals(1, $result[0]);
         $this->assertEquals(2, $result[1]);
         $this->assertEquals(null, $result[2]);
@@ -528,7 +528,7 @@ class ServerTest extends TestCase
         $response = $this->server->handle();
         $result = $response->getResult();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEquals(1, $result[0]);
         $this->assertEquals('two', $result[1]);
         $this->assertEquals(3, $result[2]);
@@ -545,7 +545,7 @@ class ServerTest extends TestCase
         $server->handle();
 
         $response = $server->getResponse();
-        $this->assertEquals($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
+        $this->assertEquals(Error::ERROR_INVALID_PARAMS, $response->getError()->getCode());
     }
 
     public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys1(): void
@@ -559,6 +559,6 @@ class ServerTest extends TestCase
         $server->handle();
         $response = $server->getResponse();
         $this->assertNotEmpty($response->getError());
-        $this->assertEquals($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
+        $this->assertEquals(Error::ERROR_INVALID_PARAMS, $response->getError()->getCode());
     }
 }
