@@ -1,7 +1,6 @@
 # laminas-json-server
 
-[![Build Status](https://travis-ci.com/laminas/laminas-json-server.svg?branch=master)](https://travis-ci.com/laminas/laminas-json-server)
-[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-json-server/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-json-server?branch=master)
+[![Build Status](https://github.com/laminas/laminas-json-server/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-json-server/actions/workflows/continuous-integration.yml)
 
 Provides a JSON-RPC server implementation.
 
