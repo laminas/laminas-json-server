@@ -18,6 +18,9 @@ use PHPUnit\Framework\TestCase;
 
 class ResponseTest extends TestCase
 {
+    /**
+     * @var Response
+     */
     private $response;
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -74,7 +77,7 @@ class ResponseTest extends TestCase
         $this->assertNull($this->response->getId());
     }
 
-    public function testIdAccesorsShouldWorkWithNormalInput(): void
+    public function testIdAccessorsShouldWorkWithNormalInput(): void
     {
         $this->response->setId('foo');
         $this->assertSame('foo', $this->response->getId());

@@ -42,6 +42,11 @@ class ClientTest extends TestCase
      */
     protected $jsonClient;
 
+    /**
+     * @var HttpClient
+     */
+    protected $mockedHttpClient;
+
     protected function setUp(): void
     {
         $this->httpAdapter = new TestAdapter();
@@ -60,7 +65,7 @@ class ClientTest extends TestCase
     {
         $jsonClient = new Client('http://foo');
         $httpClient = $jsonClient->getHttpClient();
-        //$this->assertInstanceOf('Laminas\\Http\\Client', $httpClient);
+        $this->assertInstanceOf('Laminas\\Http\\Client', $httpClient);
         $this->assertSame($httpClient, $jsonClient->getHttpClient());
     }
 
@@ -311,7 +316,7 @@ class ClientTest extends TestCase
 
     public function mockHttpClient(): void
     {
-        $this->mockedHttpClient = $this->getMock(HttpClient::class);
+        $this->mockedHttpClient = $this->createMock(HttpClient::class);
         $this->jsonClient->setHttpClient($this->mockedHttpClient);
     }
 }

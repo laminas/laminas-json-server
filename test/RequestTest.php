@@ -22,6 +22,11 @@ use function var_export;
 class RequestTest extends TestCase
 {
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      *

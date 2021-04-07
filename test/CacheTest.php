@@ -22,6 +22,16 @@ use function unlink;
 class CacheTest extends TestCase
 {
     /**
+     * @var Server\Server
+     */
+    protected $server;
+
+    /**
+     * @var false|string
+     */
+    protected $cacheFile;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      *

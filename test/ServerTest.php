@@ -33,12 +33,17 @@ class ServerTest extends TestCase
     }
 
     /**
+     * @var Server\Server
+     */
+    protected $server;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      *
      * @return void
      */
-    protected function setUp(): void
+    public function setUp(): void
     {
         $this->server = new Server\Server();
     }
@@ -554,7 +559,7 @@ class ServerTest extends TestCase
         $server->handle();
 
         $response = $server->getResponse();
-        $this->assertSame($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
+        $this->assertSame(Error::ERROR_INVALID_PARAMS, $response->getError()->getCode());
     }
 
     public function testResponseShouldBeInvalidWhenRequestHasLessRequiredParametersPassedWithoutKeys1(): void
@@ -568,6 +573,6 @@ class ServerTest extends TestCase
         $server->handle();
         $response = $server->getResponse();
         $this->assertNotEmpty($response->getError());
-        $this->assertSame($response->getError()->getCode(), Error::ERROR_INVALID_PARAMS);
+        $this->assertSame(Error::ERROR_INVALID_PARAMS, $response->getError()->getCode());
     }
 }
