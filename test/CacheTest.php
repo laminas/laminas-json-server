@@ -14,12 +14,22 @@ use PHPUnit\Framework\TestCase;
 class CacheTest extends TestCase
 {
     /**
+     * @var Server\Server
+     */
+    protected $server;
+
+    /**
+     * @var false|string
+     */
+    protected $cacheFile;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->server = new Server\Server();
         $this->server->setClass(TestAsset\Foo::class, 'foo');
@@ -41,24 +51,24 @@ class CacheTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         if (file_exists($this->cacheFile)) {
             unlink($this->cacheFile);
         }
     }
 
-    public function testRetrievingSmdCacheShouldReturnFalseIfCacheDoesNotExist()
+    public function testRetrievingSmdCacheShouldReturnFalseIfCacheDoesNotExist(): void
     {
         $this->assertFalse(Server\Cache::getSmd($this->cacheFile));
     }
 
-    public function testSavingSmdCacheShouldReturnTrueOnSuccess()
+    public function testSavingSmdCacheShouldReturnTrueOnSuccess(): void
     {
         $this->assertTrue(Server\Cache::saveSmd($this->cacheFile, $this->server));
     }
 
-    public function testSavedCacheShouldMatchGeneratedCache()
+    public function testSavedCacheShouldMatchGeneratedCache(): void
     {
         $this->testSavingSmdCacheShouldReturnTrueOnSuccess();
         $json = $this->server->getServiceMap()->toJSON();
@@ -66,12 +76,12 @@ class CacheTest extends TestCase
         $this->assertSame($json, $test);
     }
 
-    public function testDeletingSmdShouldReturnFalseOnFailure()
+    public function testDeletingSmdShouldReturnFalseOnFailure(): void
     {
         $this->assertFalse(Server\Cache::deleteSmd($this->cacheFile));
     }
 
-    public function testDeletingSmdShouldReturnTrueOnSuccess()
+    public function testDeletingSmdShouldReturnTrueOnSuccess(): void
     {
         $this->testSavingSmdCacheShouldReturnTrueOnSuccess();
         $this->assertTrue(Server\Cache::deleteSmd($this->cacheFile));

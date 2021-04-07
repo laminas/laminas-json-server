@@ -17,45 +17,50 @@ use PHPUnit\Framework\TestCase;
 class SmdTest extends TestCase
 {
     /**
+     * @var Smd
+     */
+    protected $smd;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->smd = new Smd();
     }
 
-    public function testTransportShouldDefaultToPost()
+    public function testTransportShouldDefaultToPost(): void
     {
         $this->assertEquals('POST', $this->smd->getTransport());
     }
 
-    public function testTransportAccessorsShouldWorkUnderNormalInput()
+    public function testTransportAccessorsShouldWorkUnderNormalInput(): void
     {
         $this->smd->setTransport('POST');
         $this->assertEquals('POST', $this->smd->getTransport());
     }
 
-    public function testTransportShouldBeLimitedToPost()
+    public function testTransportShouldBeLimitedToPost(): void
     {
         foreach (['GET', 'REST'] as $transport) {
             try {
                 $this->smd->setTransport($transport);
                 $this->fail('Invalid transport should throw exception');
             } catch (InvalidArgumentException $e) {
-                $this->assertContains('Invalid transport', $e->getMessage());
+                $this->assertStringContainsString('Invalid transport', $e->getMessage());
             }
         }
     }
 
-    public function testEnvelopeShouldDefaultToJSONRpcVersion1()
+    public function testEnvelopeShouldDefaultToJSONRpcVersion1(): void
     {
         $this->assertEquals(Smd::ENV_JSONRPC_1, $this->smd->getEnvelope());
     }
 
-    public function testEnvelopeAccessorsShouldWorkUnderNormalInput()
+    public function testEnvelopeAccessorsShouldWorkUnderNormalInput(): void
     {
         $this->testEnvelopeShouldDefaultToJSONRpcVersion1();
         $this->smd->setEnvelope(Smd::ENV_JSONRPC_2);
@@ -64,24 +69,24 @@ class SmdTest extends TestCase
         $this->assertEquals(Smd::ENV_JSONRPC_1, $this->smd->getEnvelope());
     }
 
-    public function testEnvelopeShouldBeLimitedToJSONRpcVersions()
+    public function testEnvelopeShouldBeLimitedToJSONRpcVersions(): void
     {
         foreach (['URL', 'PATH', 'JSON'] as $env) {
             try {
                 $this->smd->setEnvelope($env);
                 $this->fail('Invalid envelope type should throw exception');
             } catch (InvalidArgumentException $e) {
-                $this->assertContains('Invalid envelope', $e->getMessage());
+                $this->assertStringContainsString('Invalid envelope', $e->getMessage());
             }
         }
     }
 
-    public function testContentTypeShouldDefaultToApplicationJSON()
+    public function testContentTypeShouldDefaultToApplicationJSON(): void
     {
         $this->assertEquals('application/json', $this->smd->getContentType());
     }
 
-    public function testContentTypeAccessorsShouldWorkUnderNormalInput()
+    public function testContentTypeAccessorsShouldWorkUnderNormalInput(): void
     {
         foreach (['text/json', 'text/plain', 'application/x-json'] as $type) {
             $this->smd->setContentType($type);
@@ -89,60 +94,60 @@ class SmdTest extends TestCase
         }
     }
 
-    public function testContentTypeShouldBeLimitedToMimeFormatStrings()
+    public function testContentTypeShouldBeLimitedToMimeFormatStrings(): void
     {
         foreach (['plain', 'json', 'foobar'] as $type) {
             try {
                 $this->smd->setContentType($type);
                 $this->fail('Invalid content type should raise exception');
             } catch (InvalidArgumentException $e) {
-                $this->assertContains('Invalid content type', $e->getMessage());
+                $this->assertStringContainsString('Invalid content type', $e->getMessage());
             }
         }
     }
 
-    public function testTargetShouldDefaultToNull()
+    public function testTargetShouldDefaultToNull(): void
     {
         $this->assertNull($this->smd->getTarget());
     }
 
-    public function testTargetAccessorsShouldWorkUnderNormalInput()
+    public function testTargetAccessorsShouldWorkUnderNormalInput(): void
     {
         $this->testTargetShouldDefaultToNull();
         $this->smd->setTarget('foo');
         $this->assertEquals('foo', $this->smd->getTarget());
     }
 
-    public function testIdShouldDefaultToNull()
+    public function testIdShouldDefaultToNull(): void
     {
         $this->assertNull($this->smd->getId());
     }
 
-    public function testIdAccessorsShouldWorkUnderNormalInput()
+    public function testIdAccessorsShouldWorkUnderNormalInput(): void
     {
         $this->testIdShouldDefaultToNull();
         $this->smd->setId('foo');
         $this->assertEquals('foo', $this->smd->getId());
     }
 
-    public function testDescriptionShouldDefaultToNull()
+    public function testDescriptionShouldDefaultToNull(): void
     {
         $this->assertNull($this->smd->getDescription());
     }
 
-    public function testDescriptionAccessorsShouldWorkUnderNormalInput()
+    public function testDescriptionAccessorsShouldWorkUnderNormalInput(): void
     {
         $this->testDescriptionShouldDefaultToNull();
         $this->smd->setDescription('foo');
         $this->assertEquals('foo', $this->smd->getDescription());
     }
 
-    public function testDojoCompatibilityShouldBeDisabledByDefault()
+    public function testDojoCompatibilityShouldBeDisabledByDefault(): void
     {
         $this->assertFalse($this->smd->isDojoCompatible());
     }
 
-    public function testDojoCompatibilityFlagShouldBeMutable()
+    public function testDojoCompatibilityFlagShouldBeMutable(): void
     {
         $this->testDojoCompatibilityShouldBeDisabledByDefault();
         $this->smd->setDojoCompatible(true);
@@ -151,21 +156,21 @@ class SmdTest extends TestCase
         $this->assertFalse($this->smd->isDojoCompatible());
     }
 
-    public function testServicesShouldBeEmptyByDefault()
+    public function testServicesShouldBeEmptyByDefault(): void
     {
         $services = $this->smd->getServices();
-        $this->assertInternalType('array', $services);
+        $this->assertIsArray($services);
         $this->assertEmpty($services);
     }
 
-    public function testShouldBeAbleToUseServiceObjectToAddService()
+    public function testShouldBeAbleToUseServiceObjectToAddService(): void
     {
         $service = new Smd\Service('foo');
         $this->smd->addService($service);
         $this->assertSame($service, $this->smd->getService('foo'));
     }
 
-    public function testShouldBeAbleToUseArrayToAddService()
+    public function testShouldBeAbleToUseArrayToAddService(): void
     {
         $service = [
             'name' => 'foo',
@@ -176,7 +181,7 @@ class SmdTest extends TestCase
         $this->assertEquals('foo', $foo->getName());
     }
 
-    public function testAddingServiceWithExistingServiceNameShouldThrowException()
+    public function testAddingServiceWithExistingServiceNameShouldThrowException(): void
     {
         $service = new Smd\Service('foo');
         $this->smd->addService($service);
@@ -185,23 +190,23 @@ class SmdTest extends TestCase
             $this->smd->addService($test);
             $this->fail('Adding service with existing service name should throw exception');
         } catch (RuntimeException $e) {
-            $this->assertContains('already register', $e->getMessage());
+            $this->assertStringContainsString('already register', $e->getMessage());
         }
     }
 
-    public function testAttemptingToRegisterInvalidServiceShouldThrowException()
+    public function testAttemptingToRegisterInvalidServiceShouldThrowException(): void
     {
         foreach (['foo', false, 1, 1.0] as $service) {
             try {
                 $this->smd->addService($service);
                 $this->fail('Attempt to register invalid service should throw exception');
             } catch (InvalidArgumentException $e) {
-                $this->assertContains('Invalid service', $e->getMessage());
+                $this->assertStringContainsString('Invalid service', $e->getMessage());
             }
         }
     }
 
-    public function testShouldBeAbleToAddManyServicesAtOnceWithArrayOfServiceObjects()
+    public function testShouldBeAbleToAddManyServicesAtOnceWithArrayOfServiceObjects(): void
     {
         $one   = new Smd\Service('one');
         $two   = new Smd\Service('two');
@@ -212,7 +217,7 @@ class SmdTest extends TestCase
         $this->assertSame($services, array_values($test));
     }
 
-    public function testShouldBeAbleToAddManyServicesAtOnceWithArrayOfArrays()
+    public function testShouldBeAbleToAddManyServicesAtOnceWithArrayOfArrays(): void
     {
         $services = [
             ['name' => 'one'],
@@ -224,7 +229,7 @@ class SmdTest extends TestCase
         $this->assertSame(['one', 'two', 'three'], array_keys($test));
     }
 
-    public function testShouldBeAbleToAddManyServicesAtOnceWithMixedArrayOfObjectsAndArrays()
+    public function testShouldBeAbleToAddManyServicesAtOnceWithMixedArrayOfObjectsAndArrays(): void
     {
         $two = new Smd\Service('two');
         $services = [
@@ -238,7 +243,7 @@ class SmdTest extends TestCase
         $this->assertEquals($two, $test['two']);
     }
 
-    public function testSetServicesShouldOverwriteExistingServices()
+    public function testSetServicesShouldOverwriteExistingServices(): void
     {
         $this->testShouldBeAbleToAddManyServicesAtOnceWithMixedArrayOfObjectsAndArrays();
         $five = new Smd\Service('five');
@@ -253,19 +258,19 @@ class SmdTest extends TestCase
         $this->assertEquals($five, $test['five']);
     }
 
-    public function testShouldBeAbleToRetrieveServiceByName()
+    public function testShouldBeAbleToRetrieveServiceByName(): void
     {
         $this->testShouldBeAbleToUseServiceObjectToAddService();
     }
 
-    public function testShouldBeAbleToRemoveServiceByName()
+    public function testShouldBeAbleToRemoveServiceByName(): void
     {
         $this->testShouldBeAbleToUseServiceObjectToAddService();
         $this->assertTrue($this->smd->removeService('foo'));
         $this->assertFalse($this->smd->getService('foo'));
     }
 
-    public function testShouldBeAbleToCastToArray()
+    public function testShouldBeAbleToCastToArray(): void
     {
         $options = $this->getOptions();
         $this->smd->setOptions($options);
@@ -273,13 +278,13 @@ class SmdTest extends TestCase
         $this->validateServiceArray($service, $options);
     }
 
-    public function testShouldBeAbleToCastToDojoArray()
+    public function testShouldBeAbleToCastToDojoArray(): void
     {
         $options = $this->getOptions();
         $this->smd->setOptions($options);
         $smd = $this->smd->toDojoArray();
 
-        $this->assertInternalType('array', $smd);
+        $this->assertIsArray($smd);
 
         $this->assertArrayHasKey('SMDVersion', $smd);
         $this->assertArrayHasKey('serviceType', $smd);
@@ -296,7 +301,7 @@ class SmdTest extends TestCase
         $this->assertArrayHasKey('parameters', $foo);
         $this->assertEquals('foo', $foo['name']);
         $this->assertEquals($this->smd->getTarget(), $foo['serviceURL']);
-        $this->assertInternalType('array', $foo['parameters']);
+        $this->assertIsArray($foo['parameters']);
         $this->assertCount(1, $foo['parameters']);
 
         $bar = array_shift($methods);
@@ -305,11 +310,11 @@ class SmdTest extends TestCase
         $this->assertArrayHasKey('parameters', $bar);
         $this->assertEquals('bar', $bar['name']);
         $this->assertEquals($this->smd->getTarget(), $bar['serviceURL']);
-        $this->assertInternalType('array', $bar['parameters']);
+        $this->assertIsArray($bar['parameters']);
         $this->assertCount(1, $bar['parameters']);
     }
 
-    public function testShouldBeAbleToRenderAsJSON()
+    public function testShouldBeAbleToRenderAsJSON(): void
     {
         $options = $this->getOptions();
         $this->smd->setOptions($options);
@@ -318,7 +323,7 @@ class SmdTest extends TestCase
         $this->validateServiceArray($smd, $options);
     }
 
-    public function testToStringImplementationShouldProxyToJSON()
+    public function testToStringImplementationShouldProxyToJSON(): void
     {
         $options = $this->getOptions();
         $this->smd->setOptions($options);
@@ -327,7 +332,7 @@ class SmdTest extends TestCase
         $this->validateServiceArray($smd, $options);
     }
 
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
             'target'   => '/test/me',
@@ -351,9 +356,9 @@ class SmdTest extends TestCase
         ];
     }
 
-    public function validateServiceArray(array $smd, array $options)
+    public function validateServiceArray(array $smd, array $options): void
     {
-        $this->assertInternalType('array', $smd);
+        $this->assertIsArray($smd);
 
         $this->assertArrayHasKey('SMDVersion', $smd);
         $this->assertArrayHasKey('target', $smd);
@@ -378,7 +383,7 @@ class SmdTest extends TestCase
     /**
      * @group Laminas-5624
      */
-    public function testSetOptionsShouldAccommodateToArrayOutput()
+    public function testSetOptionsShouldAccommodateToArrayOutput(): void
     {
         $smdSource = new Smd();
         $smdSource->setContentType('application/json');

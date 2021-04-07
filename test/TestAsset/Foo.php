@@ -23,7 +23,7 @@ class Foo
      * @param  mixed $three
      * @return array
      */
-    public function bar($one, $two = 'two', $three = null)
+    public function bar($one, $two = 'two', $three = null): array
     {
         return [$one, $two, $three];
     }
@@ -33,7 +33,7 @@ class Foo
      *
      * @return void
      */
-    public function baz()
+    public function baz(): void
     {
         throw new Exception('application error');
     }

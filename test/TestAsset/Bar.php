@@ -27,7 +27,7 @@ class Bar
      * @param  mixed $three
      * @return array
      */
-    public function foo($one, $two = 'two', $three = null)
+    public function foo($one, $two = 'two', $three = null): array
     {
         return [$one, $two, $three, $this->val];
     }
@@ -37,7 +37,7 @@ class Bar
      *
      * @return void
      */
-    public function baz()
+    public function baz(): void
     {
         throw new Exception('application error');
     }

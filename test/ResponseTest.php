@@ -16,6 +16,9 @@ use PHPUnit\Framework\TestCase;
 
 class ResponseTest extends TestCase
 {
+    /**
+     * @var Response
+     */
     private $response;
     /**
      * Sets up the fixture, for example, open a network connection.
@@ -23,17 +26,17 @@ class ResponseTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->response = new Response();
     }
 
-    public function testResultShouldBeNullByDefault()
+    public function testResultShouldBeNullByDefault(): void
     {
         $this->assertNull($this->response->getResult());
     }
 
-    public function testResultAccessorsShouldWorkWithNormalInput()
+    public function testResultAccessorsShouldWorkWithNormalInput(): void
     {
         foreach ([true, 'foo', 2, 2.0, [], ['foo' => 'bar']] as $result) {
             $this->response->setResult($result);
@@ -41,49 +44,49 @@ class ResponseTest extends TestCase
         }
     }
 
-    public function testResultShouldNotBeErrorByDefault()
+    public function testResultShouldNotBeErrorByDefault(): void
     {
         $this->assertFalse($this->response->isError());
     }
 
-    public function testSettingErrorShouldMarkRequestAsError()
+    public function testSettingErrorShouldMarkRequestAsError(): void
     {
         $error = new Error();
         $this->response->setError($error);
         $this->assertTrue($this->response->isError());
     }
 
-    public function testShouldBeAbleToRetrieveErrorObject()
+    public function testShouldBeAbleToRetrieveErrorObject(): void
     {
         $error = new Error();
         $this->response->setError($error);
         $this->assertSame($error, $this->response->getError());
     }
 
-    public function testErrorAccesorsShouldWorkWithNullInput()
+    public function testErrorAccesorsShouldWorkWithNullInput(): void
     {
         $this->response->setError(null);
         $this->assertNull($this->response->getError());
         $this->assertFalse($this->response->isError());
     }
 
-    public function testIdShouldBeNullByDefault()
+    public function testIdShouldBeNullByDefault(): void
     {
         $this->assertNull($this->response->getId());
     }
 
-    public function testIdAccesorsShouldWorkWithNormalInput()
+    public function testIdAccessorsShouldWorkWithNormalInput(): void
     {
         $this->response->setId('foo');
         $this->assertEquals('foo', $this->response->getId());
     }
 
-    public function testVersionShouldBeNullByDefault()
+    public function testVersionShouldBeNullByDefault(): void
     {
         $this->assertNull($this->response->getVersion());
     }
 
-    public function testVersionShouldBeLimitedToV2()
+    public function testVersionShouldBeLimitedToV2(): void
     {
         $this->response->setVersion('2.0');
         $this->assertEquals('2.0', $this->response->getVersion());
@@ -93,7 +96,7 @@ class ResponseTest extends TestCase
         }
     }
 
-    public function testShouldBeAbleToLoadResponseFromJSONString()
+    public function testShouldBeAbleToLoadResponseFromJSONString(): void
     {
         $options = $this->getOptions();
         $json    = Json::encode($options);
@@ -103,7 +106,7 @@ class ResponseTest extends TestCase
         $this->assertEquals($options['result'], $this->response->getResult());
     }
 
-    public function testLoadingFromJSONShouldSetJSONRpcVersionWhenPresent()
+    public function testLoadingFromJSONShouldSetJSONRpcVersionWhenPresent(): void
     {
         $options = $this->getOptions();
         $options['jsonrpc'] = '2.0';
@@ -112,7 +115,7 @@ class ResponseTest extends TestCase
         $this->assertEquals('2.0', $this->response->getVersion());
     }
 
-    public function testResponseShouldBeAbleToCastToJSON()
+    public function testResponseShouldBeAbleToCastToJSON(): void
     {
         $this->response->setResult(true)
                        ->setId('foo')
@@ -120,7 +123,7 @@ class ResponseTest extends TestCase
         $json = $this->response->toJSON();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertArrayHasKey('result', $test);
         $this->assertArrayNotHasKey('error', $test, "'error' may not coexist with 'result'");
         $this->assertArrayHasKey('id', $test);
@@ -131,7 +134,7 @@ class ResponseTest extends TestCase
         $this->assertEquals($this->response->getVersion(), $test['jsonrpc']);
     }
 
-    public function testResponseShouldCastErrorToJSONIfIsError()
+    public function testResponseShouldCastErrorToJSONIfIsError(): void
     {
         $error = new Error();
         $error->setCode(Error::ERROR_INTERNAL)
@@ -142,7 +145,7 @@ class ResponseTest extends TestCase
         $json = $this->response->toJSON();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertArrayNotHasKey('result', $test, "'result' may not coexist with 'error'");
         $this->assertArrayHasKey('error', $test);
         $this->assertArrayHasKey('id', $test);
@@ -153,14 +156,14 @@ class ResponseTest extends TestCase
         $this->assertEquals($error->getMessage(), $test['error']['message']);
     }
 
-    public function testCastToStringShouldCastToJSON()
+    public function testCastToStringShouldCastToJSON(): void
     {
         $this->response->setResult(true)
                        ->setId('foo');
         $json = $this->response->__toString();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertArrayHasKey('result', $test);
         $this->assertArrayNotHasKey('error', $test, "'error' may not coexist with 'result'");
         $this->assertArrayHasKey('id', $test);
@@ -177,7 +180,7 @@ class ResponseTest extends TestCase
      *
      * @dataProvider provideScalarJSONResponses
      */
-    public function testLoadingScalarJSONResponseShouldThrowException($json)
+    public function testLoadingScalarJSONResponseShouldThrowException($json): void
     {
         $this->expectException(RuntimeException::class);
         $this->response->loadJson($json);
@@ -186,12 +189,12 @@ class ResponseTest extends TestCase
     /**
      * @return string[][]
      */
-    public function provideScalarJSONResponses()
+    public function provideScalarJSONResponses(): array
     {
         return [[''], ['true'], ['null'], ['3'], ['"invalid"']];
     }
 
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
             'result' => [
@@ -206,7 +209,7 @@ class ResponseTest extends TestCase
     /**
      * @see https://github.com/zendframework/zend-json-server/pull/2
      */
-    public function testValueOfZeroForOptionsKeyShouldNotBeInterpretedAsVersionKey()
+    public function testValueOfZeroForOptionsKeyShouldNotBeInterpretedAsVersionKey(): void
     {
         $this->response->setOptions([
             0 => '2.0',
@@ -218,7 +221,7 @@ class ResponseTest extends TestCase
      * Assert that error data can be omitted
      * @see https://www.jsonrpc.org/specification#response_object
      */
-    public function testSetOptionsAcceptsErrorWithEmptyDate()
+    public function testSetOptionsAcceptsErrorWithEmptyDate(): void
     {
         $this->response->setOptions([
             'error' => [
