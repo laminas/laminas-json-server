@@ -25,6 +25,11 @@ use function uniqid;
 class SmdTest extends TestCase
 {
     /**
+     * @var Smd
+     */
+    protected $smd;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      *

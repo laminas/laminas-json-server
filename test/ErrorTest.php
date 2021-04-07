@@ -20,6 +20,11 @@ use function range;
 class ErrorTest extends TestCase
 {
     /**
+     * @var Server\Error
+     */
+    protected $error;
+
+    /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      *
@@ -33,6 +38,12 @@ class ErrorTest extends TestCase
     public function testCodeShouldBeErrOtherByDefault(): void
     {
         $this->assertSame(Server\Error::ERROR_OTHER, $this->error->getCode());
+    }
+
+    public function testSetCodeAllowsIntegers(): void
+    {
+        $this->error->setCode(-32700);
+        $this->assertEquals(-32700, $this->error->getCode());
     }
 
     public function testCodeShouldAllowArbitraryAppErrorCodesInXmlRpcErrorCodeRange(): void
@@ -61,7 +72,7 @@ class ErrorTest extends TestCase
         $this->assertSame($code, $this->error->getCode());
     }
 
-    public function testMessageShouldBeAnEmptyStringByDefault(): void
+    public function testMessageShouldBeEmptyStringByDefalt(): void
     {
         $this->assertSame('', $this->error->getMessage());
     }
