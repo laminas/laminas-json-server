@@ -24,14 +24,14 @@
         "php": "^7.3 || ~8.0.0",
         "laminas/laminas-http": "^2.15.1",
         "laminas/laminas-json": "^3.3.0",
-        "laminas/laminas-server": "^2.11.0",
-        "psalm/plugin-phpunit": "^0.16.1",
-        "vimeo/psalm": "^4.18.0"
+        "laminas/laminas-server": "^2.11.0"
     },
     "require-dev": {
         "ext-json": "*",
         "laminas/laminas-coding-standard": "~1.0.0",
-        "phpunit/phpunit": "^9.5.11"
+        "phpunit/phpunit": "^9.5.11",
+        "psalm/plugin-phpunit": "^0.16.1",
+        "vimeo/psalm": "^4.18.0"
     },
     "conflict": {
         "laminas/laminas-stdlib": "<3.2.1"
