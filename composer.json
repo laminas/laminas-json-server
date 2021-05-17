@@ -1,7 +1,6 @@
 {
     "name": "laminas/laminas-json-server",
     "description": "Laminas Json-Server is a JSON-RPC server implementation.",
-    "license": "BSD-3-Clause",
     "keywords": [
         "laminas",
         "json",
@@ -9,19 +8,7 @@
         "json-server"
     ],
     "homepage": "https://laminas.dev",
-    "support": {
-        "docs": "https://docs.laminas.dev/laminas-json-server/",
-        "issues": "https://github.com/laminas/laminas-json-server/issues",
-        "source": "https://github.com/laminas/laminas-json-server",
-        "rss": "https://github.com/laminas/laminas-json-server/releases.atom",
-        "chat": "https://laminas.dev/chat",
-        "forum": "https://discourse.laminas.dev"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-    },
+    "license": "BSD-3-Clause",
     "require": {
         "php": "^7.3 || ~8.0.0",
         "laminas/laminas-http": "^2.7",
@@ -29,26 +16,33 @@
         "laminas/laminas-server": "^2.7",
         "laminas/laminas-zendframework-bridge": "^1.0"
     },
+    "replace": {
+        "zendframework/zend-json-server": "^3.2.0"
+    },
+    "conflict": {
+        "laminas/laminas-stdlib": "<3.2.1"
+    },
     "require-dev": {
         "ext-json": "*",
         "laminas/laminas-coding-standard": "~1.0.0",
         "phpunit/phpunit": "^9.3.0"
     },
-    "conflict": {
-        "laminas/laminas-stdlib": "<3.2.1"
+    "config": {
+        "sort-packages": true
     },
+    "extra": {},
     "autoload": {
         "psr-4": {
             "Laminas\\Json\\Server\\": "src/"
         }
     },
     "autoload-dev": {
-        "files": [
-            "test/TestAsset/FooFunc.php"
-        ],
         "psr-4": {
             "LaminasTest\\Json\\Server\\": "test/"
-        }
+        },
+        "files": [
+            "test/TestAsset/FooFunc.php"
+        ]
     },
     "scripts": {
         "check": [
@@ -60,7 +54,12 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "replace": {
-        "zendframework/zend-json-server": "^3.2.0"
+    "support": {
+        "issues": "https://github.com/laminas/laminas-json-server/issues",
+        "forum": "https://discourse.laminas.dev",
+        "chat": "https://laminas.dev/chat",
+        "source": "https://github.com/laminas/laminas-json-server",
+        "docs": "https://docs.laminas.dev/laminas-json-server/",
+        "rss": "https://github.com/laminas/laminas-json-server/releases.atom"
     }
 }
