@@ -1,6 +1,7 @@
 {
     "name": "laminas/laminas-json-server",
     "description": "Laminas Json-Server is a JSON-RPC server implementation.",
+    "license": "BSD-3-Clause",
     "keywords": [
         "laminas",
         "json",
@@ -8,43 +9,49 @@
         "json-server"
     ],
     "homepage": "https://laminas.dev",
-    "license": "BSD-3-Clause",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-json-server/",
+        "issues": "https://github.com/laminas/laminas-json-server/issues",
+        "source": "https://github.com/laminas/laminas-json-server",
+        "rss": "https://github.com/laminas/laminas-json-server/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+    },
     "require": {
         "php": "^7.3 || ~8.0.0",
         "laminas/laminas-http": "^2.7",
         "laminas/laminas-json": "^2.6.1 || ^3.0",
         "laminas/laminas-server": "^2.7",
-        "laminas/laminas-zendframework-bridge": "^1.0",
+        "laminas/laminas-zendframework-bridge": "^1.0"
         "phpunit/phpunit": "^9.5",
         "psalm/plugin-phpunit": "^0.15.1",
         "vimeo/psalm": "^4.7"
     },
-    "replace": {
-        "zendframework/zend-json-server": "^3.2.0"
+    "require-dev": {
+        "ext-json": "*",
+        "laminas/laminas-coding-standard": "~1.0.0",
+        "phpunit/phpunit": "^9.3.0"
     },
     "conflict": {
         "laminas/laminas-stdlib": "<3.2.1"
     },
-    "require-dev": {
-        "ext-json": "*",
-        "laminas/laminas-coding-standard": "~1.0.0"
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {},
     "autoload": {
         "psr-4": {
             "Laminas\\Json\\Server\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-4": {
-            "LaminasTest\\Json\\Server\\": "test/"
-        },
         "files": [
             "test/TestAsset/FooFunc.php"
-        ]
+        ],
+        "psr-4": {
+            "LaminasTest\\Json\\Server\\": "test/"
+        }
     },
     "scripts": {
         "check": [
@@ -57,12 +64,7 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     },
-    "support": {
-        "issues": "https://github.com/laminas/laminas-json-server/issues",
-        "forum": "https://discourse.laminas.dev",
-        "chat": "https://laminas.dev/chat",
-        "source": "https://github.com/laminas/laminas-json-server",
-        "docs": "https://docs.laminas.dev/laminas-json-server/",
-        "rss": "https://github.com/laminas/laminas-json-server/releases.atom"
+    "replace": {
+        "zendframework/zend-json-server": "^3.2.0"
     }
 }
