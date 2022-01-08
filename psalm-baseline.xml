@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.18.0.0">
+  <file src="src/Cache.php">
+    <DocblockTypeContradiction occurrences="2">
+      <code>! is_string($filename)</code>
+      <code>! is_string($filename)</code>
+    </DocblockTypeContradiction>
+    <InvalidArgument occurrences="2"/>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_string($filename)</code>
+    </RedundantConditionGivenDocblockType>
+    <UnusedClosureParam occurrences="4">
+      <code>$errno</code>
+      <code>$errno</code>
+      <code>$errstr</code>
+      <code>$errstr</code>
+    </UnusedClosureParam>
+  </file>
+  <file src="src/Client.php">
+    <DeprecatedInterface occurrences="1">
+      <code>Client</code>
+    </DeprecatedInterface>
+    <DocblockTypeContradiction occurrences="1">
+      <code>$httpRequest-&gt;getUriString() === null</code>
+    </DocblockTypeContradiction>
+    <PossiblyInvalidMethodCall occurrences="5">
+      <code>addHeaderLine</code>
+      <code>addHeaders</code>
+      <code>get</code>
+      <code>has</code>
+      <code>has</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullArgument occurrences="1">
+      <code>$error-&gt;getCode()</code>
+    </PossiblyNullArgument>
+    <PossiblyNullReference occurrences="1">
+      <code>getMessage</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedMethod occurrences="5">
+      <code>addHeaderLine</code>
+      <code>addHeaders</code>
+      <code>get</code>
+      <code>has</code>
+      <code>has</code>
+    </PossiblyUndefinedMethod>
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>$lastRequest</code>
+      <code>$lastResponse</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Error.php">
+    <DocblockTypeContradiction occurrences="6">
+      <code>! is_scalar($code)</code>
+      <code>! is_scalar($code) || is_bool($code)</code>
+      <code>is_bool($code)</code>
+      <code>is_float($code)</code>
+      <code>is_scalar($message)</code>
+      <code>is_string($code)</code>
+    </DocblockTypeContradiction>
+    <PossiblyNullArgument occurrences="1">
+      <code>$message</code>
+    </PossiblyNullArgument>
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(int) $code</code>
+      <code>(string) $message</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="src/Request.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>! is_string($key)</code>
+    </DocblockTypeContradiction>
+    <MissingConstructor occurrences="1">
+      <code>$method</code>
+    </MissingConstructor>
+    <MixedArgument occurrences="2">
+      <code>$options</code>
+      <code>$value</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="2">
+      <code>$key</code>
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="3">
+      <code>$options</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>string</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;id</code>
+    </MixedReturnStatement>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>null !== ($id = $this-&gt;getId())</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/Request/Http.php">
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>Http</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="src/Response.php">
+    <InvalidScalarArgument occurrences="1">
+      <code>$e-&gt;getCode()</code>
+    </InvalidScalarArgument>
+    <MissingConstructor occurrences="4">
+      <code>$id</code>
+      <code>$id</code>
+      <code>$serviceMap</code>
+      <code>$serviceMap</code>
+    </MissingConstructor>
+    <MixedArgument occurrences="3">
+      <code>$error['code']</code>
+      <code>$error['message']</code>
+      <code>$value</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="5">
+      <code>$errorData</code>
+      <code>$response['result']</code>
+      <code>$this-&gt;error</code>
+      <code>$this-&gt;id</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <PossiblyNullReference occurrences="1">
+      <code>toArray</code>
+    </PossiblyNullReference>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(string) $version</code>
+    </RedundantCastGivenDocblockType>
+  </file>
+  <file src="src/Server.php">
+    <ArgumentTypeCoercion occurrences="2">
+      <code>$callback-&gt;getClass()</code>
+      <code>$callback-&gt;getFunction()</code>
+    </ArgumentTypeCoercion>
+    <DeprecatedInterface occurrences="1">
+      <code>Server</code>
+    </DeprecatedInterface>
+    <DeprecatedMethod occurrences="3">
+      <code>_buildSignature</code>
+      <code>_buildSignature</code>
+      <code>_dispatch</code>
+    </DeprecatedMethod>
+    <DocblockTypeContradiction occurrences="5">
+      <code>is_object($function)</code>
+      <code>null === $request-&gt;getMethod()</code>
+      <code>null === $this-&gt;request</code>
+      <code>null === $this-&gt;response</code>
+      <code>null === $this-&gt;serviceMap</code>
+    </DocblockTypeContradiction>
+    <ImplementedParamTypeMismatch occurrences="1">
+      <code>$function</code>
+    </ImplementedParamTypeMismatch>
+    <ImplementedReturnTypeMismatch occurrences="3">
+      <code>Server</code>
+      <code>Server</code>
+      <code>self</code>
+    </ImplementedReturnTypeMismatch>
+    <InvalidParamDefault occurrences="1">
+      <code>Request</code>
+    </InvalidParamDefault>
+    <InvalidReturnStatement occurrences="6">
+      <code>$params</code>
+      <code>$this-&gt;fault($e-&gt;getMessage(), $e-&gt;getCode(), $e)</code>
+      <code>$this-&gt;fault('Invalid Request', Error::ERROR_INVALID_REQUEST)</code>
+      <code>$this-&gt;fault('Invalid Request', Error::ERROR_INVALID_REQUEST)</code>
+      <code>$this-&gt;fault('Method not found', Error::ERROR_INVALID_METHOD)</code>
+      <code>$this-&gt;fault('Parse error', Error::ERROR_PARSE)</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>void</code>
+    </InvalidReturnType>
+    <InvalidScalarArgument occurrences="1">
+      <code>$e-&gt;getCode()</code>
+    </InvalidScalarArgument>
+    <MissingClosureReturnType occurrences="1">
+      <code>function ($count, $param) {</code>
+    </MissingClosureReturnType>
+    <MixedArgument occurrences="7">
+      <code>$argv</code>
+      <code>$function</code>
+      <code>$method</code>
+      <code>$method</code>
+      <code>$method</code>
+      <code>$method</code>
+      <code>$param</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAccess occurrences="3">
+      <code>$param['default']</code>
+      <code>$param['name']</code>
+      <code>$param['optional']</code>
+    </MixedArrayAccess>
+    <MixedArrayOffset occurrences="8">
+      <code>$args[$param['name']]</code>
+      <code>$args[$param['name']]</code>
+      <code>$params[$key]</code>
+      <code>$params[$key]</code>
+      <code>$params[$key]</code>
+      <code>$params[$key]</code>
+      <code>$params[$key]</code>
+      <code>$params[$key]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="20">
+      <code>$args[$param['name']]</code>
+      <code>$count</code>
+      <code>$default</code>
+      <code>$description</code>
+      <code>$key</code>
+      <code>$method</code>
+      <code>$method</code>
+      <code>$method</code>
+      <code>$newType</code>
+      <code>$orderedParams[$refParam-&gt;getName()]</code>
+      <code>$param</code>
+      <code>$parameter</code>
+      <code>$params[$key]['default']</code>
+      <code>$params[$key]['description']</code>
+      <code>$prototype</code>
+      <code>$prototype</code>
+      <code>$requiredParamsCount</code>
+      <code>$result</code>
+      <code>$return[]</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>string|array</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="9">
+      <code>getDefaultValue</code>
+      <code>getDescription</code>
+      <code>getName</code>
+      <code>getParameterObjects</code>
+      <code>getReturnType</code>
+      <code>getType</code>
+      <code>getType</code>
+      <code>getType</code>
+      <code>isOptional</code>
+    </MixedMethodCall>
+    <MixedOperand occurrences="1">
+      <code>$count</code>
+    </MixedOperand>
+    <MixedReturnStatement occurrences="1">
+      <code>$return[0]</code>
+    </MixedReturnStatement>
+    <MoreSpecificImplementedParamType occurrences="3">
+      <code>$class</code>
+      <code>$fault</code>
+      <code>$request</code>
+    </MoreSpecificImplementedParamType>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$function</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidCast occurrences="1">
+      <code>$function</code>
+    </PossiblyInvalidCast>
+    <PossiblyInvalidMethodCall occurrences="1">
+      <code>getParams</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullArgument occurrences="6">
+      <code>$argv</code>
+      <code>$argv</code>
+      <code>$callback-&gt;getClass()</code>
+      <code>$callback-&gt;getFunction()</code>
+      <code>$callback-&gt;getMethod()</code>
+      <code>$invokable</code>
+    </PossiblyNullArgument>
+    <PossiblyUndefinedVariable occurrences="1">
+      <code>$method</code>
+    </PossiblyUndefinedVariable>
+    <PropertyNotSetInConstructor occurrences="4">
+      <code>$request</code>
+      <code>$response</code>
+      <code>$serviceMap</code>
+      <code>$smdMethods</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(bool) $flag</code>
+    </RedundantCastGivenDocblockType>
+    <RedundantConditionGivenDocblockType occurrences="5">
+      <code>false !== $request</code>
+      <code>gettype($function)</code>
+      <code>null !== $this-&gt;smdMethods</code>
+      <code>null !== ($id = $request-&gt;getId())</code>
+      <code>null !== ($version = $request-&gt;getVersion())</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/Smd.php">
+    <MissingConstructor occurrences="3">
+      <code>$description</code>
+      <code>$id</code>
+      <code>$target</code>
+    </MissingConstructor>
+    <MixedArgument occurrences="2">
+      <code>$param</code>
+      <code>$service</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$key</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAccess occurrences="3">
+      <code>$param['name']</code>
+      <code>$param['type']</code>
+      <code>$param['type']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="7">
+      <code>$SMDVersion</code>
+      <code>$param</code>
+      <code>$service</code>
+      <code>$service['services'][$name]</code>
+      <code>$svc</code>
+      <code>$svc</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>bool|Smd\Service</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="3">
+      <code>getParams</code>
+      <code>setEnvelope</code>
+      <code>toArray</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;services[$name]</code>
+    </MixedReturnStatement>
+    <RedundantCastGivenDocblockType occurrences="4">
+      <code>(bool) $flag</code>
+      <code>(string) $description</code>
+      <code>(string) $id</code>
+      <code>(string) $target</code>
+    </RedundantCastGivenDocblockType>
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>null !== ($id = $this-&gt;getId())</code>
+      <code>null !== ($target = $this-&gt;getTarget())</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/Smd/Service.php">
+    <DocblockTypeContradiction occurrences="3">
+      <code>! is_string($type) &amp;&amp; ! is_array($type)</code>
+      <code>! is_string($type) &amp;&amp; ! is_array($type)</code>
+      <code>is_string($type)</code>
+    </DocblockTypeContradiction>
+    <MissingPropertyType occurrences="5">
+      <code>$envelope</code>
+      <code>$name</code>
+      <code>$return</code>
+      <code>$target</code>
+      <code>$transport</code>
+    </MissingPropertyType>
+    <MixedArgument occurrences="5">
+      <code>$order</code>
+      <code>$paramType</code>
+      <code>$returnType</code>
+      <code>$type</code>
+      <code>$type</code>
+    </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="4">
+      <code>$key</code>
+      <code>$key</code>
+      <code>$this-&gt;envelopeTypes</code>
+      <code>$this-&gt;transportTypes</code>
+    </MixedArgumentTypeCoercion>
+    <MixedArrayAccess occurrences="4">
+      <code>$param['order']</code>
+      <code>$param['order']</code>
+      <code>$param['param']</code>
+      <code>$param['param']</code>
+    </MixedArrayAccess>
+    <MixedArrayOffset occurrences="1">
+      <code>$params[$param['order']]</code>
+    </MixedArrayOffset>
+    <MixedAssignment occurrences="12">
+      <code>$callback</code>
+      <code>$order</code>
+      <code>$param</code>
+      <code>$paramOptions[$key]</code>
+      <code>$paramType</code>
+      <code>$paramType</code>
+      <code>$params[$index]</code>
+      <code>$params[$param['order']]</code>
+      <code>$returnType</code>
+      <code>$type</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedFunctionCall occurrences="1">
+      <code>$callback($value)</code>
+    </MixedFunctionCall>
+    <MixedInferredReturnType occurrences="6">
+      <code>string</code>
+      <code>string</code>
+      <code>string</code>
+      <code>string</code>
+      <code>string</code>
+      <code>string|array</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="6">
+      <code>$paramType</code>
+      <code>$this-&gt;envelope</code>
+      <code>$this-&gt;name</code>
+      <code>$this-&gt;return</code>
+      <code>$this-&gt;target</code>
+      <code>$this-&gt;transport</code>
+    </MixedReturnStatement>
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(string) $name</code>
+      <code>(string) $target</code>
+    </RedundantCastGivenDocblockType>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_array($spec)</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="test/CacheTest.php">
+    <PossiblyFalseArgument occurrences="7">
+      <code>$this-&gt;cacheFile</code>
+      <code>$this-&gt;cacheFile</code>
+      <code>$this-&gt;cacheFile</code>
+      <code>$this-&gt;cacheFile</code>
+      <code>$this-&gt;cacheFile</code>
+      <code>$this-&gt;cacheFile</code>
+      <code>$this-&gt;cacheFile</code>
+    </PossiblyFalseArgument>
+  </file>
+  <file src="test/ClientTest.php">
+    <ArgumentTypeCoercion occurrences="4">
+      <code>'Laminas\\Http\\Client'</code>
+      <code>'Laminas\\Http\\Client'</code>
+      <code>'Laminas\\Json\\Server\\Request'</code>
+      <code>'Laminas\\Json\\Server\\Response'</code>
+    </ArgumentTypeCoercion>
+    <InvalidArgument occurrences="2">
+      <code>$this-&gt;mockedHttpClient</code>
+      <code>Exception\ExceptionInterface::class</code>
+    </InvalidArgument>
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>$this-&gt;createMock('Laminas\\Http\\Client')</code>
+    </InvalidPropertyAssignmentValue>
+    <MissingParamType occurrences="6">
+      <code>$data</code>
+      <code>$message</code>
+      <code>$nativeVars</code>
+      <code>$nativeVars</code>
+      <code>$nativeVars</code>
+      <code>$status</code>
+    </MissingParamType>
+    <MixedArgument occurrences="1">
+      <code>$data</code>
+    </MixedArgument>
+  </file>
+  <file src="test/ErrorTest.php">
+    <InvalidArgument occurrences="2">
+      <code>$code</code>
+      <code>$message</code>
+    </InvalidArgument>
+    <InvalidCast occurrences="1">
+      <code>$message</code>
+    </InvalidCast>
+    <InvalidScalarArgument occurrences="2">
+      <code>$message</code>
+      <code>'-32700'</code>
+    </InvalidScalarArgument>
+    <MissingParamType occurrences="2">
+      <code>$code</code>
+      <code>$error</code>
+    </MissingParamType>
+    <MixedArgument occurrences="1">
+      <code>$code</code>
+    </MixedArgument>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
+  </file>
+  <file src="test/RequestTest.php">
+    <InvalidArgument occurrences="1">
+      <code>$spec[1]</code>
+    </InvalidArgument>
+    <InvalidScalarArgument occurrences="4">
+      <code>1</code>
+      <code>1</code>
+      <code>1</code>
+      <code>1</code>
+    </InvalidScalarArgument>
+    <MissingParamType occurrences="1">
+      <code>$json</code>
+    </MissingParamType>
+    <MixedArgument occurrences="1">
+      <code>$json</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$test</code>
+    </MixedAssignment>
+    <PossiblyNullArgument occurrences="4">
+      <code>var_export($json, 1)</code>
+      <code>var_export($params, 1)</code>
+      <code>var_export($params, 1)</code>
+      <code>var_export($params, 1)</code>
+    </PossiblyNullArgument>
+  </file>
+  <file src="test/ResponseTest.php">
+    <InvalidScalarArgument occurrences="1">
+      <code>$version</code>
+    </InvalidScalarArgument>
+    <MixedArrayAccess occurrences="2">
+      <code>$test['error']['code']</code>
+      <code>$test['error']['message']</code>
+    </MixedArrayAccess>
+    <PossiblyNullReference occurrences="3">
+      <code>getCode</code>
+      <code>getData</code>
+      <code>getMessage</code>
+    </PossiblyNullReference>
+  </file>
+  <file src="test/ServerTest.php">
+    <InvalidArgument occurrences="3">
+      <code>$object</code>
+      <code>$object</code>
+      <code>new Json\Json()</code>
+    </InvalidArgument>
+    <InvalidCast occurrences="3">
+      <code>$object</code>
+      <code>$object</code>
+      <code>new Json\Json()</code>
+    </InvalidCast>
+    <InvalidScalarArgument occurrences="4">
+      <code>1</code>
+      <code>1</code>
+      <code>1</code>
+      <code>1</code>
+    </InvalidScalarArgument>
+    <MixedArgument occurrences="1">
+      <code>$decoded['result']</code>
+    </MixedArgument>
+    <MixedMethodCall occurrences="10">
+      <code>setContentType</code>
+      <code>setContentType</code>
+      <code>setDescription</code>
+      <code>setDescription</code>
+      <code>setEnvelope</code>
+      <code>setEnvelope</code>
+      <code>setId</code>
+      <code>setId</code>
+      <code>setTarget</code>
+      <code>setTarget</code>
+    </MixedMethodCall>
+    <PossiblyNullArgument occurrences="2">
+      <code>var_export($result, 1)</code>
+      <code>var_export($result, 1)</code>
+    </PossiblyNullArgument>
+    <PossiblyNullOperand occurrences="2">
+      <code>var_export($test, 1)</code>
+      <code>var_export($test, 1)</code>
+    </PossiblyNullOperand>
+    <PossiblyNullReference occurrences="13">
+      <code>getCallback</code>
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getCode</code>
+      <code>getMessage</code>
+      <code>getResult</code>
+      <code>getResult</code>
+      <code>getResult</code>
+      <code>getResult</code>
+    </PossiblyNullReference>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>assertIsArray</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="test/Smd/ServiceTest.php">
+    <InvalidArgument occurrences="2">
+      <code>new stdClass</code>
+      <code>new stdClass</code>
+    </InvalidArgument>
+    <InvalidScalarArgument occurrences="4">
+      <code>1</code>
+      <code>1</code>
+      <code>1</code>
+      <code>123</code>
+    </InvalidScalarArgument>
+    <MissingReturnType occurrences="2">
+      <code>testSettingNameShouldNotThrowExceptionWhenContainingInvalidFormatStartingWithRpcInsensitiveCase</code>
+      <code>testSettingNameShouldThrowExceptionWhenContainingInvalidFormatStartingWithRpcWithoutPeriodChar</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="5">
+      <code>$params</code>
+      <code>$params</code>
+      <code>$params</code>
+      <code>$params</code>
+      <code>$smd</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="17">
+      <code>$param['default']</code>
+      <code>$param['description']</code>
+      <code>$param['name']</code>
+      <code>$param['name']</code>
+      <code>$param['optional']</code>
+      <code>$param['type']</code>
+      <code>$param['type']</code>
+      <code>$param['type']</code>
+      <code>$param['type']</code>
+      <code>$param['type']</code>
+      <code>$param['type']</code>
+      <code>$param['type']</code>
+      <code>$param['type']</code>
+      <code>$param['type']</code>
+      <code>$param['type']</code>
+      <code>$param['type']</code>
+      <code>$smd['foo']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="14">
+      <code>$param</code>
+      <code>$param</code>
+      <code>$param</code>
+      <code>$param</code>
+      <code>$param</code>
+      <code>$param</code>
+      <code>$param</code>
+      <code>$param</code>
+      <code>$param</code>
+      <code>$param</code>
+      <code>$param</code>
+      <code>$param</code>
+      <code>$params</code>
+      <code>$smd</code>
+    </MixedAssignment>
+    <NullArgument occurrences="2">
+      <code>null</code>
+      <code>null</code>
+    </NullArgument>
+    <PossiblyNullArgument occurrences="3">
+      <code>var_export($params, 1)</code>
+      <code>var_export($params, 1)</code>
+      <code>var_export($params, 1)</code>
+    </PossiblyNullArgument>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>assertIsString</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="test/SmdTest.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>'Laminas\Json\Server\Smd\Service'</code>
+    </ArgumentTypeCoercion>
+    <InvalidArgument occurrences="1">
+      <code>$service</code>
+    </InvalidArgument>
+    <MixedArgument occurrences="14">
+      <code>$bar</code>
+      <code>$bar</code>
+      <code>$bar</code>
+      <code>$foo</code>
+      <code>$foo</code>
+      <code>$foo</code>
+      <code>$methods</code>
+      <code>$methods</code>
+      <code>$methods</code>
+      <code>$services</code>
+      <code>$services</code>
+      <code>$services</code>
+      <code>$smd</code>
+      <code>$smd</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="6">
+      <code>$bar['name']</code>
+      <code>$bar['parameters']</code>
+      <code>$bar['serviceURL']</code>
+      <code>$foo['name']</code>
+      <code>$foo['parameters']</code>
+      <code>$foo['serviceURL']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="6">
+      <code>$bar</code>
+      <code>$foo</code>
+      <code>$methods</code>
+      <code>$services</code>
+      <code>$smd</code>
+      <code>$smd</code>
+    </MixedAssignment>
+    <PossiblyInvalidMethodCall occurrences="1">
+      <code>getName</code>
+    </PossiblyInvalidMethodCall>
+    <RedundantCondition occurrences="1">
+      <code>assertIsArray</code>
+    </RedundantCondition>
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>assertIsArray</code>
+      <code>assertIsArray</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="test/TestAsset/Bar.php">
+    <MissingParamType occurrences="1">
+      <code>$someval</code>
+    </MissingParamType>
+    <MissingPropertyType occurrences="1">
+      <code>$val</code>
+    </MissingPropertyType>
+  </file>
+  <file src="test/TestAsset/JsonSerializableLaminasImpl.php">
+    <DeprecatedInterface occurrences="1">
+      <code>JsonSerializableLaminasImpl</code>
+    </DeprecatedInterface>
+  </file>
+  <file src="test/TestAsset/TestIteratorAggregate.php">
+    <MissingPropertyType occurrences="1">
+      <code>$array</code>
+    </MissingPropertyType>
+    <MixedArgument occurrences="1">
+      <code>$this-&gt;array</code>
+    </MixedArgument>
+  </file>
+</files>
