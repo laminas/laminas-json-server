@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.7.2@83a0325c0a95c0ab531d6b90c877068b464377b5">
+<files psalm-version="4.18.0.0">
   <file src="src/Cache.php">
     <DocblockTypeContradiction occurrences="2">
       <code>! is_string($filename)</code>
       <code>! is_string($filename)</code>
     </DocblockTypeContradiction>
     <InvalidArgument occurrences="2"/>
-    <MissingClosureParamType occurrences="4">
-      <code>$errno</code>
-      <code>$errno</code>
-      <code>$errstr</code>
-      <code>$errstr</code>
-    </MissingClosureParamType>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_string($filename)</code>
     </RedundantConditionGivenDocblockType>
@@ -151,9 +145,7 @@
       <code>_buildSignature</code>
       <code>_dispatch</code>
     </DeprecatedMethod>
-    <DocblockTypeContradiction occurrences="7">
-      <code>! is_array($definition) &amp;&amp; (! $definition instanceof Definition)</code>
-      <code>(false !== $request) &amp;&amp; ! $request instanceof Request</code>
+    <DocblockTypeContradiction occurrences="5">
       <code>is_object($function)</code>
       <code>null === $request-&gt;getMethod()</code>
       <code>null === $this-&gt;request</code>
@@ -185,10 +177,6 @@
     <InvalidScalarArgument occurrences="1">
       <code>$e-&gt;getCode()</code>
     </InvalidScalarArgument>
-    <MissingClosureParamType occurrences="2">
-      <code>$count</code>
-      <code>$param</code>
-    </MissingClosureParamType>
     <MissingClosureReturnType occurrences="1">
       <code>function ($count, $param) {</code>
     </MissingClosureReturnType>
@@ -219,8 +207,9 @@
       <code>$params[$key]</code>
       <code>$params[$key]</code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="19">
+    <MixedAssignment occurrences="20">
       <code>$args[$param['name']]</code>
+      <code>$count</code>
       <code>$default</code>
       <code>$description</code>
       <code>$key</code>
@@ -303,9 +292,6 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Smd.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>$service instanceof Smd\Service</code>
-    </DocblockTypeContradiction>
     <MissingConstructor occurrences="3">
       <code>$description</code>
       <code>$id</code>
@@ -374,9 +360,11 @@
       <code>$type</code>
       <code>$type</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="2">
+    <MixedArgumentTypeCoercion occurrences="4">
       <code>$key</code>
       <code>$key</code>
+      <code>$this-&gt;envelopeTypes</code>
+      <code>$this-&gt;transportTypes</code>
     </MixedArgumentTypeCoercion>
     <MixedArrayAccess occurrences="4">
       <code>$param['order']</code>
