@@ -62,13 +62,15 @@ class ServiceTest extends TestCase
         $this->service->setName('rpc.Foo');
     }
 
-    public function testSettingNameShouldThrowExceptionWhenContainingInvalidFormatStartingWithRpcWithoutPeriodChar()
+    // phpcs:ignore
+    public function testSettingNameShouldThrowExceptionWhenContainingInvalidFormatStartingWithRpcWithoutPeriodChar(): void
     {
         $this->service->setName('rpcFoo');
         $this->assertEquals('rpcFoo', $this->service->getName());
     }
 
-    public function testSettingNameShouldNotThrowExceptionWhenContainingInvalidFormatStartingWithRpcInsensitiveCase()
+    // phpcs:ignore
+    public function testSettingNameShouldNotThrowExceptionWhenContainingInvalidFormatStartingWithRpcInsensitiveCase(): void
     {
         $this->service->setName('RpcFoo');
         $this->assertEquals('RpcFoo', $this->service->getName());

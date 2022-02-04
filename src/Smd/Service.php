@@ -34,10 +34,9 @@ class Service
     /** @var string */
     protected $envelope = Smd::ENV_JSONRPC_1;
 
-    /** @var string */
-    protected $name;
+    protected string $name = '';
 
-    /** @var string|array */
+    /** @var null|string|array */
     protected $return;
 
     /** @var string|null */
@@ -134,7 +133,7 @@ class Service
             $this->setOptions($spec);
         }
 
-        if (null === $this->getName()) {
+        if ('' === $this->getName()) {
             throw new InvalidArgumentException('SMD service description requires a name; none provided');
         }
     }
@@ -165,13 +164,11 @@ class Service
     /**
      * Set service name.
      *
-     * @param  string $name
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setName($name)
+    public function setName(string $name)
     {
-        $name = (string) $name;
         if (! preg_match($this->nameRegex, $name)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid name "%s" provided for service; must follow PHP method naming conventions',
@@ -185,10 +182,8 @@ class Service
 
     /**
      * Retrieve name.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -240,10 +235,8 @@ class Service
 
     /**
      * Get service target.
-     *
-     * @return string
      */
-    public function getTarget()
+    public function getTarget(): ?string
     {
         return $this->target;
     }
@@ -425,7 +418,7 @@ class Service
     /**
      * Get return type.
      *
-     * @return string|array
+     * @return null|string|array
      */
     public function getReturn()
     {

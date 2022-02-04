@@ -9,8 +9,10 @@ use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
 
 use function array_key_exists;
+use function assert;
 use function in_array;
 use function is_array;
+use function is_string;
 use function method_exists;
 use function preg_match;
 use function ucfirst;
@@ -403,7 +405,8 @@ class Smd
         $envelope    = $this->getEnvelope();
         $contentType = $this->getContentType();
         $smdVersion  = static::SMD_VERSION;
-        $service     = [
+        assert(is_string($smdVersion));
+        $service = [
             'transport'   => $transport,
             'envelope'    => $envelope,
             'contentType' => $contentType,
