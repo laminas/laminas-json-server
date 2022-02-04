@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server\TestAsset;
 
 use Exception;
 
+// phpcs:disable
 class Bar
 {
     protected $val;
@@ -28,8 +31,6 @@ class Bar
 
     /**
      * Baz
-     *
-     * @return void
      */
     public function baz(): void
     {

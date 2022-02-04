@@ -1,10 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server\Smd;
 
 use Laminas\Json\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Smd;
+
+use function array_key_exists;
+use function array_keys;
+use function array_search;
+use function get_class_methods;
+use function gettype;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_string;
+use function ksort;
+use function preg_match;
+use function sprintf;
+use function strtolower;
+use function ucfirst;
 
 /**
  * Create Service Mapping Description for a method
@@ -14,24 +31,24 @@ use Laminas\Json\Server\Smd;
  */
 class Service
 {
-    /**#@+
-     * Service metadata
-     *
-     * @var string
-     */
-    protected $envelope  = Smd::ENV_JSONRPC_1;
-    protected $name;
+    /** @var string */
+    protected $envelope = Smd::ENV_JSONRPC_1;
+
+    protected string $name = '';
+
+    /** @var null|string|array */
     protected $return;
+
+    /** @var string|null */
     protected $target;
+
+    /** @var string */
     protected $transport = 'POST';
-    /**#@-*/
 
     /**
      * Allowed envelope types.
-     *
-     * @var array
      */
-    protected $envelopeTypes = [
+    protected array $envelopeTypes = [
         Smd::ENV_JSONRPC_1,
         Smd::ENV_JSONRPC_2,
     ];
@@ -41,6 +58,7 @@ class Service
      *
      * @link http://php.net/manual/en/language.oop5.basic.php
      * @link http://www.jsonrpc.org/specification#request_object
+     *
      * @var string
      */
     protected $nameRegex = '/^(?!^rpc\.)[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\.\\\]*$/';
@@ -105,7 +123,7 @@ class Service
 
     /**
      * @param string|array $spec
-     * @throws InvalidArgumentException if no name provided
+     * @throws InvalidArgumentException If no name provided.
      */
     public function __construct($spec)
     {
@@ -115,7 +133,7 @@ class Service
             $this->setOptions($spec);
         }
 
-        if (null == $this->getName()) {
+        if ('' === $this->getName()) {
             throw new InvalidArgumentException('SMD service description requires a name; none provided');
         }
     }
@@ -130,7 +148,7 @@ class Service
     {
         $methods = get_class_methods($this);
         foreach ($options as $key => $value) {
-            if ('options' == strtolower($key)) {
+            if ('options' === strtolower($key)) {
                 continue;
             }
 
@@ -146,13 +164,11 @@ class Service
     /**
      * Set service name.
      *
-     * @param  string $name
      * @return self
      * @throws InvalidArgumentException
      */
-    public function setName($name)
+    public function setName(string $name)
     {
-        $name = (string) $name;
         if (! preg_match($this->nameRegex, $name)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid name "%s" provided for service; must follow PHP method naming conventions',
@@ -222,7 +238,7 @@ class Service
     /**
      * Get service target.
      *
-     * @return string
+     * @return null|string
      */
     public function getTarget()
     {
@@ -327,7 +343,7 @@ class Service
             }
 
             $type  = $options['type'];
-            $order = (array_key_exists('order', $options)) ? $options['order'] : null;
+            $order = array_key_exists('order', $options) ? $options['order'] : null;
             $this->addParam($type, $options, $order);
         }
 
@@ -406,7 +422,7 @@ class Service
     /**
      * Get return type.
      *
-     * @return string|array
+     * @return null|string|array
      */
     public function getReturn()
     {
@@ -428,10 +444,23 @@ class Service
         $name       = $this->getName();
 
         if (empty($target)) {
-            return compact('envelope', 'transport', 'name', 'parameters', 'returns');
+            return [
+                'envelope'   => $envelope,
+                'transport'  => $transport,
+                'name'       => $name,
+                'parameters' => $parameters,
+                'returns'    => $returns,
+            ];
         }
 
-        return compact('envelope', 'target', 'transport', 'name', 'parameters', 'returns');
+        return [
+            'envelope'   => $envelope,
+            'target'     => $target,
+            'transport'  => $transport,
+            'name'       => $name,
+            'parameters' => $parameters,
+            'returns'    => $returns,
+        ];
     }
 
     /**
@@ -478,7 +507,7 @@ class Service
         }
 
         $paramType = $this->paramMap[$type];
-        if (! $isReturn && ('null' == $paramType)) {
+        if (! $isReturn && ('null' === $paramType)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid param type provided ("%s")',
                 $type

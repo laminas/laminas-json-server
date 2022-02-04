@@ -115,9 +115,6 @@
       <code>$error['message']</code>
       <code>$value</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$key</code>
-    </MixedArgumentTypeCoercion>
     <MixedAssignment occurrences="5">
       <code>$errorData</code>
       <code>$response['result']</code>
@@ -163,17 +160,6 @@
     <InvalidParamDefault occurrences="1">
       <code>Request</code>
     </InvalidParamDefault>
-    <InvalidReturnStatement occurrences="6">
-      <code>$params</code>
-      <code>$this-&gt;fault($e-&gt;getMessage(), $e-&gt;getCode(), $e)</code>
-      <code>$this-&gt;fault('Invalid Request', Error::ERROR_INVALID_REQUEST)</code>
-      <code>$this-&gt;fault('Invalid Request', Error::ERROR_INVALID_REQUEST)</code>
-      <code>$this-&gt;fault('Method not found', Error::ERROR_INVALID_METHOD)</code>
-      <code>$this-&gt;fault('Parse error', Error::ERROR_PARSE)</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
-      <code>void</code>
-    </InvalidReturnType>
     <InvalidScalarArgument occurrences="1">
       <code>$e-&gt;getCode()</code>
     </InvalidScalarArgument>
@@ -192,8 +178,7 @@
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$key</code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayAccess occurrences="3">
-      <code>$param['default']</code>
+    <MixedArrayAccess occurrences="2">
       <code>$param['name']</code>
       <code>$param['optional']</code>
     </MixedArrayAccess>
@@ -304,13 +289,7 @@
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$key</code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayAccess occurrences="3">
-      <code>$param['name']</code>
-      <code>$param['type']</code>
-      <code>$param['type']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="7">
-      <code>$SMDVersion</code>
+    <MixedAssignment occurrences="6">
       <code>$param</code>
       <code>$service</code>
       <code>$service['services'][$name]</code>
@@ -346,13 +325,6 @@
       <code>! is_string($type) &amp;&amp; ! is_array($type)</code>
       <code>is_string($type)</code>
     </DocblockTypeContradiction>
-    <MissingPropertyType occurrences="5">
-      <code>$envelope</code>
-      <code>$name</code>
-      <code>$return</code>
-      <code>$target</code>
-      <code>$transport</code>
-    </MissingPropertyType>
     <MixedArgument occurrences="5">
       <code>$order</code>
       <code>$paramType</code>
@@ -392,24 +364,13 @@
     <MixedFunctionCall occurrences="1">
       <code>$callback($value)</code>
     </MixedFunctionCall>
-    <MixedInferredReturnType occurrences="6">
+    <MixedInferredReturnType occurrences="1">
       <code>string</code>
-      <code>string</code>
-      <code>string</code>
-      <code>string</code>
-      <code>string</code>
-      <code>string|array</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="6">
+    <MixedReturnStatement occurrences="1">
       <code>$paramType</code>
-      <code>$this-&gt;envelope</code>
-      <code>$this-&gt;name</code>
-      <code>$this-&gt;return</code>
-      <code>$this-&gt;target</code>
-      <code>$this-&gt;transport</code>
     </MixedReturnStatement>
-    <RedundantCastGivenDocblockType occurrences="2">
-      <code>(string) $name</code>
+    <RedundantCastGivenDocblockType occurrences="1">
       <code>(string) $target</code>
     </RedundantCastGivenDocblockType>
     <RedundantConditionGivenDocblockType occurrences="1">
@@ -428,30 +389,9 @@
     </PossiblyFalseArgument>
   </file>
   <file src="test/ClientTest.php">
-    <ArgumentTypeCoercion occurrences="4">
-      <code>'Laminas\\Http\\Client'</code>
-      <code>'Laminas\\Http\\Client'</code>
-      <code>'Laminas\\Json\\Server\\Request'</code>
-      <code>'Laminas\\Json\\Server\\Response'</code>
-    </ArgumentTypeCoercion>
-    <InvalidArgument occurrences="2">
-      <code>$this-&gt;mockedHttpClient</code>
+    <InvalidArgument occurrences="1">
       <code>Exception\ExceptionInterface::class</code>
     </InvalidArgument>
-    <InvalidPropertyAssignmentValue occurrences="1">
-      <code>$this-&gt;createMock('Laminas\\Http\\Client')</code>
-    </InvalidPropertyAssignmentValue>
-    <MissingParamType occurrences="6">
-      <code>$data</code>
-      <code>$message</code>
-      <code>$nativeVars</code>
-      <code>$nativeVars</code>
-      <code>$nativeVars</code>
-      <code>$status</code>
-    </MissingParamType>
-    <MixedArgument occurrences="1">
-      <code>$data</code>
-    </MixedArgument>
   </file>
   <file src="test/ErrorTest.php">
     <InvalidArgument occurrences="2">
@@ -465,42 +405,24 @@
       <code>$message</code>
       <code>'-32700'</code>
     </InvalidScalarArgument>
-    <MissingParamType occurrences="2">
-      <code>$code</code>
-      <code>$error</code>
-    </MissingParamType>
-    <MixedArgument occurrences="1">
-      <code>$code</code>
+    <MixedArgument occurrences="2">
+      <code>Json\Json::decode($json, Json\Json::TYPE_ARRAY)</code>
+      <code>Json\Json::decode($json, Json\Json::TYPE_ARRAY)</code>
     </MixedArgument>
     <MixedInferredReturnType occurrences="1">
       <code>array</code>
     </MixedInferredReturnType>
+    <RedundantCondition occurrences="1">
+      <code>assertIsArray</code>
+    </RedundantCondition>
   </file>
   <file src="test/RequestTest.php">
     <InvalidArgument occurrences="1">
       <code>$spec[1]</code>
     </InvalidArgument>
-    <InvalidScalarArgument occurrences="4">
-      <code>1</code>
-      <code>1</code>
-      <code>1</code>
-      <code>1</code>
-    </InvalidScalarArgument>
-    <MissingParamType occurrences="1">
-      <code>$json</code>
-    </MissingParamType>
-    <MixedArgument occurrences="1">
-      <code>$json</code>
-    </MixedArgument>
     <MixedAssignment occurrences="1">
       <code>$test</code>
     </MixedAssignment>
-    <PossiblyNullArgument occurrences="4">
-      <code>var_export($json, 1)</code>
-      <code>var_export($params, 1)</code>
-      <code>var_export($params, 1)</code>
-      <code>var_export($params, 1)</code>
-    </PossiblyNullArgument>
   </file>
   <file src="test/ResponseTest.php">
     <InvalidScalarArgument occurrences="1">
@@ -527,12 +449,6 @@
       <code>$object</code>
       <code>new Json\Json()</code>
     </InvalidCast>
-    <InvalidScalarArgument occurrences="4">
-      <code>1</code>
-      <code>1</code>
-      <code>1</code>
-      <code>1</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="1">
       <code>$decoded['result']</code>
     </MixedArgument>
@@ -548,14 +464,6 @@
       <code>setTarget</code>
       <code>setTarget</code>
     </MixedMethodCall>
-    <PossiblyNullArgument occurrences="2">
-      <code>var_export($result, 1)</code>
-      <code>var_export($result, 1)</code>
-    </PossiblyNullArgument>
-    <PossiblyNullOperand occurrences="2">
-      <code>var_export($test, 1)</code>
-      <code>var_export($test, 1)</code>
-    </PossiblyNullOperand>
     <PossiblyNullReference occurrences="13">
       <code>getCallback</code>
       <code>getCode</code>
@@ -577,19 +485,12 @@
   </file>
   <file src="test/Smd/ServiceTest.php">
     <InvalidArgument occurrences="2">
-      <code>new stdClass</code>
-      <code>new stdClass</code>
+      <code>new stdClass()</code>
+      <code>new stdClass()</code>
     </InvalidArgument>
-    <InvalidScalarArgument occurrences="4">
-      <code>1</code>
-      <code>1</code>
-      <code>1</code>
+    <InvalidScalarArgument occurrences="1">
       <code>123</code>
     </InvalidScalarArgument>
-    <MissingReturnType occurrences="2">
-      <code>testSettingNameShouldNotThrowExceptionWhenContainingInvalidFormatStartingWithRpcInsensitiveCase</code>
-      <code>testSettingNameShouldThrowExceptionWhenContainingInvalidFormatStartingWithRpcWithoutPeriodChar</code>
-    </MissingReturnType>
     <MixedArgument occurrences="5">
       <code>$params</code>
       <code>$params</code>
@@ -636,19 +537,8 @@
       <code>null</code>
       <code>null</code>
     </NullArgument>
-    <PossiblyNullArgument occurrences="3">
-      <code>var_export($params, 1)</code>
-      <code>var_export($params, 1)</code>
-      <code>var_export($params, 1)</code>
-    </PossiblyNullArgument>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>assertIsString</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="test/SmdTest.php">
-    <ArgumentTypeCoercion occurrences="1">
-      <code>'Laminas\Json\Server\Smd\Service'</code>
-    </ArgumentTypeCoercion>
     <InvalidArgument occurrences="1">
       <code>$service</code>
     </InvalidArgument>
@@ -684,9 +574,6 @@
       <code>$smd</code>
       <code>$smd</code>
     </MixedAssignment>
-    <PossiblyInvalidMethodCall occurrences="1">
-      <code>getName</code>
-    </PossiblyInvalidMethodCall>
     <RedundantCondition occurrences="1">
       <code>assertIsArray</code>
     </RedundantCondition>
@@ -707,13 +594,5 @@
     <DeprecatedInterface occurrences="1">
       <code>JsonSerializableLaminasImpl</code>
     </DeprecatedInterface>
-  </file>
-  <file src="test/TestAsset/TestIteratorAggregate.php">
-    <MissingPropertyType occurrences="1">
-      <code>$array</code>
-    </MissingPropertyType>
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;array</code>
-    </MixedArgument>
   </file>
 </files>

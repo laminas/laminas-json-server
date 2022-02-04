@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server\TestAsset;
 
 use ArrayIterator;
@@ -10,7 +12,7 @@ use IteratorAggregate;
  */
 class TestIteratorAggregate implements IteratorAggregate
 {
-    protected $array = [
+    protected array $array = [
         'foo' => 'bar',
         'baz' => 5,
     ];

@@ -1,9 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Laminas\Json\Exception\RuntimeException;
 use Laminas\Json\Json;
+
+use function get_class_methods;
+use function in_array;
+use function is_array;
+use function ucfirst;
 
 class Response
 {
@@ -42,9 +49,7 @@ class Response
      */
     protected $version;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $args;
 
     /**
@@ -57,14 +62,14 @@ class Response
     {
         // re-produce error state
         if (isset($options['error']) && is_array($options['error'])) {
-            $error = $options['error'];
-            $errorData = isset($error['data']) ? $error['data'] : null;
+            $error            = $options['error'];
+            $errorData        = $error['data'] ?? null;
             $options['error'] = new Error($error['message'], $error['code'], $errorData);
         }
 
         $methods = get_class_methods($this);
         foreach ($options as $key => $value) {
-            $method = 'set' . ucfirst($key);
+            $method = 'set' . ucfirst((string) $key);
             if (in_array($method, $methods)) {
                 $this->$method($value);
                 continue;
@@ -134,7 +139,7 @@ class Response
      * @param  mixed $error
      * @return self
      */
-    public function setError(Error $error = null)
+    public function setError(?Error $error = null)
     {
         $this->error = $error;
         return $this;
@@ -191,7 +196,7 @@ class Response
     public function setVersion($version)
     {
         $version = (string) $version;
-        if ('2.0' == $version) {
+        if ('2.0' === $version) {
             $this->version = '2.0';
             return $this;
         }

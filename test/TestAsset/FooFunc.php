@@ -1,11 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server\TestAsset;
 
 /**
  * Test function for JSON-RPC server
- *
- * @return bool
  */
 function FooFunc(): bool
 {
