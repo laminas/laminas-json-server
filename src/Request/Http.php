@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server\Request;
 
 use Laminas\Json\Server\Request as JsonRequest;
+
+use function file_get_contents;
 
 class Http extends JsonRequest
 {
@@ -18,7 +22,7 @@ class Http extends JsonRequest
      */
     public function __construct()
     {
-        $json = file_get_contents('php://input');
+        $json          = file_get_contents('php://input');
         $this->rawJson = $json;
         if (! empty($json)) {
             $this->loadJson($json);

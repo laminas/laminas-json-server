@@ -1,9 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Exception;
 use Laminas\Json\Json;
+
+use function array_key_exists;
+use function count;
+use function get_class_methods;
+use function in_array;
+use function is_string;
+use function preg_match;
+use function ucfirst;
 
 /**
  * @todo Revised method regex to allow NS; however, should SMD be revised to
@@ -76,7 +86,7 @@ class Request
                 continue;
             }
 
-            if ($key == 'jsonrpc') {
+            if ($key === 'jsonrpc') {
                 $this->setVersion($value);
                 continue;
             }
@@ -94,7 +104,7 @@ class Request
     public function addParam($value, $key = null)
     {
         if ((null === $key) || ! is_string($key)) {
-            $index = count($this->params);
+            $index                = count($this->params);
             $this->params[$index] = $value;
             return $this;
         }
@@ -121,7 +131,7 @@ class Request
      * Overwrite params.
      *
      * @param  array $params
-     * @return \Laminas\Json\Server\Request
+     * @return Request
      */
     public function setParams(array $params)
     {
@@ -231,7 +241,7 @@ class Request
      */
     public function setVersion($version)
     {
-        if ('2.0' == $version) {
+        if ('2.0' === $version) {
             $this->version = '2.0';
             return $this;
         }
@@ -274,7 +284,7 @@ class Request
     public function toJson()
     {
         $jsonArray = [
-            'method' => $this->getMethod()
+            'method' => $this->getMethod(),
         ];
 
         if (null !== ($id = $this->getId())) {
@@ -286,7 +296,7 @@ class Request
             $jsonArray['params'] = $params;
         }
 
-        if ('2.0' == $this->getVersion()) {
+        if ('2.0' === $this->getVersion()) {
             $jsonArray['jsonrpc'] = '2.0';
         }
 

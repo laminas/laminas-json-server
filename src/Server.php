@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Exception as PhpException;
@@ -10,14 +12,32 @@ use Laminas\Server\Reflection;
 use ReflectionFunction;
 use ReflectionMethod;
 
+use function array_key_exists;
+use function array_keys;
+use function array_push;
+use function array_reduce;
+use function array_shift;
+use function array_slice;
+use function count;
+use function func_get_args;
+use function func_num_args;
+use function get_class;
+use function get_class_methods;
+use function gettype;
+use function in_array;
+use function is_array;
+use function is_callable;
+use function is_object;
+use function is_string;
+use function key;
+use function preg_match;
+use function sprintf;
+use function strstr;
+
 class Server extends AbstractServer
 {
-    /**#@+
-     * Version Constants
-     */
-    const VERSION_1 = '1.0';
-    const VERSION_2 = '2.0';
-    /**#@-*/
+    public const VERSION_1 = '1.0';
+    public const VERSION_2 = '2.0';
 
     /**
      * Flag: whether or not to auto-emit the response
@@ -77,7 +97,7 @@ class Server extends AbstractServer
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects the first argument to be callable; received %s',
                 __METHOD__,
-                (is_object($function) ? get_class($function) : gettype($function))
+                is_object($function) ? get_class($function) : gettype($function)
             ));
         }
 
@@ -91,13 +111,13 @@ class Server extends AbstractServer
         if (! is_array($function)) {
             $method = Reflection::reflectFunction($function, $argv, $namespace);
         } else {
-            $class  = array_shift($function);
-            $action = array_shift($function);
+            $class      = array_shift($function);
+            $action     = array_shift($function);
             $reflection = Reflection::reflectClass($class, $argv, $namespace);
-            $methods = $reflection->getMethods();
-            $found   = false;
+            $methods    = $reflection->getMethods();
+            $found      = false;
             foreach ($methods as $method) {
-                if ($action == $method->getName()) {
+                if ($action === $method->getName()) {
                     $found = true;
                     break;
                 }
@@ -196,7 +216,7 @@ class Server extends AbstractServer
      */
     public function loadFunctions($definition)
     {
-        if (! is_array($definition) && (! $definition instanceof Definition)) {
+        if (! is_array($definition) && ! $definition instanceof Definition) {
             throw new Exception\InvalidArgumentException('Invalid definition provided to loadFunctions()');
         }
 
@@ -208,6 +228,9 @@ class Server extends AbstractServer
 
     /**
      * Cache/persist server (unused)
+     *
+     * @param  int $mode
+     * @return void
      */
     public function setPersistence($mode)
     {
@@ -216,7 +239,6 @@ class Server extends AbstractServer
     /**
      * Set request object
      *
-     * @param  Request $request
      * @return self
      */
     public function setRequest(Request $request)
@@ -244,7 +266,6 @@ class Server extends AbstractServer
     /**
      * Set response object.
      *
-     * @param  Response $response
      * @return self
      */
     public function setResponse(Response $response)
@@ -313,7 +334,7 @@ class Server extends AbstractServer
             return;
         }
 
-        if ('set' == $matches[1]) {
+        if ('set' === $matches[1]) {
             $value = array_shift($args);
             $this->getServiceMap()->$method($value);
             return $this;
@@ -340,7 +361,6 @@ class Server extends AbstractServer
     /**
      * Add service method to service map.
      *
-     * @param  Method\Definition $method
      * @return void
      */
     protected function addMethodServiceMap(Method\Definition $method)
@@ -350,9 +370,9 @@ class Server extends AbstractServer
             'return' => $this->getReturnType($method),
         ];
 
-        $params = $this->getParams($method);
+        $params                = $this->getParams($method);
         $serviceInfo['params'] = $params;
-        $serviceMap = $this->getServiceMap();
+        $serviceMap            = $this->getServiceMap();
 
         if (false !== $serviceMap->getService($serviceInfo['name'])) {
             $serviceMap->removeService($serviceInfo['name']);
@@ -409,13 +429,12 @@ class Server extends AbstractServer
     private function isAssociative(array $array)
     {
         $keys = array_keys($array);
-        return ($keys != array_keys($keys));
+        return $keys !== array_keys($keys);
     }
 
     /**
      * Get method param type.
      *
-     * @param  Method\Definition $method
      * @return string|array
      */
     protected function getParams(Method\Definition $method)
@@ -445,14 +464,16 @@ class Server extends AbstractServer
 
                 $newType = $parameter->getType();
 
-                if (is_array($params[$key]['type'])
+                if (
+                    is_array($params[$key]['type'])
                     && in_array($newType, $params[$key]['type'])
                 ) {
                     continue;
                 }
 
-                if (! is_array($params[$key]['type'])
-                    && $params[$key]['type'] == $newType
+                if (
+                    ! is_array($params[$key]['type'])
+                    && $params[$key]['type'] === $newType
                 ) {
                     continue;
                 }
@@ -493,7 +514,6 @@ class Server extends AbstractServer
     /**
      * Get method return type.
      *
-     * @param  Method\Definition $method
      * @return string|array
      */
     protected function getReturnType(Method\Definition $method)
@@ -503,7 +523,7 @@ class Server extends AbstractServer
             $return[] = $prototype->getReturnType();
         }
 
-        if (1 == count($return)) {
+        if (1 === count($return)) {
             return $return[0];
         }
 
@@ -543,7 +563,7 @@ class Server extends AbstractServer
     /**
      * Internal method for handling request.
      *
-     * @return void
+     * @return Error|void
      */
     protected function handleRequest()
     {
@@ -591,7 +611,6 @@ class Server extends AbstractServer
     /**
      * @param array $requestedParams
      * @param array $serviceParams
-     * @param Method\Definition $invokable
      * @return array|Error Array of parameters to use when calling the requested
      *     method on success, Error if there is a mismatch between request
      *     parameters and the method signature.
@@ -611,7 +630,6 @@ class Server extends AbstractServer
      *
      * @param array $requestedParams
      * @param array $serviceParams
-     * @param Method\Definition $invokable
      * @return array|Error Array of parameters to use when calling the requested
      *     method on success, Error if any named request parameters do not match
      *     those of the method requested.
@@ -625,8 +643,8 @@ class Server extends AbstractServer
             $requestedParams = $this->getDefaultParams($requestedParams, $serviceParams);
         }
 
-        $callback = $invokable->getCallback();
-        $reflection = 'function' == $callback->getType()
+        $callback   = $invokable->getCallback();
+        $reflection = 'function' === $callback->getType()
             ? new ReflectionFunction($callback->getFunction())
             : new ReflectionMethod($callback->getClass(), $callback->getMethod());
 

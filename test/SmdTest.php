@@ -1,25 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server;
 
 use Laminas\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
 use Laminas\Json\Server\Smd;
+use Laminas\Json\Server\Smd\Service;
 use PHPUnit\Framework\TestCase;
+
+use function array_keys;
+use function array_shift;
+use function array_values;
+use function uniqid;
 
 class SmdTest extends TestCase
 {
-    /**
-     * @var Smd
-     */
+    /** @var Smd */
     protected $smd;
 
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -171,7 +175,7 @@ class SmdTest extends TestCase
         ];
         $this->smd->addService($service);
         $foo = $this->smd->getService('foo');
-        $this->assertInstanceOf('Laminas\Json\Server\Smd\Service', $foo);
+        $this->assertInstanceOf(Service::class, $foo);
         $this->assertEquals('foo', $foo->getName());
     }
 
@@ -179,7 +183,7 @@ class SmdTest extends TestCase
     {
         $service = new Smd\Service('foo');
         $this->smd->addService($service);
-        $test    = new Smd\Service('foo');
+        $test = new Smd\Service('foo');
         try {
             $this->smd->addService($test);
             $this->fail('Adding service with existing service name should throw exception');
@@ -202,9 +206,9 @@ class SmdTest extends TestCase
 
     public function testShouldBeAbleToAddManyServicesAtOnceWithArrayOfServiceObjects(): void
     {
-        $one   = new Smd\Service('one');
-        $two   = new Smd\Service('two');
-        $three = new Smd\Service('three');
+        $one      = new Smd\Service('one');
+        $two      = new Smd\Service('two');
+        $three    = new Smd\Service('three');
         $services = [$one, $two, $three];
         $this->smd->addServices($services);
         $test = $this->smd->getServices();
@@ -225,7 +229,7 @@ class SmdTest extends TestCase
 
     public function testShouldBeAbleToAddManyServicesAtOnceWithMixedArrayOfObjectsAndArrays(): void
     {
-        $two = new Smd\Service('two');
+        $two      = new Smd\Service('two');
         $services = [
             ['name' => 'one'],
             $two,
@@ -240,7 +244,7 @@ class SmdTest extends TestCase
     public function testSetServicesShouldOverwriteExistingServices(): void
     {
         $this->testShouldBeAbleToAddManyServicesAtOnceWithMixedArrayOfObjectsAndArrays();
-        $five = new Smd\Service('five');
+        $five     = new Smd\Service('five');
         $services = [
             ['name' => 'four'],
             $five,
@@ -387,7 +391,7 @@ class SmdTest extends TestCase
         $smdSource->setTarget('http://foo');
         $smdSource->setTransport('POST');
         $smdSource->setServices([
-            ['name' => 'foo']
+            ['name' => 'foo'],
         ]);
 
         $smdDestination = new Smd();

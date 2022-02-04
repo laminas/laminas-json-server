@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server;
 
 use Laminas\Json\Json;
@@ -10,15 +12,11 @@ use PHPUnit\Framework\TestCase;
 
 class ResponseTest extends TestCase
 {
-    /**
-     * @var Response
-     */
+    /** @var Response */
     private $response;
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -102,9 +100,9 @@ class ResponseTest extends TestCase
 
     public function testLoadingFromJSONShouldSetJSONRpcVersionWhenPresent(): void
     {
-        $options = $this->getOptions();
+        $options            = $this->getOptions();
         $options['jsonrpc'] = '2.0';
-        $json    = Json::encode($options);
+        $json               = Json::encode($options);
         $this->response->loadJSON($json);
         $this->assertEquals('2.0', $this->response->getVersion());
     }
@@ -169,9 +167,7 @@ class ResponseTest extends TestCase
 
     /**
      * @param string $json
-     *
      * @group 5956
-     *
      * @dataProvider provideScalarJSONResponses
      */
     public function testLoadingScalarJSONResponseShouldThrowException($json): void
@@ -196,7 +192,7 @@ class ResponseTest extends TestCase
                 'four',
                 true,
             ],
-            'id'  => 'foobar',
+            'id'     => 'foobar',
         ];
     }
 
@@ -213,13 +209,14 @@ class ResponseTest extends TestCase
 
     /**
      * Assert that error data can be omitted
+     *
      * @see https://www.jsonrpc.org/specification#response_object
      */
     public function testSetOptionsAcceptsErrorWithEmptyDate(): void
     {
         $this->response->setOptions([
             'error' => [
-                'code' => 0,
+                'code'    => 0,
                 'message' => 'Lorem Ipsum',
             ],
         ]);

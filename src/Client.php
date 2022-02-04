@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Laminas\Http\Client as HttpClient;
@@ -48,9 +50,9 @@ class Client implements ServerClient
      * @param string $server Full address of the JSON-RPC service.
      * @param HttpClient $httpClient HTTP Client to use for requests.
      */
-    public function __construct($server, HttpClient $httpClient = null)
+    public function __construct($server, ?HttpClient $httpClient = null)
     {
-        $this->httpClient = $httpClient ?: new HttpClient();
+        $this->httpClient    = $httpClient ?: new HttpClient();
         $this->serverAddress = $server;
     }
 
@@ -113,7 +115,7 @@ class Client implements ServerClient
         }
 
         // Set default Accept and Content-Type headers unless already set.
-        $headers = $httpRequest->getHeaders();
+        $headers      = $httpRequest->getHeaders();
         $headersToAdd = [];
         if (! $headers->has('Content-Type')) {
             $headersToAdd['Content-Type'] = 'application/json-rpc';

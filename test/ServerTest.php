@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server;
 
 use Laminas\Json;
@@ -10,18 +12,20 @@ use Laminas\Json\Server\Response;
 use Laminas\Server\Reflection\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
 
+use function count;
+use function get_class_methods;
+use function ob_get_clean;
+use function ob_start;
+use function var_export;
+
 class ServerTest extends TestCase
 {
-    /**
-     * @var Server\Server
-     */
+    /** @var Server\Server */
     protected $server;
 
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -56,10 +60,10 @@ class ServerTest extends TestCase
     public function testBindingClassToServerShouldRegisterAllPublicMethods(): void
     {
         $this->server->setClass(Server\Server::class);
-        $test = $this->server->getFunctions();
+        $test    = $this->server->getFunctions();
         $methods = get_class_methods(Server\Server::class);
         foreach ($methods as $method) {
-            if ('_' == $method[0]) {
+            if ('_' === $method[0]) {
                 continue;
             }
             $this->assertTrue(
@@ -81,10 +85,10 @@ class ServerTest extends TestCase
     {
         $object = new Server\Server();
         $this->server->setClass($object);
-        $test = $this->server->getFunctions();
+        $test    = $this->server->getFunctions();
         $methods = get_class_methods($object);
         foreach ($methods as $method) {
-            if ('_' == $method[0]) {
+            if ('_' === $method[0]) {
                 continue;
             }
             $this->assertTrue(
@@ -98,7 +102,7 @@ class ServerTest extends TestCase
     {
         $this->server->setClass(Server\Server::class)
                      ->setClass(new Json\Json());
-        $methods = $this->server->getFunctions();
+        $methods    = $this->server->getFunctions();
         $zjsMethods = get_class_methods(Server\Server::class);
         $zjMethods  = get_class_methods(Json\Json::class);
         $this->assertGreaterThan(count($zjsMethods), count($methods));
@@ -111,8 +115,8 @@ class ServerTest extends TestCase
                      ->setClass(Response::class);
         $methods = $this->server->getFunctions();
         $this->assertTrue($methods->hasMethod('toJson'));
-        $toJSON = $methods->getMethod('toJson');
-        $this->assertEquals(Response::class, $toJSON->getCallback()->getClass());
+        $toJson = $methods->getMethod('toJson');
+        $this->assertEquals(Response::class, $toJson->getCallback()->getClass());
     }
 
     public function testGetRequestShouldInstantiateRequestObjectByDefault(): void
@@ -217,7 +221,7 @@ class ServerTest extends TestCase
         $this->assertArrayHasKey('strtolower', $services);
         $methods = get_class_methods(Server\Server::class);
         foreach ($methods as $method) {
-            if ('_' == $method[0]) {
+            if ('_' === $method[0]) {
                 continue;
             }
             $this->assertArrayHasKey($method, $services);
@@ -236,7 +240,6 @@ class ServerTest extends TestCase
         $response = $this->server->handle();
         $this->assertInstanceOf(Response::class, $response);
         $this->assertFalse($response->isError());
-
 
         $request->setMethod(__NAMESPACE__ . '\\TestAsset\\FooFunc')
                 ->setId('foo');
@@ -322,11 +325,11 @@ class ServerTest extends TestCase
                 ->setParams([
                     'three' => 3,
                     'two'   => 2,
-                    'one'   => 1
+                    'one'   => 1,
                 ])
                 ->setId('foo');
         $response = $this->server->handle();
-        $result = $response->getResult();
+        $result   = $response->getResult();
 
         $this->assertIsArray($result);
         $this->assertEquals(1, $result[0]);
@@ -347,7 +350,7 @@ class ServerTest extends TestCase
                 ])
                 ->setId('foo');
         $response = $this->server->handle();
-        $result = $response->getResult();
+        $result   = $response->getResult();
 
         $this->assertIsArray($result);
         $this->assertEquals(1, $result[0]);
@@ -364,7 +367,7 @@ class ServerTest extends TestCase
                 ->setParams([
                     'three' => 3,
                     'two'   => 2,
-                 ])
+                ])
                 ->setId('foo');
         $response = $this->server->handle();
 
@@ -448,7 +451,7 @@ class ServerTest extends TestCase
     {
         $this->server->setClass(TestAsset\Foo::class);
         $functions = $this->server->getFunctions();
-        $server = new Server\Server();
+        $server    = new Server\Server();
         $server->loadFunctions($functions);
         $this->assertEquals($functions->toArray(), $server->getFunctions()->toArray());
     }
@@ -492,12 +495,12 @@ class ServerTest extends TestCase
         $request = $this->server->getRequest();
         $request->setMethod('bar')
                 ->setParams([
-                    'two'   => 2,
-                    'one'   => 1,
+                    'two' => 2,
+                    'one' => 1,
                 ])
                 ->setId('foo');
         $response = $this->server->handle();
-        $result = $response->getResult();
+        $result   = $response->getResult();
 
         $this->assertIsArray($result);
         $this->assertEquals(1, $result[0]);
@@ -520,7 +523,7 @@ class ServerTest extends TestCase
                 ])
                 ->setId('foo');
         $response = $this->server->handle();
-        $result = $response->getResult();
+        $result   = $response->getResult();
 
         $this->assertIsArray($result);
         $this->assertEquals(1, $result[0]);

@@ -1,27 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server;
 
 use Laminas\Json\Server;
 use PHPUnit\Framework\TestCase;
 
+use function file_exists;
+use function is_writable;
+use function sys_get_temp_dir;
+use function tempnam;
+use function unlink;
+
 class CacheTest extends TestCase
 {
-    /**
-     * @var Server\Server
-     */
+    /** @var Server\Server */
     protected $server;
 
-    /**
-     * @var false|string
-     */
+    /** @var false|string */
     protected $cacheFile;
 
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -42,8 +44,6 @@ class CacheTest extends TestCase
     /**
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
-     *
-     * @return void
      */
     public function tearDown(): void
     {

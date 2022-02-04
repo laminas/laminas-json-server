@@ -1,23 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server;
 
 use Laminas\Json\Json;
 use Laminas\Json\Server\Request;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function array_shift;
+use function array_values;
+use function var_export;
 
 class RequestTest extends TestCase
 {
-    /**
-     * @var Request
-     */
+    /** @var Request */
     protected $request;
 
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -51,7 +54,7 @@ class RequestTest extends TestCase
     public function testInvalidKeysShouldBeIgnored(): void
     {
         $count = 0;
-        foreach ([['foo', true], ['foo', new \stdClass], ['foo', []]] as $spec) {
+        foreach ([['foo', true], ['foo', new stdClass()], ['foo', []]] as $spec) {
             $this->request->addParam($spec[0], $spec[1]);
             $this->assertNull($this->request->getParam('foo'));
             $params = $this->request->getParams();
@@ -183,9 +186,9 @@ class RequestTest extends TestCase
 
     public function testLoadingFromJSONShouldSetJSONRpcVersionWhenPresent(): void
     {
-        $options = $this->getOptions();
+        $options            = $this->getOptions();
         $options['jsonrpc'] = '2.0';
-        $json    = Json::encode($options);
+        $json               = Json::encode($options);
         $this->request->loadJSON($json);
         $this->assertEquals('2.0', $this->request->getVersion());
     }
@@ -194,7 +197,7 @@ class RequestTest extends TestCase
     {
         $options = $this->getOptions();
         $this->request->setOptions($options);
-        $json    = $this->request->toJSON();
+        $json = $this->request->toJSON();
         $this->validateJSON($json, $options);
     }
 
@@ -202,7 +205,7 @@ class RequestTest extends TestCase
     {
         $options = $this->getOptions();
         $this->request->setOptions($options);
-        $json    = $this->request->__toString();
+        $json = $this->request->__toString();
         $this->validateJSON($json, $options);
     }
 
@@ -231,11 +234,11 @@ class RequestTest extends TestCase
                 'four',
                 true,
             ],
-            'id'     => 'foobar'
+            'id'     => 'foobar',
         ];
     }
 
-    public function validateJSON($json, array $options): void
+    public function validateJSON(string $json, array $options): void
     {
         $test = Json::decode($json, Json::TYPE_ARRAY);
         $this->assertIsArray($test, var_export($json, 1));

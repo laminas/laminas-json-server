@@ -1,23 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server;
 
 use Laminas\Json;
 use Laminas\Json\Server;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function range;
 
 class ErrorTest extends TestCase
 {
-    /**
-     * @var Server\Error
-     */
+    /** @var Server\Error */
     protected $error;
 
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -37,7 +38,7 @@ class ErrorTest extends TestCase
 
     public function testCodeShouldBeLimitedToStandardIntegers(): void
     {
-        foreach ([null, true, 'foo', [], new \stdClass, 2.0] as $code) {
+        foreach ([null, true, 'foo', [], new stdClass(), 2.0] as $code) {
             $this->error->setCode($code);
             $this->assertEquals(Server\Error::ERROR_OTHER, $this->error->getCode());
         }
@@ -63,7 +64,7 @@ class ErrorTest extends TestCase
     /**
      * @dataProvider arbitraryErrorCodes
      */
-    public function testCodeShouldAllowArbitraryErrorCode($code): void
+    public function testCodeShouldAllowArbitraryErrorCode(int $code): void
     {
         $this->error->setCode($code);
         $this->assertEquals($code, $this->error->getCode());
@@ -84,7 +85,7 @@ class ErrorTest extends TestCase
 
     public function testSetMessageToNonScalarShouldSilentlyFail(): void
     {
-        foreach ([[], new \stdClass] as $message) {
+        foreach ([[], new stdClass()] as $message) {
             $this->error->setMessage($message);
             $this->assertNull($this->error->getMessage());
         }
@@ -97,7 +98,7 @@ class ErrorTest extends TestCase
 
     public function testShouldAllowArbitraryData(): void
     {
-        foreach ([true, 'foo', 2, 2.0, [], new \stdClass] as $datum) {
+        foreach ([true, 'foo', 2, 2.0, [], new stdClass()] as $datum) {
             $this->error->setData($datum);
             $this->assertEquals($datum, $this->error->getData());
         }
@@ -131,7 +132,7 @@ class ErrorTest extends TestCase
                     ->setData(['foo' => 'bar']);
     }
 
-    public function validateArray($error): void
+    public function validateArray(array $error): void
     {
         $this->assertIsArray($error);
         $this->assertArrayHasKey('code', $error);

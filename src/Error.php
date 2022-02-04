@@ -1,17 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Laminas\Json\Json;
 
+use function is_bool;
+use function is_float;
+use function is_numeric;
+use function is_scalar;
+use function is_string;
+
 class Error
 {
-    const ERROR_PARSE           = -32700;
-    const ERROR_INVALID_REQUEST = -32600;
-    const ERROR_INVALID_METHOD  = -32601;
-    const ERROR_INVALID_PARAMS  = -32602;
-    const ERROR_INTERNAL        = -32603;
-    const ERROR_OTHER           = -32000;
+    public const ERROR_PARSE           = -32700;
+    public const ERROR_INVALID_REQUEST = -32600;
+    public const ERROR_INVALID_METHOD  = -32601;
+    public const ERROR_INVALID_PARAMS  = -32602;
+    public const ERROR_INTERNAL        = -32603;
+    public const ERROR_OTHER           = -32000;
 
     /**
      * Current code

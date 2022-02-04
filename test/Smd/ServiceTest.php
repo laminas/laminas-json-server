@@ -1,25 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Json\Server\Smd;
 
+use Laminas\Json\Json;
 use Laminas\Json\Server\Exception;
 use Laminas\Json\Server\Smd;
 use Laminas\Json\Server\Smd\Service;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function array_shift;
+use function var_export;
+
 class ServiceTest extends TestCase
 {
-    /**
-     * @var Service
-     */
+    /** @var Service */
     protected $service;
 
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
-     *
-     * @return void
      */
     public function setUp(): void
     {
@@ -171,7 +173,7 @@ class ServiceTest extends TestCase
 
     public function testParamsShouldAcceptArrayOfTypes(): void
     {
-        $type   = ['integer', 'string'];
+        $type = ['integer', 'string'];
         $this->service->addParam($type);
         $params = $this->service->getParams();
         $param  = array_shift($params);
@@ -184,7 +186,7 @@ class ServiceTest extends TestCase
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid param type');
-        $this->service->addParam(new stdClass);
+        $this->service->addParam(new stdClass());
     }
 
     public function testShouldBeAbleToOrderParams(): void
@@ -283,7 +285,7 @@ class ServiceTest extends TestCase
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid param type');
-        $this->service->setReturn(new stdClass);
+        $this->service->setReturn(new stdClass());
     }
 
     public function testToArrayShouldCreateSmdCompatibleHash(): void
@@ -297,7 +299,7 @@ class ServiceTest extends TestCase
     {
         $this->setupSmdValidationObject();
         $json = $this->service->toJSON();
-        $smd  = \Laminas\Json\Json::decode($json, \Laminas\Json\Json::TYPE_ARRAY);
+        $smd  = Json::decode($json, Json::TYPE_ARRAY);
 
         $this->assertArrayHasKey('foo', $smd);
         $this->assertIsArray($smd['foo']);

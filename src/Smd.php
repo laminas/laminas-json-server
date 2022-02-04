@@ -1,16 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Json\Server;
 
 use Laminas\Json\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
 
+use function array_key_exists;
+use function in_array;
+use function is_array;
+use function method_exists;
+use function preg_match;
+use function ucfirst;
+
 class Smd
 {
-    const ENV_JSONRPC_1 = 'JSON-RPC-1.0';
-    const ENV_JSONRPC_2 = 'JSON-RPC-2.0';
-    const SMD_VERSION   = '2.0';
+    public const ENV_JSONRPC_1 = 'JSON-RPC-1.0';
+    public const ENV_JSONRPC_2 = 'JSON-RPC-2.0';
+    public const SMD_VERSION   = '2.0';
 
     /**
      * Content type.
@@ -116,7 +125,7 @@ class Smd
      *
      * @param  string $transport
      * @return self
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setTransport($transport)
     {
@@ -143,7 +152,7 @@ class Smd
      *
      * @param  string $envelopeType
      * @return self
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setEnvelope($envelopeType)
     {
@@ -170,7 +179,7 @@ class Smd
      *
      * @param  string $type
      * @return self
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setContentType($type)
     {
@@ -287,8 +296,8 @@ class Smd
      *
      * @param Smd\Service|array $service
      * @return self
-     * @throws Exception\RuntimeException
-     * @throws Exception\InvalidArgumentException
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
     public function addService($service)
     {
@@ -393,8 +402,14 @@ class Smd
         $transport   = $this->getTransport();
         $envelope    = $this->getEnvelope();
         $contentType = $this->getContentType();
-        $SMDVersion  = static::SMD_VERSION;
-        $service     = compact('transport', 'envelope', 'contentType', 'SMDVersion', 'description');
+        $smdVersion  = static::SMD_VERSION;
+        $service     = [
+            'transport'   => $transport,
+            'envelope'    => $envelope,
+            'contentType' => $contentType,
+            'SMDVersion'  => $smdVersion,
+            'description' => $description,
+        ];
 
         if (null !== ($target = $this->getTarget())) {
             $service['target'] = $target;
@@ -425,9 +440,9 @@ class Smd
      */
     public function toDojoArray()
     {
-        $SMDVersion  = '.1';
+        $smdVersion  = '.1';
         $serviceType = 'JSON-RPC';
-        $service     = compact('SMDVersion', 'serviceType');
+        $service     = ['SMDVersion' => $smdVersion, 'serviceType' => $serviceType];
         $target      = $this->getTarget();
         $services    = $this->getServices();
 
