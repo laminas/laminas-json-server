@@ -54,12 +54,12 @@ class CacheTest extends TestCase
 
     public function testRetrievingSmdCacheShouldReturnFalseIfCacheDoesNotExist(): void
     {
-        $this->assertFalse(Server\Cache::getSmd($this->cacheFile));
+        self::assertFalse(Server\Cache::getSmd($this->cacheFile));
     }
 
     public function testSavingSmdCacheShouldReturnTrueOnSuccess(): void
     {
-        $this->assertTrue(Server\Cache::saveSmd($this->cacheFile, $this->server));
+        self::assertTrue(Server\Cache::saveSmd($this->cacheFile, $this->server));
     }
 
     public function testSavedCacheShouldMatchGeneratedCache(): void
@@ -67,17 +67,17 @@ class CacheTest extends TestCase
         $this->testSavingSmdCacheShouldReturnTrueOnSuccess();
         $json = $this->server->getServiceMap()->toJSON();
         $test = Server\Cache::getSmd($this->cacheFile);
-        $this->assertSame($json, $test);
+        self::assertSame($json, $test);
     }
 
     public function testDeletingSmdShouldReturnFalseOnFailure(): void
     {
-        $this->assertFalse(Server\Cache::deleteSmd($this->cacheFile));
+        self::assertFalse(Server\Cache::deleteSmd($this->cacheFile));
     }
 
     public function testDeletingSmdShouldReturnTrueOnSuccess(): void
     {
         $this->testSavingSmdCacheShouldReturnTrueOnSuccess();
-        $this->assertTrue(Server\Cache::deleteSmd($this->cacheFile));
+        self::assertTrue(Server\Cache::deleteSmd($this->cacheFile));
     }
 }

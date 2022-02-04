@@ -25,66 +25,66 @@ class ResponseTest extends TestCase
 
     public function testResultShouldBeNullByDefault(): void
     {
-        $this->assertNull($this->response->getResult());
+        self::assertNull($this->response->getResult());
     }
 
     public function testResultAccessorsShouldWorkWithNormalInput(): void
     {
         foreach ([true, 'foo', 2, 2.0, [], ['foo' => 'bar']] as $result) {
             $this->response->setResult($result);
-            $this->assertEquals($result, $this->response->getResult());
+            self::assertEquals($result, $this->response->getResult());
         }
     }
 
     public function testResultShouldNotBeErrorByDefault(): void
     {
-        $this->assertFalse($this->response->isError());
+        self::assertFalse($this->response->isError());
     }
 
     public function testSettingErrorShouldMarkRequestAsError(): void
     {
         $error = new Error();
         $this->response->setError($error);
-        $this->assertTrue($this->response->isError());
+        self::assertTrue($this->response->isError());
     }
 
     public function testShouldBeAbleToRetrieveErrorObject(): void
     {
         $error = new Error();
         $this->response->setError($error);
-        $this->assertSame($error, $this->response->getError());
+        self::assertSame($error, $this->response->getError());
     }
 
     public function testErrorAccesorsShouldWorkWithNullInput(): void
     {
         $this->response->setError(null);
-        $this->assertNull($this->response->getError());
-        $this->assertFalse($this->response->isError());
+        self::assertNull($this->response->getError());
+        self::assertFalse($this->response->isError());
     }
 
     public function testIdShouldBeNullByDefault(): void
     {
-        $this->assertNull($this->response->getId());
+        self::assertNull($this->response->getId());
     }
 
     public function testIdAccessorsShouldWorkWithNormalInput(): void
     {
         $this->response->setId('foo');
-        $this->assertEquals('foo', $this->response->getId());
+        self::assertEquals('foo', $this->response->getId());
     }
 
     public function testVersionShouldBeNullByDefault(): void
     {
-        $this->assertNull($this->response->getVersion());
+        self::assertNull($this->response->getVersion());
     }
 
     public function testVersionShouldBeLimitedToV2(): void
     {
         $this->response->setVersion('2.0');
-        $this->assertEquals('2.0', $this->response->getVersion());
+        self::assertEquals('2.0', $this->response->getVersion());
         foreach (['a', 1, '1.0', true] as $version) {
             $this->response->setVersion($version);
-            $this->assertNull($this->response->getVersion());
+            self::assertNull($this->response->getVersion());
         }
     }
 
@@ -94,8 +94,8 @@ class ResponseTest extends TestCase
         $json    = Json::encode($options);
         $this->response->loadJSON($json);
 
-        $this->assertEquals('foobar', $this->response->getId());
-        $this->assertEquals($options['result'], $this->response->getResult());
+        self::assertEquals('foobar', $this->response->getId());
+        self::assertEquals($options['result'], $this->response->getResult());
     }
 
     public function testLoadingFromJSONShouldSetJSONRpcVersionWhenPresent(): void
@@ -104,7 +104,7 @@ class ResponseTest extends TestCase
         $options['jsonrpc'] = '2.0';
         $json               = Json::encode($options);
         $this->response->loadJSON($json);
-        $this->assertEquals('2.0', $this->response->getVersion());
+        self::assertEquals('2.0', $this->response->getVersion());
     }
 
     public function testResponseShouldBeAbleToCastToJSON(): void
@@ -115,15 +115,15 @@ class ResponseTest extends TestCase
         $json = $this->response->toJSON();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertIsArray($test);
-        $this->assertArrayHasKey('result', $test);
-        $this->assertArrayNotHasKey('error', $test, "'error' may not coexist with 'result'");
-        $this->assertArrayHasKey('id', $test);
-        $this->assertArrayHasKey('jsonrpc', $test);
+        self::assertIsArray($test);
+        self::assertArrayHasKey('result', $test);
+        self::assertArrayNotHasKey('error', $test, "'error' may not coexist with 'result'");
+        self::assertArrayHasKey('id', $test);
+        self::assertArrayHasKey('jsonrpc', $test);
 
-        $this->assertTrue($test['result']);
-        $this->assertEquals($this->response->getId(), $test['id']);
-        $this->assertEquals($this->response->getVersion(), $test['jsonrpc']);
+        self::assertTrue($test['result']);
+        self::assertEquals($this->response->getId(), $test['id']);
+        self::assertEquals($this->response->getVersion(), $test['jsonrpc']);
     }
 
     public function testResponseShouldCastErrorToJSONIfIsError(): void
@@ -137,15 +137,15 @@ class ResponseTest extends TestCase
         $json = $this->response->toJSON();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertIsArray($test);
-        $this->assertArrayNotHasKey('result', $test, "'result' may not coexist with 'error'");
-        $this->assertArrayHasKey('error', $test);
-        $this->assertArrayHasKey('id', $test);
-        $this->assertArrayNotHasKey('jsonrpc', $test);
+        self::assertIsArray($test);
+        self::assertArrayNotHasKey('result', $test, "'result' may not coexist with 'error'");
+        self::assertArrayHasKey('error', $test);
+        self::assertArrayHasKey('id', $test);
+        self::assertArrayNotHasKey('jsonrpc', $test);
 
-        $this->assertEquals($this->response->getId(), $test['id']);
-        $this->assertEquals($error->getCode(), $test['error']['code']);
-        $this->assertEquals($error->getMessage(), $test['error']['message']);
+        self::assertEquals($this->response->getId(), $test['id']);
+        self::assertEquals($error->getCode(), $test['error']['code']);
+        self::assertEquals($error->getMessage(), $test['error']['message']);
     }
 
     public function testCastToStringShouldCastToJSON(): void
@@ -155,14 +155,14 @@ class ResponseTest extends TestCase
         $json = $this->response->__toString();
         $test = Json::decode($json, Json::TYPE_ARRAY);
 
-        $this->assertIsArray($test);
-        $this->assertArrayHasKey('result', $test);
-        $this->assertArrayNotHasKey('error', $test, "'error' may not coexist with 'result'");
-        $this->assertArrayHasKey('id', $test);
-        $this->assertArrayNotHasKey('jsonrpc', $test);
+        self::assertIsArray($test);
+        self::assertArrayHasKey('result', $test);
+        self::assertArrayNotHasKey('error', $test, "'error' may not coexist with 'result'");
+        self::assertArrayHasKey('id', $test);
+        self::assertArrayNotHasKey('jsonrpc', $test);
 
-        $this->assertTrue($test['result']);
-        $this->assertEquals($this->response->getId(), $test['id']);
+        self::assertTrue($test['result']);
+        self::assertEquals($this->response->getId(), $test['id']);
     }
 
     /**
@@ -204,7 +204,7 @@ class ResponseTest extends TestCase
         $this->response->setOptions([
             0 => '2.0',
         ]);
-        $this->assertNull($this->response->getVersion());
+        self::assertNull($this->response->getVersion());
     }
 
     /**
@@ -220,9 +220,9 @@ class ResponseTest extends TestCase
                 'message' => 'Lorem Ipsum',
             ],
         ]);
-        $this->assertInstanceOf(Error::class, $this->response->getError());
-        $this->assertEquals(-32000, $this->response->getError()->getCode());
-        $this->assertEquals('Lorem Ipsum', $this->response->getError()->getMessage());
-        $this->assertEquals(null, $this->response->getError()->getData());
+        self::assertInstanceOf(Error::class, $this->response->getError());
+        self::assertEquals(-32000, $this->response->getError()->getCode());
+        self::assertEquals('Lorem Ipsum', $this->response->getError()->getMessage());
+        self::assertEquals(null, $this->response->getError()->getData());
     }
 }

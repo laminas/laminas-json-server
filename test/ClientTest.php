@@ -49,30 +49,30 @@ class ClientTest extends TestCase
     {
         $jsonClient = new Client('http://foo');
         $httpClient = $jsonClient->getHttpClient();
-        $this->assertInstanceOf(HttpClient::class, $httpClient);
-        $this->assertSame($httpClient, $jsonClient->getHttpClient());
+        self::assertInstanceOf(HttpClient::class, $httpClient);
+        self::assertSame($httpClient, $jsonClient->getHttpClient());
     }
 
     public function testSettingAndGettingHttpClient(): void
     {
         $jsonClient = new Client('http://foo');
-        $this->assertNotSame($this->httpClient, $jsonClient->getHttpClient());
+        self::assertNotSame($this->httpClient, $jsonClient->getHttpClient());
 
         $jsonClient->setHttpClient($this->httpClient);
-        $this->assertSame($this->httpClient, $jsonClient->getHttpClient());
+        self::assertSame($this->httpClient, $jsonClient->getHttpClient());
     }
 
     public function testSettingHttpClientViaConstructor(): void
     {
         $jsonClient = new Client('http://foo', $this->httpClient);
         $httpClient = $jsonClient->getHttpClient();
-        $this->assertSame($this->httpClient, $httpClient);
+        self::assertSame($this->httpClient, $httpClient);
     }
 
     public function testLastRequestAndResponseAreInitiallyNull(): void
     {
-        $this->assertNull($this->jsonClient->getLastRequest());
-        $this->assertNull($this->jsonClient->getLastResponse());
+        self::assertNull($this->jsonClient->getLastRequest());
+        self::assertNull($this->jsonClient->getLastResponse());
     }
 
     public function testLastRequestAndResponseAreSetAfterRpcMethodCall(): void
@@ -80,8 +80,8 @@ class ClientTest extends TestCase
         $this->setServerResponseTo(true);
         $this->jsonClient->call('foo');
 
-        $this->assertInstanceOf(Request::class, $this->jsonClient->getLastRequest());
-        $this->assertInstanceOf(Response::class, $this->jsonClient->getLastResponse());
+        self::assertInstanceOf(Request::class, $this->jsonClient->getLastRequest());
+        self::assertInstanceOf(Response::class, $this->jsonClient->getLastResponse());
     }
 
     public function testSuccessfulRpcMethodCallWithNoParameters(): void
@@ -90,15 +90,15 @@ class ClientTest extends TestCase
         $expectedReturn = 7;
 
         $this->setServerResponseTo($expectedReturn);
-        $this->assertSame($expectedReturn, $this->jsonClient->call($expectedMethod));
+        self::assertSame($expectedReturn, $this->jsonClient->call($expectedMethod));
 
         $request  = $this->jsonClient->getLastRequest();
         $response = $this->jsonClient->getLastResponse();
 
-        $this->assertSame($expectedMethod, $request->getMethod());
-        $this->assertSame([], $request->getParams());
-        $this->assertSame($expectedReturn, $response->getResult());
-        $this->assertFalse($response->isError());
+        self::assertSame($expectedMethod, $request->getMethod());
+        self::assertSame([], $request->getParams());
+        self::assertSame($expectedReturn, $response->getResult());
+        self::assertFalse($response->isError());
     }
 
     public function testSuccessfulRpcMethodCallWithParameters(): void
@@ -110,21 +110,21 @@ class ClientTest extends TestCase
         $this->setServerResponseTo($expectedReturn);
 
         $actualReturn = $this->jsonClient->call($expectedMethod, $expectedParams);
-        $this->assertSame($expectedReturn, $actualReturn);
+        self::assertSame($expectedReturn, $actualReturn);
 
         $request  = $this->jsonClient->getLastRequest();
         $response = $this->jsonClient->getLastResponse();
 
-        $this->assertSame($expectedMethod, $request->getMethod());
+        self::assertSame($expectedMethod, $request->getMethod());
         $params = $request->getParams();
-        $this->assertSame(count($expectedParams), count($params));
-        $this->assertSame($expectedParams[0], $params[0]);
-        $this->assertSame($expectedParams[1], $params[1]);
-        $this->assertSame($expectedParams[2], $params[2]);
-        $this->assertSame($expectedParams['foo'], $params['foo']);
+        self::assertSame(count($expectedParams), count($params));
+        self::assertSame($expectedParams[0], $params[0]);
+        self::assertSame($expectedParams[1], $params[1]);
+        self::assertSame($expectedParams[2], $params[2]);
+        self::assertSame($expectedParams['foo'], $params['foo']);
 
-        $this->assertSame($expectedReturn, $response->getResult());
-        $this->assertFalse($response->isError());
+        self::assertSame($expectedReturn, $response->getResult());
+        self::assertFalse($response->isError());
     }
 
     public function testRpcMethodCallThrowsOnHttpFailure(): void
@@ -170,7 +170,7 @@ class ClientTest extends TestCase
         $this->jsonClient->call('foo');
         $uri = $this->jsonClient->getHttpClient()->getUri()->toString();
 
-        $this->assertEquals($changedUri, $uri);
+        self::assertEquals($changedUri, $uri);
     }
 
     public function testSettingNoHttpClientUriForcesClientToSetUri(): void
@@ -183,22 +183,22 @@ class ClientTest extends TestCase
         $this->jsonClient->setHttpClient($this->httpClient);
 
         $this->setServerResponseTo(null);
-        $this->assertNull($this->jsonClient->getHttpClient()->getRequest()->getUriString());
+        self::assertNull($this->jsonClient->getHttpClient()->getRequest()->getUriString());
         $this->jsonClient->call('foo');
         $uri = $this->jsonClient->getHttpClient()->getUri();
 
-        $this->assertEquals($baseUri, $uri->toString());
+        self::assertEquals($baseUri, $uri->toString());
     }
 
     public function testCustomHttpClientUserAgentIsNotOverridden(): void
     {
-        $this->assertFalse(
+        self::assertFalse(
             $this->httpClient->getHeader('User-Agent'),
             'UA is null if no request was made'
         );
         $this->setServerResponseTo(null);
-        $this->assertNull($this->jsonClient->call('method'));
-        $this->assertSame(
+        self::assertNull($this->jsonClient->call('method'));
+        self::assertSame(
             'Laminas_Json_Server_Client',
             $this->httpClient->getHeader('User-Agent'),
             'If no custom UA is set, set Laminas_Json_Server_Client'
@@ -208,8 +208,8 @@ class ClientTest extends TestCase
         $this->httpClient->setHeaders(['User-Agent' => $expectedUserAgent]);
 
         $this->setServerResponseTo(null);
-        $this->assertNull($this->jsonClient->call('method'));
-        $this->assertSame($expectedUserAgent, $this->httpClient->getHeader('User-Agent'));
+        self::assertNull($this->jsonClient->call('method'));
+        self::assertSame($expectedUserAgent, $this->httpClient->getHeader('User-Agent'));
     }
 
     /**
@@ -244,8 +244,8 @@ class ClientTest extends TestCase
         $jsonClient = new Client('http://foo');
         $jsonClient->getHttpClient()->setAdapter($testAdapter);
         $jsonClient->doRequest($request);
-        $this->assertSame('application/json-rpc', $jsonClient->getHttpClient()->getHeader('Content-Type'));
-        $this->assertSame('application/json-rpc', $jsonClient->getHttpClient()->getHeader('Accept'));
+        self::assertSame('application/json-rpc', $jsonClient->getHttpClient()->getHeader('Content-Type'));
+        self::assertSame('application/json-rpc', $jsonClient->getHttpClient()->getHeader('Accept'));
     }
 
     public function testClientShouldNotOverwriteAcceptAndContentTypeHeadersIfAlreadyPresentInRequest(): void
@@ -265,8 +265,8 @@ class ClientTest extends TestCase
         $jsonClient = new Client('http://foo', $httpClient);
         $jsonClient->getHttpClient()->setAdapter($testAdapter);
         $jsonClient->doRequest($request);
-        $this->assertSame('application/jsonrequest', $jsonClient->getHttpClient()->getHeader('Content-Type'));
-        $this->assertSame('application/jsonrequest', $jsonClient->getHttpClient()->getHeader('Accept'));
+        self::assertSame('application/jsonrequest', $jsonClient->getHttpClient()->getHeader('Content-Type'));
+        self::assertSame('application/jsonrequest', $jsonClient->getHttpClient()->getHeader('Accept'));
     }
 
     /**
