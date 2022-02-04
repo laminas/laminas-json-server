@@ -199,11 +199,11 @@ class ServiceTest extends TestCase
         $this->assertCount(3, $params);
 
         $param = array_shift($params);
-        $this->assertEquals('string', $param['type'], var_export($params, 1));
+        $this->assertEquals('string', $param['type'], var_export($params, true));
         $param = array_shift($params);
-        $this->assertEquals('boolean', $param['type'], var_export($params, 1));
+        $this->assertEquals('boolean', $param['type'], var_export($params, true));
         $param = array_shift($params);
-        $this->assertEquals('integer', $param['type'], var_export($params, 1));
+        $this->assertEquals('integer', $param['type'], var_export($params, true));
     }
 
     public function testShouldBeAbleToAddArbitraryParamOptions(): void
