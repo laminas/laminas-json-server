@@ -182,8 +182,10 @@ class Service
 
     /**
      * Retrieve name.
+     *
+     * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -235,8 +237,10 @@ class Service
 
     /**
      * Get service target.
+     *
+     * @return null|string
      */
-    public function getTarget(): ?string
+    public function getTarget()
     {
         return $this->target;
     }
