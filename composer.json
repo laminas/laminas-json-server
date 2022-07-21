@@ -36,7 +36,7 @@
         "ext-json": "*",
         "laminas/laminas-coding-standard": "^2.3",
         "phpunit/phpunit": "^9.5.11",
-        "psalm/plugin-phpunit": "^0.16.1",
+        "psalm/plugin-phpunit": "^0.17.0",
         "vimeo/psalm": "^4.18.0"
     },
     "conflict": {
