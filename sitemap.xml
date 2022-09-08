@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.laminas.dev/laminas-json-server/</loc>
-         <lastmod>2022-02-04</lastmod>
+         <lastmod>2022-09-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-json-server/error/</loc>
-         <lastmod>2022-02-04</lastmod>
+         <lastmod>2022-09-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-json-server/intro/</loc>
-         <lastmod>2022-02-04</lastmod>
+         <lastmod>2022-09-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-json-server/request/</loc>
-         <lastmod>2022-02-04</lastmod>
+         <lastmod>2022-09-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-json-server/response/</loc>
-         <lastmod>2022-02-04</lastmod>
+         <lastmod>2022-09-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-json-server/server/</loc>
-         <lastmod>2022-02-04</lastmod>
+         <lastmod>2022-09-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-json-server/smd/</loc>
-         <lastmod>2022-02-04</lastmod>
+         <lastmod>2022-09-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-json-server/usage/</loc>
-         <lastmod>2022-02-04</lastmod>
+         <lastmod>2022-09-08</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

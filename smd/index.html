@@ -5,7 +5,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Laminas\Json\Server">  
+    <meta name="description" content="Laminas\Json\Server"> 
+
+    
+    
+    <meta name="docsearch:version" content="latest">
+    <meta name="docsearch:language" content="en">
+    <meta name="docsearch:component" content="laminas-json-server">
+
     <link rel="canonical" href="https://docs.laminas.dev/laminas-json-server/smd/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
@@ -242,7 +249,7 @@
                     <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
                         <i class="fa fa-search"></i> Search
                     </a>
-                    <a href="https://github.com/laminas/laminas-json-server/" class="header__link header__link--github" title="Go to repository of laminas-json-server">
+                    <a href="https://github.com/laminas/laminas-json-server" class="header__link header__link--github" title="Go to repository of laminas-json-server">
                         <i class="fa fa-github"></i> GitHub
                     </a>
                 
@@ -388,13 +395,11 @@ class and function introspection cannot offer.</p>
 <li><code>getEnvelope()</code>: Retrieve the service envelope type.
   <code>addParam($type, array $options = array(), $order = null)</code>: Add a parameter
   to the service. By default, only the parameter type is necessary. However,
-  you may also specify the order, as well as options such as:<ul>
+  you may also specify the order, as well as options such as:</li>
 <li><strong>name</strong>: the parameter name</li>
 <li><strong>optional</strong>: whether or not the parameter is optional</li>
 <li><strong>default</strong>: a default value for the parameter</li>
 <li><strong>description</strong>: text describing the parameter</li>
-</ul>
-</li>
 <li><code>addParams(array $params)</code>: Add several parameters at once; each param should
   be an assoc array containing minimally the key 'type' describing the
   parameter type, and optionally the key 'order'; any other keys will be passed
@@ -418,7 +423,9 @@ class and function introspection cannot offer.</p>
         <li class="page-nav__item">
             
                 <a rel="prev" class="page-nav__link page-nav__link--prev" href="../error/">
-                    <i class="fa fa-chevron-left"></i> Previous
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    Laminas\Json\Server\Error
                 </a>
             
         </li>
@@ -603,7 +610,7 @@ class and function introspection cannot offer.</p>
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/laminas/laminas-json-server/blob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/laminas/laminas-json-server/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
