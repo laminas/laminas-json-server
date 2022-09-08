@@ -41,7 +41,7 @@ class Cache extends ServerCache
             return false;
         }
 
-        set_error_handler(function ($errno, $errstr) {
+        set_error_handler(static function ($errno, $errstr): void {
             // swallow errors; method returns false on failure
         }, E_WARNING);
 
@@ -75,7 +75,7 @@ class Cache extends ServerCache
             return false;
         }
 
-        set_error_handler(function ($errno, $errstr) {
+        set_error_handler(static function ($errno, $errstr): void {
             // swallow errors; method returns false on failure
         }, E_WARNING);
 

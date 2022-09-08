@@ -12,8 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class ResponseTest extends TestCase
 {
-    /** @var Response */
-    private $response;
+    private Response $response;
     /**
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
