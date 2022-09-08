@@ -675,7 +675,7 @@ class Server extends AbstractServer
      */
     private function validateAndPrepareOrderedParams(array $requestedParams, array $serviceParams)
     {
-        $requiredParamsCount = array_reduce($serviceParams, function ($count, $param) {
+        $requiredParamsCount = array_reduce($serviceParams, static function ($count, $param) {
             $count += $param['optional'] ? 0 : 1;
             return $count;
         }, 0);

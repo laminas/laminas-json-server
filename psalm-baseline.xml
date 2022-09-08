@@ -164,7 +164,7 @@
       <code>$e-&gt;getCode()</code>
     </InvalidScalarArgument>
     <MissingClosureReturnType occurrences="1">
-      <code>function ($count, $param) {</code>
+      <code>static function ($count, $param) {</code>
     </MissingClosureReturnType>
     <MixedArgument occurrences="7">
       <code>$argv</code>
