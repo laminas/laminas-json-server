@@ -177,7 +177,7 @@ class Server extends AbstractServer
     /**
      * Handle request.
      *
-     * @param  Request $request
+     * @param  Request|false $request
      * @return null|Response
      * @throws Exception\InvalidArgumentException
      */
@@ -563,7 +563,7 @@ class Server extends AbstractServer
     /**
      * Internal method for handling request.
      *
-     * @return Error|void
+     * @return Error|null
      */
     protected function handleRequest()
     {
@@ -606,6 +606,8 @@ class Server extends AbstractServer
         }
 
         $this->getResponse()->setResult($result);
+
+        return null;
     }
 
     /**
