@@ -9,6 +9,7 @@ use IteratorAggregate;
 
 /**
  * @see Laminas-12347
+ *
  * @template-implements IteratorAggregate<non-empty-string, non-empty-string|positive-int>
  */
 class TestIteratorAggregate implements IteratorAggregate
