@@ -26,7 +26,7 @@ class Error
      *
      * @var int
      */
-    protected $code = self::ERROR_OTHER;
+    protected int $code = self::ERROR_OTHER;
 
     /**
      * Error data
@@ -59,10 +59,10 @@ class Error
      *
      * If the error code is 0, it will be set to -32000 (ERROR_OTHER).
      *
-     * @param  int $code
+     * @param mixed $code
      * @return self
      */
-    public function setCode($code)
+    public function setCode($code): Error
     {
         if (! is_scalar($code) || is_bool($code) || is_float($code)) {
             return $this;
@@ -86,9 +86,9 @@ class Error
     /**
      * Get error code
      *
-     * @return int|null
+     * @return int
      */
-    public function getCode()
+    public function getCode(): int
     {
         return $this->code;
     }
