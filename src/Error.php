@@ -43,9 +43,9 @@ class Error
     protected $message;
 
     /**
-     * @param  string $message
-     * @param  int $code
-     * @param  mixed $data
+     * @param string $message
+     * @param mixed $code
+     * @param mixed $data
      */
     public function __construct($message = null, $code = self::ERROR_OTHER, $data = null)
     {
@@ -59,7 +59,7 @@ class Error
      *
      * If the error code is 0, it will be set to -32000 (ERROR_OTHER).
      *
-     * @param  int $code
+     * @param mixed $code
      * @return self
      */
     public function setCode($code)
@@ -86,7 +86,7 @@ class Error
     /**
      * Get error code
      *
-     * @return int|null
+     * @return int
      */
     public function getCode()
     {
@@ -96,7 +96,7 @@ class Error
     /**
      * Set error message
      *
-     * @param  string $message
+     * @param mixed $message
      * @return self
      */
     public function setMessage($message)
@@ -106,6 +106,7 @@ class Error
         }
 
         $this->message = (string) $message;
+
         return $this;
     }
 
@@ -128,6 +129,7 @@ class Error
     public function setData($data)
     {
         $this->data = $data;
+
         return $this;
     }
 
