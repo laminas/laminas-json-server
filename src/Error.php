@@ -26,7 +26,7 @@ class Error
      *
      * @var int
      */
-    protected int $code = self::ERROR_OTHER;
+    protected $code = self::ERROR_OTHER;
 
     /**
      * Error data
@@ -88,7 +88,7 @@ class Error
      *
      * @return int
      */
-    public function getCode(): int
+    public function getCode()
     {
         return $this->code;
     }
@@ -162,7 +162,7 @@ class Error
      *
      * @return string
      */
-    public function toJson(): string
+    public function toJson()
     {
         return Json::encode($this->toArray());
     }
