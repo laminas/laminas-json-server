@@ -43,9 +43,9 @@ class Error
     protected $message;
 
     /**
-     * @param  string $message
-     * @param  int $code
-     * @param  mixed $data
+     * @param string $message
+     * @param mixed $code
+     * @param mixed $data
      */
     public function __construct($message = null, $code = self::ERROR_OTHER, $data = null)
     {
