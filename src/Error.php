@@ -62,7 +62,7 @@ class Error
      * @param mixed $code
      * @return self
      */
-    public function setCode($code): Error
+    public function setCode($code)
     {
         if (! is_scalar($code) || is_bool($code) || is_float($code)) {
             return $this;
@@ -99,7 +99,7 @@ class Error
      * @param mixed $message
      * @return self
      */
-    public function setMessage($message): Error
+    public function setMessage($message)
     {
         if (! is_scalar($message)) {
             return $this;
@@ -126,7 +126,7 @@ class Error
      * @param  mixed $data
      * @return self
      */
-    public function setData($data): Error
+    public function setData($data)
     {
         $this->data = $data;
 
