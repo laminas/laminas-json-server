@@ -148,7 +148,7 @@ class Error
      *
      * @return array
      */
-    public function toArray(): array
+    public function toArray()
     {
         return [
             'code'    => $this->getCode(),
