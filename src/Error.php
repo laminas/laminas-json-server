@@ -96,16 +96,17 @@ class Error
     /**
      * Set error message
      *
-     * @param  string $message
+     * @param mixed $message
      * @return self
      */
-    public function setMessage($message)
+    public function setMessage($message): Error
     {
         if (! is_scalar($message)) {
             return $this;
         }
 
         $this->message = (string) $message;
+
         return $this;
     }
 
@@ -125,9 +126,10 @@ class Error
      * @param  mixed $data
      * @return self
      */
-    public function setData($data)
+    public function setData($data): Error
     {
         $this->data = $data;
+
         return $this;
     }
 
@@ -146,7 +148,7 @@ class Error
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'code'    => $this->getCode(),
@@ -160,7 +162,7 @@ class Error
      *
      * @return string
      */
-    public function toJson()
+    public function toJson(): string
     {
         return Json::encode($this->toArray());
     }
