@@ -23,11 +23,11 @@
         },
         "sort-packages": true,
         "platform": {
-            "php": "7.4.99"
+            "php": "8.1.99"
         }
     },
     "require": {
-        "php": "^7.4 || ~8.0.0 || ~8.1.0 || ~8.2.0",
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
         "laminas/laminas-http": "^2.15.1",
         "laminas/laminas-json": "^3.3.0",
         "laminas/laminas-server": "^2.11.0"
