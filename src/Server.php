@@ -21,13 +21,11 @@ use function array_slice;
 use function count;
 use function func_get_args;
 use function func_num_args;
-use function get_class;
 use function get_class_methods;
-use function gettype;
+use function get_debug_type;
 use function in_array;
 use function is_array;
 use function is_callable;
-use function is_object;
 use function is_string;
 use function key;
 use function preg_match;
@@ -97,7 +95,7 @@ class Server extends AbstractServer
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects the first argument to be callable; received %s',
                 __METHOD__,
-                is_object($function) ? get_class($function) : gettype($function)
+                get_debug_type($function)
             ));
         }
 
