@@ -609,14 +609,6 @@
       <code>JsonSerializableBuiltinImpl</code>
     </UnusedClass>
   </file>
-  <file src="test/TestAsset/JsonSerializableLaminasImpl.php">
-    <DeprecatedInterface>
-      <code>JsonSerializableLaminasImpl</code>
-    </DeprecatedInterface>
-    <UnusedClass>
-      <code>JsonSerializableLaminasImpl</code>
-    </UnusedClass>
-  </file>
   <file src="test/TestAsset/TestIteratorAggregate.php">
     <UnusedClass>
       <code>TestIteratorAggregate</code>
