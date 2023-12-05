@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Laminas\Json\Server;
 
 use Laminas\Http\Client as HttpClient;
-use Laminas\Server\Client as ServerClient;
+use Laminas\Server\ClientInterface;
 
-class Client implements ServerClient
+class Client implements ClientInterface
 {
     /**
      * Full address of the JSON-RPC service.
