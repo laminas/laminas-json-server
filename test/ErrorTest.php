@@ -52,7 +52,7 @@ class ErrorTest extends TestCase
         }
     }
 
-    public function arbitraryErrorCodes(): array
+    public static function arbitraryErrorCodes(): array
     {
         return [
             '1000'  => [1000],
