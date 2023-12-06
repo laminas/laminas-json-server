@@ -483,14 +483,14 @@
   </file>
   <file src="test/Smd/ServiceTest.php">
     <InvalidArgument>
+      <code>$params</code>
+      <code>$params</code>
+      <code>$params</code>
       <code>123</code>
       <code>new stdClass()</code>
       <code>new stdClass()</code>
     </InvalidArgument>
     <MixedArgument>
-      <code>$params</code>
-      <code>$params</code>
-      <code>$params</code>
       <code>$params</code>
       <code>$smd</code>
     </MixedArgument>
@@ -511,7 +511,6 @@
       <code><![CDATA[$param['type']]]></code>
       <code><![CDATA[$param['type']]]></code>
       <code><![CDATA[$param['type']]]></code>
-      <code><![CDATA[$smd['foo']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$param</code>
@@ -536,32 +535,20 @@
   </file>
   <file src="test/SmdTest.php">
     <InvalidArgument>
+      <code>$methods</code>
+      <code>$methods</code>
       <code>$service</code>
+      <code>$services</code>
+      <code>$services</code>
     </InvalidArgument>
     <MixedArgument>
       <code>$bar</code>
-      <code>$bar</code>
-      <code>$bar</code>
-      <code>$foo</code>
-      <code>$foo</code>
       <code>$foo</code>
       <code>$methods</code>
-      <code>$methods</code>
-      <code>$methods</code>
-      <code>$services</code>
-      <code>$services</code>
       <code>$services</code>
       <code>$smd</code>
       <code>$smd</code>
     </MixedArgument>
-    <MixedArrayAccess>
-      <code><![CDATA[$bar['name']]]></code>
-      <code><![CDATA[$bar['parameters']]]></code>
-      <code><![CDATA[$bar['serviceURL']]]></code>
-      <code><![CDATA[$foo['name']]]></code>
-      <code><![CDATA[$foo['parameters']]]></code>
-      <code><![CDATA[$foo['serviceURL']]]></code>
-    </MixedArrayAccess>
     <MixedAssignment>
       <code>$bar</code>
       <code>$foo</code>

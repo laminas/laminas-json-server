@@ -178,7 +178,7 @@ class ResponseTest extends TestCase
     /**
      * @return string[][]
      */
-    public function provideScalarJSONResponses(): array
+    public static function provideScalarJSONResponses(): array
     {
         return [[''], ['true'], ['null'], ['3'], ['"invalid"']];
     }
