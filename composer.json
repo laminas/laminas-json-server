@@ -34,7 +34,7 @@
     },
     "require-dev": {
         "ext-json": "*",
-        "laminas/laminas-coding-standard": "^2.4.0",
+        "laminas/laminas-coding-standard": "^3.0.0",
         "phpunit/phpunit": "^10.5",
         "psalm/plugin-phpunit": "^0.18.0",
         "vimeo/psalm": "^5.17"
