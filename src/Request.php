@@ -73,7 +73,6 @@ class Request
     /**
      * Set request state.
      *
-     * @param  array $options
      * @return self
      */
     public function setOptions(array $options)
@@ -116,7 +115,6 @@ class Request
     /**
      * Add many params.
      *
-     * @param  array $params
      * @return self
      */
     public function addParams(array $params)
@@ -130,7 +128,6 @@ class Request
     /**
      * Overwrite params.
      *
-     * @param  array $params
      * @return Request
      */
     public function setParams(array $params)

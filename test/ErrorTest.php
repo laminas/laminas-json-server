@@ -6,6 +6,7 @@ namespace LaminasTest\Json\Server;
 
 use Laminas\Json;
 use Laminas\Json\Server;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -61,9 +62,7 @@ class ErrorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider arbitraryErrorCodes
-     */
+    #[DataProvider('arbitraryErrorCodes')]
     public function testCodeShouldAllowArbitraryErrorCode(int $code): void
     {
         $this->error->setCode($code);

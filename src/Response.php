@@ -55,7 +55,6 @@ class Response
     /**
      * Set response state.
      *
-     * @param  array $options
      * @return self
      */
     public function setOptions(array $options)

@@ -6,6 +6,7 @@ namespace LaminasTest\Json\Server;
 
 use Laminas\Json\Json;
 use Laminas\Json\Server\Request;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -209,9 +210,7 @@ class RequestTest extends TestCase
         $this->validateJSON($json, $options);
     }
 
-    /**
-     * @group Laminas-6187
-     */
+    #[Group('Laminas-6187')]
     public function testMethodNamesShouldAllowDotNamespacing(): void
     {
         $this->request->setMethod('foo.bar');

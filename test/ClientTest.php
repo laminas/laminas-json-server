@@ -13,6 +13,7 @@ use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Exception;
 use Laminas\Json\Server\Request;
 use Laminas\Json\Server\Response;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function count;
@@ -212,9 +213,7 @@ class ClientTest extends TestCase
         self::assertSame($expectedUserAgent, $this->httpClient->getHeader('User-Agent'));
     }
 
-    /**
-     * @group 5956
-     */
+    #[Group('5956')]
     public function testScalarServerResponseThrowsException(): void
     {
         $response = $this->makeHttpResponseFrom('false');

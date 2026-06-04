@@ -17,7 +17,6 @@ class Foo
      * @param  bool $one
      * @param  string $two
      * @param  mixed $three
-     * @return array
      */
     public function bar($one, $two = 'two', $three = null): array
     {

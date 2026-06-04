@@ -106,7 +106,6 @@ class Smd
     /**
      * Set object state via options.
      *
-     * @param  array $options
      * @return self
      */
     public function setOptions(array $options)
@@ -324,7 +323,6 @@ class Smd
     /**
      * Add many services.
      *
-     * @param  array $services
      * @return self
      */
     public function addServices(array $services)
@@ -339,7 +337,6 @@ class Smd
     /**
      * Overwrite existing services with new ones.
      *
-     * @param  array $services
      * @return self
      */
     public function setServices(array $services)

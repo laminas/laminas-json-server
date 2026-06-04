@@ -10,6 +10,7 @@ use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Request;
 use Laminas\Json\Server\Response;
 use Laminas\Server\Reflection\Exception\RuntimeException;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function count;
@@ -456,9 +457,7 @@ class ServerTest extends TestCase
         self::assertEquals($functions->toArray(), $server->getFunctions()->toArray());
     }
 
-    /**
-     * @group Laminas-4604
-     */
+    #[Group('Laminas-4604')]
     public function testAddFunctionAndClassThatContainsConstructor(): void
     {
         $bar = new TestAsset\Bar('unique');
@@ -485,9 +484,7 @@ class ServerTest extends TestCase
         self::assertEquals($response->getId(), $decoded['id']);
     }
 
-    /**
-     * @group 3773
-     */
+    #[Group('3773')]
     public function testHandleWithNamedParamsShouldSetMissingDefaults1(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
@@ -508,9 +505,7 @@ class ServerTest extends TestCase
         self::assertEquals(null, $result[2]);
     }
 
-    /**
-     * @group 3773
-     */
+    #[Group('3773')]
     public function testHandleWithNamedParamsShouldSetMissingDefaults2(): void
     {
         $this->server->setClass(TestAsset\Foo::class)

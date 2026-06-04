@@ -9,6 +9,7 @@ use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
 use Laminas\Json\Server\Smd;
 use Laminas\Json\Server\Smd\Service;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
@@ -378,9 +379,7 @@ class SmdTest extends TestCase
         self::assertArrayHasKey('bar', $services);
     }
 
-    /**
-     * @group Laminas-5624
-     */
+    #[Group('Laminas-5624')]
     public function testSetOptionsShouldAccommodateToArrayOutput(): void
     {
         $smdSource = new Smd();

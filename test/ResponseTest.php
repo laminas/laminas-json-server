@@ -8,6 +8,8 @@ use Laminas\Json\Json;
 use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Exception\RuntimeException;
 use Laminas\Json\Server\Response;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 class ResponseTest extends TestCase
@@ -166,9 +168,9 @@ class ResponseTest extends TestCase
 
     /**
      * @param string $json
-     * @group 5956
-     * @dataProvider provideScalarJSONResponses
      */
+    #[Group('5956')]
+    #[DataProvider('provideScalarJSONResponses')]
     public function testLoadingScalarJSONResponseShouldThrowException($json): void
     {
         $this->expectException(RuntimeException::class);
