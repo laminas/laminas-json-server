@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Json\Server\Smd;
 
-use Laminas\Json\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Smd;
 
@@ -17,11 +16,14 @@ use function implode;
 use function in_array;
 use function is_array;
 use function is_string;
+use function json_encode;
 use function ksort;
 use function preg_match;
 use function sprintf;
 use function strtolower;
 use function ucfirst;
+
+use const JSON_THROW_ON_ERROR;
 
 /**
  * Create Service Mapping Description for a method
@@ -466,9 +468,9 @@ class Service
      */
     public function toJson()
     {
-        return Json::encode([
+        return json_encode([
             $this->getName() => $this->toArray(),
-        ]);
+        ], JSON_THROW_ON_ERROR);
     }
 
     /**

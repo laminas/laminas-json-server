@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d57c383730aa9208ef2c78efab11d313",
+    "content-hash": "3792f4d85e1bb9278bca83066326a8cd",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -243,68 +243,6 @@
                 }
             ],
             "time": "2025-12-05T11:02:08+00:00"
-        },
-        {
-            "name": "laminas/laminas-json",
-            "version": "3.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-json.git",
-                "reference": "5448d357c4520d79f5caf4d46a1fe03ec8b8e4b0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-json/zipball/5448d357c4520d79f5caf4d46a1fe03ec8b8e4b0",
-                "reference": "5448d357c4520d79f5caf4d46a1fe03ec8b8e4b0",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.1.0"
-            },
-            "conflict": {
-                "zendframework/zend-json": "*"
-            },
-            "require-dev": {
-                "laminas/laminas-coding-standard": "~2.4.0",
-                "laminas/laminas-stdlib": "^2.7.7 || ^3.19",
-                "phpunit/phpunit": "^9.5.25"
-            },
-            "suggest": {
-                "laminas/laminas-json-server": "For implementing JSON-RPC servers",
-                "laminas/laminas-xml2json": "For converting XML documents to JSON"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Laminas\\Json\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "provides convenience methods for serializing native PHP to JSON and decoding JSON to native PHP",
-            "homepage": "https://laminas.dev",
-            "keywords": [
-                "json",
-                "laminas"
-            ],
-            "support": {
-                "chat": "https://laminas.dev/chat",
-                "docs": "https://docs.laminas.dev/laminas-json/",
-                "forum": "https://discourse.laminas.dev",
-                "issues": "https://github.com/laminas/laminas-json/issues",
-                "rss": "https://github.com/laminas/laminas-json/releases.atom",
-                "source": "https://github.com/laminas/laminas-json"
-            },
-            "funding": [
-                {
-                    "url": "https://funding.communitybridge.org/projects/laminas-project",
-                    "type": "community_bridge"
-                }
-            ],
-            "abandoned": true,
-            "time": "2026-01-23T11:10:11+00:00"
         },
         {
             "name": "laminas/laminas-loader",
@@ -6223,11 +6161,10 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
-    },
-    "platform-dev": {
+        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
         "ext-json": "*"
     },
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.2.99"
     },

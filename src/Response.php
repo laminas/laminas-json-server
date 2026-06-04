@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Laminas\Json\Server;
 
-use Laminas\Json\Exception\RuntimeException;
-use Laminas\Json\Json;
+use JsonException;
 
 use function get_class_methods;
 use function in_array;
 use function is_array;
+use function json_decode;
+use function json_encode;
 use function ucfirst;
+
+use const JSON_THROW_ON_ERROR;
 
 class Response
 {
@@ -92,8 +95,8 @@ class Response
     public function loadJson($json)
     {
         try {
-            $options = Json::decode($json, Json::TYPE_ARRAY);
-        } catch (RuntimeException $e) {
+            $options = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
             throw new Exception\RuntimeException(
                 'json is not a valid response; array expected',
                 $e->getCode(),
@@ -233,7 +236,7 @@ class Response
             $response['jsonrpc'] = $version;
         }
 
-        return Json::encode($response);
+        return json_encode($response, JSON_THROW_ON_ERROR);
     }
 
     /**

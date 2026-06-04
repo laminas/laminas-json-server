@@ -7,7 +7,6 @@ namespace LaminasTest\Json\Server;
 use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Client\Adapter\Test as TestAdapter;
 use Laminas\Http\Response as HttpResponse;
-use Laminas\Json\Json;
 use Laminas\Json\Server\Client;
 use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Exception;
@@ -18,6 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 use function count;
 use function implode;
+use function json_encode;
 use function strlen;
 
 class ClientTest extends TestCase
@@ -237,7 +237,7 @@ class ClientTest extends TestCase
     {
         $request  = new Request();
         $response = new HttpResponse();
-        $response->setContent(Json::encode(['test' => 'test']));
+        $response->setContent(json_encode(['test' => 'test']));
         $testAdapter = new TestAdapter();
         $testAdapter->setResponse($response);
         $jsonClient = new Client('http://foo');
@@ -251,7 +251,7 @@ class ClientTest extends TestCase
     {
         $request  = new Request();
         $response = new HttpResponse();
-        $response->setContent(Json::encode(['test' => 'test']));
+        $response->setContent(json_encode(['test' => 'test']));
         $testAdapter = new TestAdapter();
         $testAdapter->setResponse($response);
 

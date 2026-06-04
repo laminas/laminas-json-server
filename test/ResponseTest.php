@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace LaminasTest\Json\Server;
 
-use Laminas\Json\Json;
 use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Exception\RuntimeException;
 use Laminas\Json\Server\Response;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+
+use function json_decode;
+use function json_encode;
+
+use const JSON_THROW_ON_ERROR;
 
 class ResponseTest extends TestCase
 {
@@ -92,7 +96,7 @@ class ResponseTest extends TestCase
     public function testShouldBeAbleToLoadResponseFromJSONString(): void
     {
         $options = $this->getOptions();
-        $json    = Json::encode($options);
+        $json    = json_encode($options, JSON_THROW_ON_ERROR);
         $this->response->loadJSON($json);
 
         self::assertEquals('foobar', $this->response->getId());
@@ -103,7 +107,7 @@ class ResponseTest extends TestCase
     {
         $options            = $this->getOptions();
         $options['jsonrpc'] = '2.0';
-        $json               = Json::encode($options);
+        $json               = json_encode($options, JSON_THROW_ON_ERROR);
         $this->response->loadJSON($json);
         self::assertEquals('2.0', $this->response->getVersion());
     }
@@ -114,7 +118,7 @@ class ResponseTest extends TestCase
                        ->setId('foo')
                        ->setVersion('2.0');
         $json = $this->response->toJSON();
-        $test = Json::decode($json, Json::TYPE_ARRAY);
+        $test = json_decode($json, true);
 
         self::assertIsArray($test);
         self::assertArrayHasKey('result', $test);
@@ -136,7 +140,7 @@ class ResponseTest extends TestCase
                        ->setResult(true)
                        ->setError($error);
         $json = $this->response->toJSON();
-        $test = Json::decode($json, Json::TYPE_ARRAY);
+        $test = json_decode($json, true);
 
         self::assertIsArray($test);
         self::assertArrayNotHasKey('result', $test, "'result' may not coexist with 'error'");
@@ -154,7 +158,7 @@ class ResponseTest extends TestCase
         $this->response->setResult(true)
                        ->setId('foo');
         $json = $this->response->__toString();
-        $test = Json::decode($json, Json::TYPE_ARRAY);
+        $test = json_decode($json, true);
 
         self::assertIsArray($test);
         self::assertArrayHasKey('result', $test);

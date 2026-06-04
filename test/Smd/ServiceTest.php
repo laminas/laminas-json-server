@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\Json\Server\Smd;
 
-use Laminas\Json\Json;
 use Laminas\Json\Server\Exception;
 use Laminas\Json\Server\Smd;
 use Laminas\Json\Server\Smd\Service;
@@ -12,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_shift;
+use function json_decode;
 use function var_export;
 
 class ServiceTest extends TestCase
@@ -301,7 +301,7 @@ class ServiceTest extends TestCase
     {
         $this->setupSmdValidationObject();
         $json = $this->service->toJSON();
-        $smd  = Json::decode($json, Json::TYPE_ARRAY);
+        $smd  = json_decode($json, true);
 
         self::assertArrayHasKey('foo', $smd);
         self::assertIsArray($smd['foo']);

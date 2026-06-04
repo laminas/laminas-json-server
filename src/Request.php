@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace Laminas\Json\Server;
 
 use Exception;
-use Laminas\Json\Json;
 
 use function array_key_exists;
 use function count;
 use function get_class_methods;
 use function in_array;
 use function is_string;
+use function json_decode;
+use function json_encode;
 use function preg_match;
 use function ucfirst;
+
+use const JSON_THROW_ON_ERROR;
 
 /**
  * @todo Revised method regex to allow NS; however, should SMD be revised to
@@ -266,7 +269,7 @@ class Request
     public function loadJson($json)
     {
         try {
-            $options = Json::decode($json, Json::TYPE_ARRAY);
+            $options = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
             $this->setOptions($options);
         } catch (Exception $e) {
             $this->isParseError = true;
@@ -297,7 +300,7 @@ class Request
             $jsonArray['jsonrpc'] = '2.0';
         }
 
-        return Json::encode($jsonArray);
+        return json_encode($jsonArray, JSON_THROW_ON_ERROR);
     }
 
     /**

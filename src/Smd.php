@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Json\Server;
 
-use Laminas\Json\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
 
@@ -13,9 +12,12 @@ use function assert;
 use function in_array;
 use function is_array;
 use function is_string;
+use function json_encode;
 use function method_exists;
 use function preg_match;
 use function ucfirst;
+
+use const JSON_THROW_ON_ERROR;
 
 class Smd
 {
@@ -482,7 +484,7 @@ class Smd
      */
     public function toJson()
     {
-        return Json::encode($this->toArray());
+        return json_encode($this->toArray(), JSON_THROW_ON_ERROR);
     }
 
     /**

@@ -494,10 +494,6 @@
     <MissingOverrideAttribute>
       <code><![CDATA[public function setUp(): void]]></code>
     </MissingOverrideAttribute>
-    <MixedArgument>
-      <code><![CDATA[Json\Json::decode($json, Json\Json::TYPE_ARRAY)]]></code>
-      <code><![CDATA[Json\Json::decode($json, Json\Json::TYPE_ARRAY)]]></code>
-    </MixedArgument>
     <MixedReturnStatement>
       <code><![CDATA[array]]></code>
     </MixedReturnStatement>
@@ -546,12 +542,10 @@
     <InvalidArgument>
       <code><![CDATA[$object]]></code>
       <code><![CDATA[$object]]></code>
-      <code><![CDATA[new Json\Json()]]></code>
     </InvalidArgument>
     <InvalidCast>
       <code><![CDATA[$object]]></code>
       <code><![CDATA[$object]]></code>
-      <code><![CDATA[new Json\Json()]]></code>
     </InvalidCast>
     <MissingOverrideAttribute>
       <code><![CDATA[public function setUp(): void]]></code>

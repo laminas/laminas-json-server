@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\Json\Server;
 
-use Laminas\Json;
 use Laminas\Json\Server;
 use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Request;
@@ -15,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 use function count;
 use function get_class_methods;
+use function json_decode;
 use function ob_get_clean;
 use function ob_start;
 use function var_export;
@@ -102,10 +102,10 @@ class ServerTest extends TestCase
     public function testShouldBeAbleToBindMultipleClassesAndObjectsToServer(): void
     {
         $this->server->setClass(Server\Server::class)
-                     ->setClass(new Json\Json());
+                     ->setClass(Server\Smd::class);
         $methods    = $this->server->getFunctions();
         $zjsMethods = get_class_methods(Server\Server::class);
-        $zjMethods  = get_class_methods(Json\Json::class);
+        $zjMethods  = get_class_methods(Server\Smd::class);
         self::assertGreaterThan(count($zjsMethods), count($methods));
         self::assertGreaterThan(count($zjMethods), count($methods));
     }
@@ -425,7 +425,7 @@ class ServerTest extends TestCase
         $this->server->handle();
         $buffer = ob_get_clean();
 
-        $decoded = Json\Json::decode($buffer, Json\Json::TYPE_ARRAY);
+        $decoded = json_decode($buffer, true);
         self::assertIsArray($decoded);
         self::assertArrayHasKey('result', $decoded);
         self::assertArrayHasKey('id', $decoded);
@@ -472,7 +472,7 @@ class ServerTest extends TestCase
         $this->server->handle();
         $buffer = ob_get_clean();
 
-        $decoded = Json\Json::decode($buffer, Json\Json::TYPE_ARRAY);
+        $decoded = json_decode($buffer, true);
 
         self::assertIsArray($decoded);
         self::assertArrayHasKey('result', $decoded);
