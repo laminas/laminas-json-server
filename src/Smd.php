@@ -17,8 +17,6 @@ use function method_exists;
 use function preg_match;
 use function ucfirst;
 
-use const JSON_THROW_ON_ERROR;
-
 class Smd
 {
     public const ENV_JSONRPC_1 = 'JSON-RPC-1.0';
@@ -484,7 +482,7 @@ class Smd
      */
     public function toJson()
     {
-        return json_encode($this->toArray(), JSON_THROW_ON_ERROR);
+        return (string) json_encode($this->toArray());
     }
 
     /**

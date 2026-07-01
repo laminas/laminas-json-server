@@ -15,8 +15,6 @@ use function json_decode;
 use function json_encode;
 use function var_export;
 
-use const JSON_THROW_ON_ERROR;
-
 class RequestTest extends TestCase
 {
     /** @var Request */
@@ -180,7 +178,7 @@ class RequestTest extends TestCase
     public function testShouldBeAbleToLoadRequestFromJSONString(): void
     {
         $options = $this->getOptions();
-        $json    = json_encode($options, JSON_THROW_ON_ERROR);
+        $json    = (string) json_encode($options);
         $this->request->loadJSON($json);
 
         self::assertEquals('foo', $this->request->getMethod());
@@ -192,7 +190,7 @@ class RequestTest extends TestCase
     {
         $options            = $this->getOptions();
         $options['jsonrpc'] = '2.0';
-        $json               = json_encode($options, JSON_THROW_ON_ERROR);
+        $json               = (string) json_encode($options);
         $this->request->loadJSON($json);
         self::assertEquals('2.0', $this->request->getVersion());
     }

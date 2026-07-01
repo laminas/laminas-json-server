@@ -236,7 +236,7 @@ class Response
             $response['jsonrpc'] = $version;
         }
 
-        return json_encode($response, JSON_THROW_ON_ERROR);
+        return (string) json_encode($response);
     }
 
     /**

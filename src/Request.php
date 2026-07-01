@@ -300,7 +300,7 @@ class Request
             $jsonArray['jsonrpc'] = '2.0';
         }
 
-        return json_encode($jsonArray, JSON_THROW_ON_ERROR);
+        return (string) json_encode($jsonArray);
     }
 
     /**

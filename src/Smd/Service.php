@@ -23,8 +23,6 @@ use function sprintf;
 use function strtolower;
 use function ucfirst;
 
-use const JSON_THROW_ON_ERROR;
-
 /**
  * Create Service Mapping Description for a method
  *
@@ -468,9 +466,9 @@ class Service
      */
     public function toJson()
     {
-        return json_encode([
+        return (string) json_encode([
             $this->getName() => $this->toArray(),
-        ], JSON_THROW_ON_ERROR);
+        ]);
     }
 
     /**

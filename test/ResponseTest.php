@@ -14,8 +14,6 @@ use PHPUnit\Framework\TestCase;
 use function json_decode;
 use function json_encode;
 
-use const JSON_THROW_ON_ERROR;
-
 class ResponseTest extends TestCase
 {
     private Response $response;
@@ -96,7 +94,7 @@ class ResponseTest extends TestCase
     public function testShouldBeAbleToLoadResponseFromJSONString(): void
     {
         $options = $this->getOptions();
-        $json    = json_encode($options, JSON_THROW_ON_ERROR);
+        $json    = (string) json_encode($options);
         $this->response->loadJSON($json);
 
         self::assertEquals('foobar', $this->response->getId());
@@ -107,7 +105,7 @@ class ResponseTest extends TestCase
     {
         $options            = $this->getOptions();
         $options['jsonrpc'] = '2.0';
-        $json               = json_encode($options, JSON_THROW_ON_ERROR);
+        $json               = (string) json_encode($options);
         $this->response->loadJSON($json);
         self::assertEquals('2.0', $this->response->getVersion());
     }
