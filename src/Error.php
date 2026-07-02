@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Laminas\Json\Server;
 
-use Laminas\Json\Json;
-
 use function is_bool;
 use function is_float;
 use function is_numeric;
 use function is_scalar;
 use function is_string;
+use function json_encode;
 
 class Error
 {
@@ -164,7 +163,7 @@ class Error
      */
     public function toJson()
     {
-        return Json::encode($this->toArray());
+        return (string) json_encode($this->toArray());
     }
 
     /**

@@ -14,7 +14,6 @@ class FooParameters
      *
      * @param  bool $one
      * @param  string $two
-     * @return array
      */
     public function bar($one, $two): array
     {
@@ -27,7 +26,6 @@ class FooParameters
      * @param  bool $one
      * @param  string $two
      * @param  string $three
-     * @return array
      */
     public function baz($one, $two, $three = "default"): array
     {

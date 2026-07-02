@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Json\Server;
 
-use Laminas\Json\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
 
@@ -13,6 +12,7 @@ use function assert;
 use function in_array;
 use function is_array;
 use function is_string;
+use function json_encode;
 use function method_exists;
 use function preg_match;
 use function ucfirst;
@@ -106,7 +106,6 @@ class Smd
     /**
      * Set object state via options.
      *
-     * @param  array $options
      * @return self
      */
     public function setOptions(array $options)
@@ -324,7 +323,6 @@ class Smd
     /**
      * Add many services.
      *
-     * @param  array $services
      * @return self
      */
     public function addServices(array $services)
@@ -339,7 +337,6 @@ class Smd
     /**
      * Overwrite existing services with new ones.
      *
-     * @param  array $services
      * @return self
      */
     public function setServices(array $services)
@@ -485,7 +482,7 @@ class Smd
      */
     public function toJson()
     {
-        return Json::encode($this->toArray());
+        return (string) json_encode($this->toArray());
     }
 
     /**

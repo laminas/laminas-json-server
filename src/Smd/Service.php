@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Json\Server\Smd;
 
-use Laminas\Json\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Smd;
 
@@ -17,6 +16,7 @@ use function implode;
 use function in_array;
 use function is_array;
 use function is_string;
+use function json_encode;
 use function ksort;
 use function preg_match;
 use function sprintf;
@@ -141,7 +141,6 @@ class Service
     /**
      * Set object state.
      *
-     * @param  array $options
      * @return self
      */
     public function setOptions(array $options)
@@ -280,7 +279,6 @@ class Service
      * Add a parameter to the service.
      *
      * @param string|array $type
-     * @param array $options
      * @param int|null $order
      * @return self
      * @throws InvalidArgumentException
@@ -326,7 +324,6 @@ class Service
      *
      * Each param should be an array, and should include the key 'type'.
      *
-     * @param array $params
      * @return self
      */
     public function addParams(array $params)
@@ -353,7 +350,6 @@ class Service
     /**
      * Overwrite all parameters.
      *
-     * @param array $params
      * @return self
      */
     public function setParams(array $params)
@@ -470,7 +466,7 @@ class Service
      */
     public function toJson()
     {
-        return Json::encode([
+        return (string) json_encode([
             $this->getName() => $this->toArray(),
         ]);
     }

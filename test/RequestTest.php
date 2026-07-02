@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace LaminasTest\Json\Server;
 
-use Laminas\Json\Json;
 use Laminas\Json\Server\Request;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_shift;
 use function array_values;
+use function json_decode;
+use function json_encode;
 use function var_export;
 
 class RequestTest extends TestCase
@@ -176,7 +178,7 @@ class RequestTest extends TestCase
     public function testShouldBeAbleToLoadRequestFromJSONString(): void
     {
         $options = $this->getOptions();
-        $json    = Json::encode($options);
+        $json    = (string) json_encode($options);
         $this->request->loadJSON($json);
 
         self::assertEquals('foo', $this->request->getMethod());
@@ -188,7 +190,7 @@ class RequestTest extends TestCase
     {
         $options            = $this->getOptions();
         $options['jsonrpc'] = '2.0';
-        $json               = Json::encode($options);
+        $json               = (string) json_encode($options);
         $this->request->loadJSON($json);
         self::assertEquals('2.0', $this->request->getVersion());
     }
@@ -209,9 +211,7 @@ class RequestTest extends TestCase
         $this->validateJSON($json, $options);
     }
 
-    /**
-     * @group Laminas-6187
-     */
+    #[Group('Laminas-6187')]
     public function testMethodNamesShouldAllowDotNamespacing(): void
     {
         $this->request->setMethod('foo.bar');
@@ -240,7 +240,7 @@ class RequestTest extends TestCase
 
     public function validateJSON(string $json, array $options): void
     {
-        $test = Json::decode($json, Json::TYPE_ARRAY);
+        $test = json_decode($json, true);
         self::assertIsArray($test, var_export($json, true));
 
         self::assertArrayHasKey('id', $test);

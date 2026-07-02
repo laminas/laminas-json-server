@@ -397,8 +397,6 @@ class Server extends AbstractServer
     /**
      * Get default params from signature.
      *
-     * @param  array $args
-     * @param  array $params
      * @return array
      */
     protected function getDefaultParams(array $args, array $params)
@@ -421,7 +419,6 @@ class Server extends AbstractServer
     /**
      * Check whether array is associative or not.
      *
-     * @param array $array
      * @return bool
      */
     private function isAssociative(array $array)
@@ -609,8 +606,6 @@ class Server extends AbstractServer
     }
 
     /**
-     * @param array $requestedParams
-     * @param array $serviceParams
      * @return array|Error Array of parameters to use when calling the requested
      *     method on success, Error if there is a mismatch between request
      *     parameters and the method signature.
@@ -628,8 +623,6 @@ class Server extends AbstractServer
     /**
      * Ensures named parameters are passed in the correct order.
      *
-     * @param array $requestedParams
-     * @param array $serviceParams
      * @return array|Error Array of parameters to use when calling the requested
      *     method on success, Error if any named request parameters do not match
      *     those of the method requested.
@@ -667,8 +660,6 @@ class Server extends AbstractServer
     }
 
     /**
-     * @param array $requestedParams
-     * @param array $serviceParams
      * @return array|Error Array of parameters to use when calling the requested
      *     method on success, Error if the number of request parameters does not
      *     match the number of parameters required by the requested method.

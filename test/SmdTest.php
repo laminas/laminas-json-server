@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace LaminasTest\Json\Server;
 
-use Laminas\Json;
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
 use Laminas\Json\Server\Smd;
 use Laminas\Json\Server\Smd\Service;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 use function array_shift;
 use function array_values;
+use function json_decode;
 use function uniqid;
 
 class SmdTest extends TestCase
@@ -317,7 +318,7 @@ class SmdTest extends TestCase
         $options = $this->getOptions();
         $this->smd->setOptions($options);
         $json = $this->smd->toJSON();
-        $smd  = Json\Json::decode($json, Json\Json::TYPE_ARRAY);
+        $smd  = json_decode($json, true);
         $this->validateServiceArray($smd, $options);
     }
 
@@ -326,7 +327,7 @@ class SmdTest extends TestCase
         $options = $this->getOptions();
         $this->smd->setOptions($options);
         $json = $this->smd->__toString();
-        $smd  = Json\Json::decode($json, Json\Json::TYPE_ARRAY);
+        $smd  = json_decode($json, true);
         $this->validateServiceArray($smd, $options);
     }
 
@@ -378,9 +379,7 @@ class SmdTest extends TestCase
         self::assertArrayHasKey('bar', $services);
     }
 
-    /**
-     * @group Laminas-5624
-     */
+    #[Group('Laminas-5624')]
     public function testSetOptionsShouldAccommodateToArrayOutput(): void
     {
         $smdSource = new Smd();

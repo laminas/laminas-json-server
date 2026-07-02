@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace LaminasTest\Json\Server;
 
-use Laminas\Json;
 use Laminas\Json\Server;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function json_decode;
 use function range;
 
 class ErrorTest extends TestCase
@@ -61,9 +62,7 @@ class ErrorTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider arbitraryErrorCodes
-     */
+    #[DataProvider('arbitraryErrorCodes')]
     public function testCodeShouldAllowArbitraryErrorCode(int $code): void
     {
         $this->error->setCode($code);
@@ -115,14 +114,14 @@ class ErrorTest extends TestCase
     {
         $this->setupError();
         $json = $this->error->toJSON();
-        $this->validateArray(Json\Json::decode($json, Json\Json::TYPE_ARRAY));
+        $this->validateArray((array) json_decode($json, true));
     }
 
     public function testCastingToStringShouldCastToJSON(): void
     {
         $this->setupError();
         $json = $this->error->__toString();
-        $this->validateArray(Json\Json::decode($json, Json\Json::TYPE_ARRAY));
+        $this->validateArray((array) json_decode($json, true));
     }
 
     public function setupError(): void

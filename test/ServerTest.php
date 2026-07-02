@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace LaminasTest\Json\Server;
 
-use Laminas\Json;
 use Laminas\Json\Server;
 use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Request;
 use Laminas\Json\Server\Response;
 use Laminas\Server\Reflection\Exception\RuntimeException;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function count;
 use function get_class_methods;
+use function json_decode;
 use function ob_get_clean;
 use function ob_start;
 use function var_export;
@@ -101,10 +102,10 @@ class ServerTest extends TestCase
     public function testShouldBeAbleToBindMultipleClassesAndObjectsToServer(): void
     {
         $this->server->setClass(Server\Server::class)
-                     ->setClass(new Json\Json());
+                     ->setClass(Server\Smd::class);
         $methods    = $this->server->getFunctions();
         $zjsMethods = get_class_methods(Server\Server::class);
-        $zjMethods  = get_class_methods(Json\Json::class);
+        $zjMethods  = get_class_methods(Server\Smd::class);
         self::assertGreaterThan(count($zjsMethods), count($methods));
         self::assertGreaterThan(count($zjMethods), count($methods));
     }
@@ -424,7 +425,7 @@ class ServerTest extends TestCase
         $this->server->handle();
         $buffer = ob_get_clean();
 
-        $decoded = Json\Json::decode($buffer, Json\Json::TYPE_ARRAY);
+        $decoded = json_decode($buffer, true);
         self::assertIsArray($decoded);
         self::assertArrayHasKey('result', $decoded);
         self::assertArrayHasKey('id', $decoded);
@@ -456,9 +457,7 @@ class ServerTest extends TestCase
         self::assertEquals($functions->toArray(), $server->getFunctions()->toArray());
     }
 
-    /**
-     * @group Laminas-4604
-     */
+    #[Group('Laminas-4604')]
     public function testAddFunctionAndClassThatContainsConstructor(): void
     {
         $bar = new TestAsset\Bar('unique');
@@ -473,7 +472,7 @@ class ServerTest extends TestCase
         $this->server->handle();
         $buffer = ob_get_clean();
 
-        $decoded = Json\Json::decode($buffer, Json\Json::TYPE_ARRAY);
+        $decoded = json_decode($buffer, true);
 
         self::assertIsArray($decoded);
         self::assertArrayHasKey('result', $decoded);
@@ -485,9 +484,7 @@ class ServerTest extends TestCase
         self::assertEquals($response->getId(), $decoded['id']);
     }
 
-    /**
-     * @group 3773
-     */
+    #[Group('3773')]
     public function testHandleWithNamedParamsShouldSetMissingDefaults1(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
@@ -508,9 +505,7 @@ class ServerTest extends TestCase
         self::assertEquals(null, $result[2]);
     }
 
-    /**
-     * @group 3773
-     */
+    #[Group('3773')]
     public function testHandleWithNamedParamsShouldSetMissingDefaults2(): void
     {
         $this->server->setClass(TestAsset\Foo::class)
