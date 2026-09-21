@@ -15,7 +15,7 @@ use function json_decode;
 use function json_encode;
 use function var_export;
 
-class RequestTest extends TestCase
+final class RequestTest extends TestCase
 {
     /** @var Request */
     protected $request;

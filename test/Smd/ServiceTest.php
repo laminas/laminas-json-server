@@ -14,7 +14,7 @@ use function array_shift;
 use function json_decode;
 use function var_export;
 
-class ServiceTest extends TestCase
+final class ServiceTest extends TestCase
 {
     /** @var Service */
     protected $service;

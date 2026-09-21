@@ -13,7 +13,7 @@ use function sys_get_temp_dir;
 use function tempnam;
 use function unlink;
 
-class CacheTest extends TestCase
+final class CacheTest extends TestCase
 {
     /** @var Server\Server */
     protected $server;
