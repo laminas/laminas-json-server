@@ -12,7 +12,7 @@ use stdClass;
 use function json_decode;
 use function range;
 
-class ErrorTest extends TestCase
+final class ErrorTest extends TestCase
 {
     /** @var Server\Error */
     protected $error;

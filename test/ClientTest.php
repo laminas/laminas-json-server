@@ -20,7 +20,7 @@ use function implode;
 use function json_encode;
 use function strlen;
 
-class ClientTest extends TestCase
+final class ClientTest extends TestCase
 {
     /** @var TestAdapter */
     protected $httpAdapter;

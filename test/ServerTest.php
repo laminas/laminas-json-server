@@ -19,7 +19,7 @@ use function ob_get_clean;
 use function ob_start;
 use function var_export;
 
-class ServerTest extends TestCase
+final class ServerTest extends TestCase
 {
     /** @var Server\Server */
     protected $server;

@@ -17,7 +17,7 @@ use function array_values;
 use function json_decode;
 use function uniqid;
 
-class SmdTest extends TestCase
+final class SmdTest extends TestCase
 {
     /** @var Smd */
     protected $smd;

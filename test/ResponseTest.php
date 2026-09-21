@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 use function json_decode;
 use function json_encode;
 
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
     private Response $response;
     /**

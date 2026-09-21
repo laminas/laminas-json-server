@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.16.1@f1f5de594dc76faf8784e02d3dc4716c91c6f6ac">
+<files psalm-version="6.17.2@dd625545733d24633e5d386a26c13004dae80e19">
   <file src="src/Cache.php">
     <ClassMustBeFinal>
       <code><![CDATA[Cache]]></code>
@@ -452,9 +452,6 @@
     </RiskyTruthyFalsyComparison>
   </file>
   <file src="test/CacheTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[CacheTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[public function setUp(): void]]></code>
       <code><![CDATA[public function tearDown(): void]]></code>
@@ -473,9 +470,6 @@
     </PossiblyFalseArgument>
   </file>
   <file src="test/ClientTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[ClientTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[Exception\ExceptionInterface::class]]></code>
     </InvalidArgument>
@@ -488,9 +482,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/ErrorTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[ErrorTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[public function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -502,9 +493,6 @@
     </RedundantCondition>
   </file>
   <file src="test/RequestTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[RequestTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[$spec[1]]]></code>
     </InvalidArgument>
@@ -516,9 +504,6 @@
     </MixedAssignment>
   </file>
   <file src="test/ResponseTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[ResponseTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[public function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -536,9 +521,6 @@
     </PossiblyNullReference>
   </file>
   <file src="test/ServerTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[ServerTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[$object]]></code>
       <code><![CDATA[$object]]></code>
@@ -608,9 +590,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Smd/ServiceTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[ServiceTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[$params]]></code>
       <code><![CDATA[$params]]></code>
@@ -681,9 +660,6 @@
     </PossiblyNullArrayAccess>
   </file>
   <file src="test/SmdTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[SmdTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[$methods]]></code>
       <code><![CDATA[$methods]]></code>
