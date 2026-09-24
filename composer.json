@@ -33,10 +33,10 @@
         "laminas/laminas-server": "^2.19.0"
     },
     "require-dev": {
-        "boundwize/structarmed": "^0.17.12",
+        "boundwize/structarmed": "^0.18.0",
         "laminas/laminas-coding-standard": "^3.1",
         "phpunit/phpunit": "^11.5",
-        "psalm/plugin-phpunit": "^0.19.7",
+        "psalm/plugin-phpunit": "^0.20.0",
         "vimeo/psalm": "^6.16"
     },
     "conflict": {
