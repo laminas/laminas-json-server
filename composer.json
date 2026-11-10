@@ -37,7 +37,7 @@
         "laminas/laminas-coding-standard": "^3.1",
         "phpunit/phpunit": "^11.5",
         "psalm/plugin-phpunit": "^0.22.0",
-        "vimeo/psalm": "^6.16"
+        "vimeo/psalm": "^7.0"
     },
     "conflict": {
         "laminas/laminas-stdlib": "<3.2.1"
