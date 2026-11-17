@@ -9,6 +9,7 @@
     findUnusedCode="true"
     findUnusedBaselineEntry="true"
     errorBaseline="psalm-baseline.xml"
+    ensureOverrideAttribute="false"
 >
 
     <projectFiles>
