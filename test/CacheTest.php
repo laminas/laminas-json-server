@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Json\Server;
 
 use Laminas\Json\Server;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function file_exists;
@@ -25,6 +26,7 @@ final class CacheTest extends TestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
+    #[Override]
     public function setUp(): void
     {
         $this->server = new Server\Server();
@@ -45,6 +47,7 @@ final class CacheTest extends TestCase
      * Tears down the fixture, for example, close a network connection.
      * This method is called after a test is executed.
      */
+    #[Override]
     public function tearDown(): void
     {
         if (file_exists($this->cacheFile)) {

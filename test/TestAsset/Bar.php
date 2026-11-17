@@ -9,11 +9,8 @@ use Exception;
 // phpcs:disable
 class Bar
 {
-    protected $val;
-
-    public function __construct($someval)
+    public function __construct(protected $val)
     {
-        $this->val = $someval;
     }
 
     /**

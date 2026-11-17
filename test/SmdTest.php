@@ -8,6 +8,7 @@ use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
 use Laminas\Json\Server\Smd;
 use Laminas\Json\Server\Smd\Service;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
@@ -26,6 +27,7 @@ final class SmdTest extends TestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
+    #[Override]
     public function setUp(): void
     {
         $this->smd = new Smd();

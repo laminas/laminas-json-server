@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.17.2@dd625545733d24633e5d386a26c13004dae80e19">
+<files psalm-version="6.20.12@56e5217b13db8789c2b8cfcc73d0f902df2cda11">
   <file src="src/Cache.php">
     <ClassMustBeFinal>
       <code><![CDATA[Cache]]></code>
@@ -39,9 +39,6 @@
     <DocblockTypeContradiction>
       <code><![CDATA[$httpRequest->getUriString() === null]]></code>
     </DocblockTypeContradiction>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function call($method, $params = [])]]></code>
-    </MissingOverrideAttribute>
     <PossiblyInvalidMethodCall>
       <code><![CDATA[addHeaderLine]]></code>
       <code><![CDATA[addHeaders]]></code>
@@ -68,6 +65,14 @@
     <ClassMustBeFinal>
       <code><![CDATA[Error]]></code>
     </ClassMustBeFinal>
+    <MissingClassConstType>
+      <code><![CDATA[ERROR_INTERNAL        = -32603]]></code>
+      <code><![CDATA[ERROR_INVALID_METHOD  = -32601]]></code>
+      <code><![CDATA[ERROR_INVALID_PARAMS  = -32602]]></code>
+      <code><![CDATA[ERROR_INVALID_REQUEST = -32600]]></code>
+      <code><![CDATA[ERROR_OTHER           = -32000]]></code>
+      <code><![CDATA[ERROR_PARSE           = -32700]]></code>
+    </MissingClassConstType>
   </file>
   <file src="src/Exception/ErrorException.php">
     <ClassMustBeFinal>
@@ -164,9 +169,6 @@
     <ClassMustBeFinal>
       <code><![CDATA[Http]]></code>
     </ClassMustBeFinal>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function toJson()]]></code>
-    </MissingOverrideAttribute>
   </file>
   <file src="src/Server.php">
     <ArgumentTypeCoercion>
@@ -198,21 +200,13 @@
       <code><![CDATA[Server]]></code>
       <code><![CDATA[self]]></code>
     </ImplementedReturnTypeMismatch>
+    <MissingClassConstType>
+      <code><![CDATA[VERSION_1 = '1.0']]></code>
+      <code><![CDATA[VERSION_2 = '2.0']]></code>
+    </MissingClassConstType>
     <MissingClosureReturnType>
       <code><![CDATA[static function ($count, $param) {]]></code>
     </MissingClosureReturnType>
-    <MissingOverrideAttribute>
-      <code><![CDATA[protected function _fixType($type)]]></code>
-      <code><![CDATA[public function addFunction($function, $namespace = '')]]></code>
-      <code><![CDATA[public function fault($fault = null, $code = 404, $data = null)]]></code>
-      <code><![CDATA[public function getResponse()]]></code>
-      <code><![CDATA[public function getReturnResponse()]]></code>
-      <code><![CDATA[public function handle($request = false)]]></code>
-      <code><![CDATA[public function loadFunctions($definition)]]></code>
-      <code><![CDATA[public function setClass($class, $namespace = '', $argv = null)]]></code>
-      <code><![CDATA[public function setPersistence($mode)]]></code>
-      <code><![CDATA[public function setReturnResponse($flag = true)]]></code>
-    </MissingOverrideAttribute>
     <MixedArgument>
       <code><![CDATA[$argv]]></code>
       <code><![CDATA[$method]]></code>
@@ -339,6 +333,11 @@
     <ClassMustBeFinal>
       <code><![CDATA[Smd]]></code>
     </ClassMustBeFinal>
+    <MissingClassConstType>
+      <code><![CDATA[ENV_JSONRPC_1 = 'JSON-RPC-1.0']]></code>
+      <code><![CDATA[ENV_JSONRPC_2 = 'JSON-RPC-2.0']]></code>
+      <code><![CDATA[SMD_VERSION   = '2.0']]></code>
+    </MissingClassConstType>
     <MissingConstructor>
       <code><![CDATA[$description]]></code>
       <code><![CDATA[$id]]></code>
@@ -452,10 +451,6 @@
     </RiskyTruthyFalsyComparison>
   </file>
   <file src="test/CacheTest.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function setUp(): void]]></code>
-      <code><![CDATA[public function tearDown(): void]]></code>
-    </MissingOverrideAttribute>
     <PossiblyFalseArgument>
       <code><![CDATA[$this->cacheFile]]></code>
       <code><![CDATA[$this->cacheFile]]></code>
@@ -473,18 +468,12 @@
     <InvalidArgument>
       <code><![CDATA[Exception\ExceptionInterface::class]]></code>
     </InvalidArgument>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function setUp(): void]]></code>
-    </MissingOverrideAttribute>
     <PossiblyUnusedMethod>
       <code><![CDATA[makeHttpResponseFor]]></code>
       <code><![CDATA[mockHttpClient]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/ErrorTest.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function setUp(): void]]></code>
-    </MissingOverrideAttribute>
     <MixedReturnStatement>
       <code><![CDATA[array]]></code>
     </MixedReturnStatement>
@@ -496,17 +485,11 @@
     <InvalidArgument>
       <code><![CDATA[$spec[1]]]></code>
     </InvalidArgument>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function setUp(): void]]></code>
-    </MissingOverrideAttribute>
     <MixedAssignment>
       <code><![CDATA[$test]]></code>
     </MixedAssignment>
   </file>
   <file src="test/ResponseTest.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function setUp(): void]]></code>
-    </MissingOverrideAttribute>
     <MixedArrayAccess>
       <code><![CDATA[$test['error']['code']]]></code>
       <code><![CDATA[$test['error']['message']]]></code>
@@ -529,9 +512,6 @@
       <code><![CDATA[$object]]></code>
       <code><![CDATA[$object]]></code>
     </InvalidCast>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function setUp(): void]]></code>
-    </MissingOverrideAttribute>
     <MixedArgument>
       <code><![CDATA[$decoded['result']]]></code>
     </MixedArgument>
@@ -598,9 +578,6 @@
       <code><![CDATA[new stdClass()]]></code>
       <code><![CDATA[new stdClass()]]></code>
     </InvalidArgument>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function setUp(): void]]></code>
-    </MissingOverrideAttribute>
     <MixedArgument>
       <code><![CDATA[$params]]></code>
       <code><![CDATA[$smd]]></code>
@@ -667,9 +644,6 @@
       <code><![CDATA[$services]]></code>
       <code><![CDATA[$services]]></code>
     </InvalidArgument>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function setUp(): void]]></code>
-    </MissingOverrideAttribute>
     <MixedArgument>
       <code><![CDATA[$bar]]></code>
       <code><![CDATA[$foo]]></code>
@@ -705,11 +679,8 @@
       <code><![CDATA[Bar]]></code>
     </ClassMustBeFinal>
     <MissingParamType>
-      <code><![CDATA[$someval]]></code>
-    </MissingParamType>
-    <MissingPropertyType>
       <code><![CDATA[$val]]></code>
-    </MissingPropertyType>
+    </MissingParamType>
     <PossiblyUnusedMethod>
       <code><![CDATA[baz]]></code>
     </PossiblyUnusedMethod>
@@ -739,9 +710,6 @@
     <ClassMustBeFinal>
       <code><![CDATA[JsonSerializableBuiltinImpl]]></code>
     </ClassMustBeFinal>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function jsonSerialize(): array]]></code>
-    </MissingOverrideAttribute>
     <UnusedClass>
       <code><![CDATA[JsonSerializableBuiltinImpl]]></code>
     </UnusedClass>
@@ -750,9 +718,6 @@
     <ClassMustBeFinal>
       <code><![CDATA[TestIteratorAggregate]]></code>
     </ClassMustBeFinal>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function getIterator(): ArrayIterator]]></code>
-    </MissingOverrideAttribute>
     <UnusedClass>
       <code><![CDATA[TestIteratorAggregate]]></code>
     </UnusedClass>

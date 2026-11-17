@@ -271,7 +271,7 @@ class Request
         try {
             $options = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
             $this->setOptions($options);
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->isParseError = true;
         }
     }

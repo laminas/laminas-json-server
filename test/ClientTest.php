@@ -12,6 +12,7 @@ use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Exception;
 use Laminas\Json\Server\Request;
 use Laminas\Json\Server\Response;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
@@ -34,6 +35,7 @@ final class ClientTest extends TestCase
     /** @var HttpClient */
     protected $mockedHttpClient;
 
+    #[Override]
     public function setUp(): void
     {
         $this->httpAdapter = new TestAdapter();

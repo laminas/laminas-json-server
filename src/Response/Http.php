@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Json\Server\Response;
 
 use Laminas\Json\Server\Response as JsonResponse;
+use Override;
 
 use function header;
 use function headers_sent;
@@ -20,6 +21,7 @@ class Http extends JsonResponse
      *
      * @return string
      */
+    #[Override]
     public function toJson()
     {
         $this->sendHeaders();
