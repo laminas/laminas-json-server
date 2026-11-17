@@ -65,6 +65,14 @@
     <ClassMustBeFinal>
       <code><![CDATA[Error]]></code>
     </ClassMustBeFinal>
+    <MissingClassConstType>
+      <code><![CDATA[ERROR_INTERNAL        = -32603]]></code>
+      <code><![CDATA[ERROR_INVALID_METHOD  = -32601]]></code>
+      <code><![CDATA[ERROR_INVALID_PARAMS  = -32602]]></code>
+      <code><![CDATA[ERROR_INVALID_REQUEST = -32600]]></code>
+      <code><![CDATA[ERROR_OTHER           = -32000]]></code>
+      <code><![CDATA[ERROR_PARSE           = -32700]]></code>
+    </MissingClassConstType>
   </file>
   <file src="src/Exception/ErrorException.php">
     <ClassMustBeFinal>
@@ -192,6 +200,10 @@
       <code><![CDATA[Server]]></code>
       <code><![CDATA[self]]></code>
     </ImplementedReturnTypeMismatch>
+    <MissingClassConstType>
+      <code><![CDATA[VERSION_1 = '1.0']]></code>
+      <code><![CDATA[VERSION_2 = '2.0']]></code>
+    </MissingClassConstType>
     <MissingClosureReturnType>
       <code><![CDATA[static function ($count, $param) {]]></code>
     </MissingClosureReturnType>
@@ -321,6 +333,11 @@
     <ClassMustBeFinal>
       <code><![CDATA[Smd]]></code>
     </ClassMustBeFinal>
+    <MissingClassConstType>
+      <code><![CDATA[ENV_JSONRPC_1 = 'JSON-RPC-1.0']]></code>
+      <code><![CDATA[ENV_JSONRPC_2 = 'JSON-RPC-2.0']]></code>
+      <code><![CDATA[SMD_VERSION   = '2.0']]></code>
+    </MissingClassConstType>
     <MissingConstructor>
       <code><![CDATA[$description]]></code>
       <code><![CDATA[$id]]></code>
@@ -667,6 +684,9 @@
     <PossiblyUnusedMethod>
       <code><![CDATA[baz]]></code>
     </PossiblyUnusedMethod>
+    <PossiblyUnusedReturnValue>
+      <code><![CDATA[array]]></code>
+    </PossiblyUnusedReturnValue>
   </file>
   <file src="test/TestAsset/Foo.php">
     <ClassMustBeFinal>
