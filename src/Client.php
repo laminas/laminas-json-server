@@ -11,6 +11,13 @@ use Override;
 class Client implements ClientInterface
 {
     /**
+     * Full address of the JSON-RPC service.
+     *
+     * @var string
+     */
+    protected $serverAddress;
+
+    /**
      * HTTP Client to use for requests.
      *
      * @var HttpClient
@@ -41,17 +48,13 @@ class Client implements ClientInterface
     /**
      * Create a new JSON-RPC client to a remote server.
      *
-     * @param string $serverAddress Full address of the JSON-RPC service.
-     * @param HttpClient $httpClient HTTP Client to use for requests.
+     * @param string $server Full address of the JSON-RPC service.
+     * @param ?HttpClient $httpClient HTTP Client to use for requests.
      */
-    public function __construct(
-        /**
-         * Full address of the JSON-RPC service.
-         */
-        protected $serverAddress,
-        ?HttpClient $httpClient = null
-    ) {
-        $this->httpClient = $httpClient ?: new HttpClient();
+    public function __construct($server, ?HttpClient $httpClient = null)
+    {
+        $this->httpClient    = $httpClient ?: new HttpClient();
+        $this->serverAddress = $server;
     }
 
     /**

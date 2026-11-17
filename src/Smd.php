@@ -6,8 +6,6 @@ namespace Laminas\Json\Server;
 
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Exception\RuntimeException;
-use Override;
-use Stringable;
 
 use function array_key_exists;
 use function assert;
@@ -19,7 +17,7 @@ use function method_exists;
 use function preg_match;
 use function ucfirst;
 
-class Smd implements Stringable
+class Smd
 {
     public const ENV_JSONRPC_1 = 'JSON-RPC-1.0';
     public const ENV_JSONRPC_2 = 'JSON-RPC-2.0';
@@ -489,9 +487,10 @@ class Smd implements Stringable
 
     /**
      * Cast to string (JSON)
+     *
+     * @return string
      */
-    #[Override]
-    public function __toString(): string
+    public function __toString()
     {
         return $this->toJson();
     }
