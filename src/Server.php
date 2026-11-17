@@ -9,6 +9,7 @@ use Laminas\Server\AbstractServer;
 use Laminas\Server\Definition;
 use Laminas\Server\Method;
 use Laminas\Server\Reflection;
+use Override;
 use ReflectionFunction;
 use ReflectionMethod;
 
@@ -89,6 +90,7 @@ class Server extends AbstractServer
      * @return Server
      * @throws Exception\InvalidArgumentException If function invalid or not callable.
      */
+    #[Override]
     public function addFunction($function, $namespace = '')
     {
         if (! is_callable($function)) {
@@ -140,6 +142,7 @@ class Server extends AbstractServer
      * @param  mixed $argv Ignored
      * @return Server
      */
+    #[Override]
     public function setClass($class, $namespace = '', $argv = null)
     {
         if (2 < func_num_args()) {
@@ -165,6 +168,7 @@ class Server extends AbstractServer
      * @param  mixed $data
      * @return Error
      */
+    #[Override]
     public function fault($fault = null, $code = 404, $data = null)
     {
         $error = new Error($fault, $code, $data);
@@ -179,6 +183,7 @@ class Server extends AbstractServer
      * @return null|Response
      * @throws Exception\InvalidArgumentException
      */
+    #[Override]
     public function handle($request = false)
     {
         if ((false !== $request) && ! $request instanceof Request) {
@@ -212,6 +217,7 @@ class Server extends AbstractServer
      * @throws Exception\InvalidArgumentException
      * @return void
      */
+    #[Override]
     public function loadFunctions($definition)
     {
         if (! is_array($definition) && ! $definition instanceof Definition) {
@@ -230,6 +236,7 @@ class Server extends AbstractServer
      * @param  int $mode
      * @return void
      */
+    #[Override]
     public function setPersistence($mode)
     {
     }
@@ -279,6 +286,7 @@ class Server extends AbstractServer
      *
      * @return Response
      */
+    #[Override]
     public function getResponse()
     {
         if (null === $this->response) {
@@ -299,6 +307,7 @@ class Server extends AbstractServer
      * @param  bool $flag
      * @return self
      */
+    #[Override]
     public function setReturnResponse($flag = true)
     {
         $this->returnResponse = (bool) $flag;
@@ -310,6 +319,7 @@ class Server extends AbstractServer
      *
      * @return bool
      */
+    #[Override]
     public function getReturnResponse()
     {
         return $this->returnResponse;
@@ -388,6 +398,7 @@ class Server extends AbstractServer
      * @param  string $type
      * @return string
      */
+    #[Override]
     protected function _fixType($type)
     {
         return $type;

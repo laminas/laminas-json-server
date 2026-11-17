@@ -7,6 +7,7 @@ namespace LaminasTest\Json\Server;
 use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Exception\RuntimeException;
 use Laminas\Json\Server\Response;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -21,6 +22,7 @@ final class ResponseTest extends TestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
+    #[Override]
     public function setUp(): void
     {
         $this->response = new Response();

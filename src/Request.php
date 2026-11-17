@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Laminas\Json\Server;
 
 use Exception;
+use Override;
+use Stringable;
 
 use function array_key_exists;
 use function count;
@@ -22,7 +24,7 @@ use const JSON_THROW_ON_ERROR;
  * @todo Revised method regex to allow NS; however, should SMD be revised to
  *     strip PHP NS instead when attaching functions?
  */
-class Request
+class Request implements Stringable
 {
     /**
      * Request ID
@@ -271,7 +273,7 @@ class Request
         try {
             $options = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
             $this->setOptions($options);
-        } catch (Exception $e) {
+        } catch (Exception) {
             $this->isParseError = true;
         }
     }
@@ -305,10 +307,9 @@ class Request
 
     /**
      * Cast request to string (JSON)
-     *
-     * @return string
      */
-    public function __toString()
+    #[Override]
+    public function __toString(): string
     {
         return $this->toJson();
     }

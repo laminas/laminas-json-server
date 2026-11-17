@@ -6,16 +6,10 @@ namespace Laminas\Json\Server;
 
 use Laminas\Http\Client as HttpClient;
 use Laminas\Server\ClientInterface;
+use Override;
 
 class Client implements ClientInterface
 {
-    /**
-     * Full address of the JSON-RPC service.
-     *
-     * @var string
-     */
-    protected $serverAddress;
-
     /**
      * HTTP Client to use for requests.
      *
@@ -47,13 +41,17 @@ class Client implements ClientInterface
     /**
      * Create a new JSON-RPC client to a remote server.
      *
-     * @param string $server Full address of the JSON-RPC service.
+     * @param string $serverAddress Full address of the JSON-RPC service.
      * @param HttpClient $httpClient HTTP Client to use for requests.
      */
-    public function __construct($server, ?HttpClient $httpClient = null)
-    {
-        $this->httpClient    = $httpClient ?: new HttpClient();
-        $this->serverAddress = $server;
+    public function __construct(
+        /**
+         * Full address of the JSON-RPC service.
+         */
+        protected $serverAddress,
+        ?HttpClient $httpClient = null
+    ) {
+        $this->httpClient = $httpClient ?: new HttpClient();
     }
 
     /**
@@ -158,6 +156,7 @@ class Client implements ClientInterface
      * @return mixed Method call results.
      * @throws Exception\ErrorException When remote call fails.
      */
+    #[Override]
     public function call($method, $params = [])
     {
         $request = $this->createRequest($method, $params);

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Laminas\Json\Server;
 
 use JsonException;
+use Override;
+use Stringable;
 
 use function get_class_methods;
 use function in_array;
@@ -15,7 +17,7 @@ use function ucfirst;
 
 use const JSON_THROW_ON_ERROR;
 
-class Response
+class Response implements Stringable
 {
     /**
      * Response error
@@ -285,10 +287,9 @@ class Response
 
     /**
      * Cast to string (JSON).
-     *
-     * @return string
      */
-    public function __toString()
+    #[Override]
+    public function __toString(): string
     {
         return $this->toJson();
     }

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Laminas\Json\Server;
 
+use Override;
+use Stringable;
+
 use function is_bool;
 use function is_float;
 use function is_numeric;
@@ -11,7 +14,7 @@ use function is_scalar;
 use function is_string;
 use function json_encode;
 
-class Error
+class Error implements Stringable
 {
     public const ERROR_PARSE           = -32700;
     public const ERROR_INVALID_REQUEST = -32600;
@@ -168,10 +171,9 @@ class Error
 
     /**
      * Cast to string (JSON)
-     *
-     * @return string
      */
-    public function __toString()
+    #[Override]
+    public function __toString(): string
     {
         return $this->toJson();
     }

@@ -6,6 +6,7 @@ namespace LaminasTest\Json\Server\TestAsset;
 
 use ArrayIterator;
 use IteratorAggregate;
+use Override;
 
 /**
  * @see Laminas-12347
@@ -19,6 +20,7 @@ class TestIteratorAggregate implements IteratorAggregate
         'baz' => 5,
     ];
 
+    #[Override]
     public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->array);

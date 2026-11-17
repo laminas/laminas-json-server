@@ -9,6 +9,7 @@ use Laminas\Json\Server\Error;
 use Laminas\Json\Server\Request;
 use Laminas\Json\Server\Response;
 use Laminas\Server\Reflection\Exception\RuntimeException;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
@@ -28,6 +29,7 @@ final class ServerTest extends TestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
+    #[Override]
     public function setUp(): void
     {
         $this->server = new Server\Server();
@@ -44,7 +46,7 @@ final class ServerTest extends TestCase
     {
         try {
             $this->server->addFunction([$this, 'setUp']);
-        } catch (RuntimeException $e) {
+        } catch (RuntimeException) {
             $this->markTestIncomplete('PHPUnit docblocks may be incorrect');
         }
         $methods = $this->server->getFunctions();

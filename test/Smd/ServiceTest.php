@@ -7,6 +7,7 @@ namespace LaminasTest\Json\Server\Smd;
 use Laminas\Json\Server\Exception;
 use Laminas\Json\Server\Smd;
 use Laminas\Json\Server\Smd\Service;
+use Override;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -23,6 +24,7 @@ final class ServiceTest extends TestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
+    #[Override]
     public function setUp(): void
     {
         $this->service = new Service('foo');

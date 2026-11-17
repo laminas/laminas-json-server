@@ -6,6 +6,8 @@ namespace Laminas\Json\Server\Smd;
 
 use Laminas\Json\Server\Exception\InvalidArgumentException;
 use Laminas\Json\Server\Smd;
+use Override;
+use Stringable;
 
 use function array_key_exists;
 use function array_keys;
@@ -29,7 +31,7 @@ use function ucfirst;
  * @todo Revised method regex to allow NS; however, should SMD be revised to
  *     strip PHP NS instead when attaching functions?
  */
-class Service
+class Service implements Stringable
 {
     /** @var string */
     protected $envelope = Smd::ENV_JSONRPC_1;
@@ -473,10 +475,9 @@ class Service
 
     /**
      * Cast to string.
-     *
-     * @return string
      */
-    public function __toString()
+    #[Override]
+    public function __toString(): string
     {
         return $this->toJson();
     }
